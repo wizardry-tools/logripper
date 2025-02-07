@@ -1,0 +1,265 @@
+[
+{
+  "name":"com.wizardry.tools.logripper.Main",
+  "queryAllPublicMethods":true
+},
+{
+  "name":"[Ljava.lang.Object;"
+},
+{
+  "name":"[Ljava.lang.String;"
+},
+{
+  "name":"java.lang.Character",
+  "methods":[{"name":"isIdeographic","parameterTypes":["int"] }]
+},
+{
+  "name":"java.lang.String[]"
+},
+{
+  "name":"java.lang.Thread",
+  "queryAllPublicMethods":true
+},
+{
+  "name":"java.lang.Throwable",
+  "queryAllPublicMethods":true
+},
+{
+  "name":"java.lang.Iterable",
+  "methods":[{"name":"iterator","parameterTypes":[] }],
+  "queryAllPublicMethods":true
+},
+{
+  "name":"java.lang.Runnable",
+  "queryAllPublicMethods":true
+},
+{
+  "name":"java.util.ArrayList",
+  "methods":[
+    {"name":"<init>","parameterTypes":[]},
+    {"name":"<init>","parameterTypes":["int"] }, 
+    {"name":"add","parameterTypes":["java.lang.Object"] },
+    {"name":"get","parameterTypes":["int"] }
+  ]
+},
+{
+  "name":"java.util.HashSet",
+  "methods":[{"name":"<init>","parameterTypes":[] }],
+  "queryAllPublicMethods":true
+},
+{
+  "name":"java.util.Iterator",
+  "methods":[
+    {"name":"hasNext","parameterTypes":[] }, 
+    {"name":"next","parameterTypes":[] }
+  ],
+  "queryAllPublicMethods":true
+},
+{
+  "name":"java.util.Map",
+  "methods":[
+    {"name":"containsKey","parameterTypes":["java.lang.Object"] }, 
+    {"name":"get","parameterTypes":["java.lang.Object"] }, 
+    {"name":"keySet","parameterTypes":[] }
+  ],
+  "queryAllPublicMethods":true
+},
+{
+  "name":"java.util.Set",
+  "methods":[
+    {"name":"add","parameterTypes":["java.lang.Object"] }, 
+    {"name":"size","parameterTypes":[] }, 
+    {"name":"toArray","parameterTypes":["java.lang.Object[]"] }
+  ],
+  "queryAllPublicMethods":true
+},
+{
+  "name":"java.nio.ByteBuffer",
+  "allPublicMethods":true
+},
+{
+  "name":"java.nio.ByteOrder",
+  "allPublicMethods":true
+},
+{
+  "name":"com.fasterxml.jackson.databind.ext.Java7SupportImpl",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+
+{
+  "name":"com.fasterxml.jackson.dataformat.xml.JacksonXmlModule",
+  "allPublicMethods":true
+},
+{
+  "name":"com.fasterxml.jackson.databind.ext.Java7SupportImpl",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"com.fasterxml.jackson.dataformat.xml.XmlFactory",
+  "allPublicMethods":true
+},
+{
+  "name":"com.fasterxml.jackson.dataformat.xml.XmlMapper",
+  "allPublicMethods":true
+},
+{
+  "name":"com.fasterxml.jackson.databind.cfg.MapperBuilder",
+  "allPublicMethods":true
+},
+{
+  "name":"org.yaml.snakeyaml.DumperOptions",
+  "allPublicMethods":true
+},
+{
+  "name":"java.awt.Font",
+  "queryAllPublicMethods":true
+},
+{
+  "name":"java.awt.image.AffineTransformOp"
+},
+{
+  "name":"java.awt.image.ConvolveOp"
+},
+{
+  "name":"java.awt.image.LookupOp"
+},
+{
+  "name":"java.awt.Toolkit",
+  "queryAllPublicMethods":true
+},
+{
+  "name":"java.security.MessageDigestSpi"
+},
+{
+  "name":"java.security.SecureRandomParameters"
+},
+{
+  "name":"javax.imageio.spi.ImageReaderSpi"
+},
+{
+  "name":"javax.imageio.spi.ImageReaderWriterSpi",
+  "methods":[
+    {"name":"getFileSuffixes","parameterTypes":[] }, 
+    {"name":"getFormatNames","parameterTypes":[] }, 
+    {"name":"getMIMETypes","parameterTypes":[] }
+  ]
+},
+{
+  "name":"javax.imageio.spi.ImageWriterSpi"
+},
+{
+  "name":"org.refcodes.logger.RuntimeLoggerFactoryImpl",
+  "queryAllPublicMethods":true
+},
+{
+  "name":"org.refcodes.logger.RuntimeLoggerFactorySingleton",
+  "queryAllPublicMethods":true
+},
+{
+  "name":"org.refcodes.logger.RuntimeLoggerImpl",
+  "allDeclaredFields":true,
+  "queryAllDeclaredMethods":true,
+  "methods":[
+    {"name":"<init>","parameterTypes":[] }, 
+    {"name":"setLogPriority","parameterTypes":["org.refcodes.logger.LogPriority"] }, 
+    {"name":"setLogLevel","parameterTypes":["java.lang.String"] }, 
+    {"name":"setLogger","parameterTypes":["org.refcodes.logger.Logger"] }
+  ]
+},
+{
+  "name":"org.refcodes.logger.alt.console.ConsoleLoggerSingleton",
+  "allDeclaredFields":true,
+  "queryAllDeclaredMethods":true,
+  "methods":[
+    {"name":"<init>","parameterTypes":[] }, 
+    {"name":"setLayout","parameterTypes":["java.lang.String"] },
+    {"name":"setLoggerLayout","parameterTypes":["java.lang.String"] }
+  ]
+},
+{
+  "name":"org.refcodes.properties.ext.runtime.RuntimePropertiesImpl",
+  "queryAllPublicMethods":true
+},
+{
+  "name":"org.refcodes.runtime.Execution",
+  "queryAllPublicMethods":true
+},
+{
+  "name":"org.refcodes.runtime.SystemContext",
+  "queryAllPublicMethods":true
+},
+{
+  "name":"sun.awt.X11FontManager",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"sun.awt.Win32FontManager",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"sun.java2d.loops.OpaqueCopyAnyToArgb",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"sun.java2d.loops.OpaqueCopyArgbToAny",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"sun.java2d.loops.SetDrawLineANY",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"sun.java2d.loops.SetDrawPathANY",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"sun.java2d.loops.SetDrawPolygonsANY",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"sun.java2d.loops.SetDrawRectANY",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"sun.java2d.loops.SetFillPathANY",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"sun.java2d.loops.SetFillRectANY",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"sun.java2d.loops.SetFillSpansANY",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"sun.java2d.marlin.DMarlinRenderingEngine",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"sun.security.provider.MD5",
+  "methods":[{"name":"<init>","parameterTypes":[]}]
+},
+{
+  "name":"sun.security.provider.NativePRNG",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"sun.security.provider.NativePRNG$Blocking",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"sun.security.provider.SHA",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"org.fusesource.jansi.AnsiConsole",
+  "methods":[
+    {"name":"out","parameterTypes":[] },
+    {"name":"err","parameterTypes":[] },
+    {"name":"systemInstall","parameterTypes":[] },
+    {"name":"systemUninstall","parameterTypes":[] },
+    {"name":"getTerminalWidth","parameterTypes":[] }
+  ]
+}
+]

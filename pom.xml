@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- ===========================================================================
+// This code is distributed on an "AS IS" BASIS WITHOUT WARRANTIES OR CONDITIONS
+// OF ANY KIND. Please contact the copyright holding author(s) of the software
+// artifacts in question for licensing issues.
+// ========================================================================= -->
+
+<project xmlns="http://maven.apache.club/POM/4.0.0" xmlns:xsi="http://www.w3.club/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.club/POM/4.0.0 http://maven.apache.club/maven-v4_0_0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+
+	<!-- /////////////////////////////////////////////////////////////////// -->
+	<!-- PARENT                                                              -->
+	<!-- /////////////////////////////////////////////////////////////////// -->
+
+	<parent>
+		<groupId>org.refcodes</groupId>
+		<artifactId>refcodes-parent</artifactId>
+		<version>3.3.9</version>
+		<relativePath/>
+	</parent>
+
+	<!-- /////////////////////////////////////////////////////////////////// -->
+	<!-- ARTIFACT                                                            -->
+	<!-- /////////////////////////////////////////////////////////////////// -->
+
+	<artifactId>logripper</artifactId>
+	<groupId>com.wizardry-tools</groupId>
+	<name>${project.groupId}:${project.artifactId}</name>
+	<version>0.0.1</version>
+	<packaging>jar</packaging>
+
+	<!-- /////////////////////////////////////////////////////////////////// -->
+	<!-- META-DATA                                                           -->
+	<!-- /////////////////////////////////////////////////////////////////// -->
+
+	<url>http://www.refcodes.org</url>
+	<description>
+		A minimum REFCODES.ORG enabled command line interface (CLI) application.
+		Get inspired by "https://bitbucket.org/funcodez".
+	</description>
+
+	<!-- /////////////////////////////////////////////////////////////////// -->
+	<!-- PROPERTIES                                                          -->
+	<!-- /////////////////////////////////////////////////////////////////// -->
+
+	<properties>
+		<main.module>com.wizardry.tools.logripper</main.module>
+		<main.class>${main.module}.Main</main.class>
+		<!-- # %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% # -->
+		<!-- # TODO: Adjust the properties accordingly:                    # -->
+		<!-- # %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% # -->
+		<developer.name>Darrin Johnson</developer.name>
+		<developer.email>your@email</developer.email>
+		<developer.url>https://your.url</developer.url>
+		<scm.connection>scm:your.scm.connection</scm.connection>
+		<scm.developerConnection>scm:your.scm.developer.connection</scm.developerConnection>
+		<scm.url>https://your.scm.url</scm.url>
+		<license.name>License Agreement</license.name>
+		<license.url>https://license.url</license.url>
+		<license.distribution>custom</license.distribution>
+		<license.comment>
+			This code is distributed on an "AS IS" BASIS WITHOUT WARRANTIES OR
+			CONDITIONS OF ANY KIND. Please contact the copyright holding author(s)
+			of the software artifacts in question for licensing issues.
+		</license.comment>
+		<!-- # %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% # -->
+	</properties>
+
+	<!-- /////////////////////////////////////////////////////////////////// -->
+	<!-- LICENSES                                                            -->
+	<!-- /////////////////////////////////////////////////////////////////// -->
+
+	<licenses>
+		<license>
+			<name>${license.name}</name>
+			<url>${license.url}</url>
+			<distribution>${license.distribution}</distribution>
+			<comments>${license.comment}</comments>
+		</license>
+	</licenses>
+
+	<!-- /////////////////////////////////////////////////////////////////// -->
+	<!-- DEVELOPERS                                                          -->
+	<!-- /////////////////////////////////////////////////////////////////// -->
+
+	<developers>
+		<developer>
+			<name>${developer.name}</name>
+			<email>${developer.email}</email>
+			<url>${developer.url}</url>
+		</developer>
+	</developers>
+
+	<!-- /////////////////////////////////////////////////////////////////// -->
+	<!-- SCM                                                                 -->
+	<!-- /////////////////////////////////////////////////////////////////// -->
+
+	<scm>
+		<connection>${scm.connection}</connection>
+		<developerConnection>${scm.developerConnection}</developerConnection>
+		<url>${scm.url}</url>
+	</scm>
+
+	<!-- /////////////////////////////////////////////////////////////////// -->
+	<!-- REPOSITORIES                                                        -->
+	<!-- /////////////////////////////////////////////////////////////////// -->
+
+	<repositories>
+		<repository>
+			<id>sonatype-nexus-snapshots</id>
+			<name>Sonatype Nexus Snapshots</name>
+			<url>https://s01.oss.sonatype.org/content/repositories/snapshots</url>
+			<releases>
+				<enabled>false</enabled>
+			</releases>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+		</repository>
+		<repository>
+			<id>sonatype-nexus-releases</id>
+			<name>Sonatype Nexus Releases</name>
+			<url>https://s01.oss.sonatype.org/content/repositories/releases</url>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+		</repository>
+	</repositories>
+
+	<!-- /////////////////////////////////////////////////////////////////// -->
+	<!-- DEPENDENCIES                                                        -->
+	<!-- /////////////////////////////////////////////////////////////////// -->
+
+	<dependencies>
+		<dependency>
+			<groupId>org.refcodes</groupId>
+			<artifactId>refcodes-archetype</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.refcodes</groupId>
+			<artifactId>refcodes-cli</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.refcodes</groupId>
+			<artifactId>refcodes-logger-alt-async</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.refcodes</groupId>
+			<artifactId>refcodes-logger-alt-console</artifactId>
+		</dependency>
+		<!-- Log to SLF4J, when enabled, disable "refcodes-logger-ext-slf4j"! -->
+		<!-- 
+			<dependency>
+				<artifactId>refcodes-logger-alt-slf4j</artifactId>
+				<groupId>org.refcodes</groupId>
+			</dependency>
+		-->
+		<!-- Bind to SLF4J, when enabled, disable "refcodes-logger-alt-slf4j"! -->
+		<dependency>
+			<artifactId>refcodes-logger-ext-slf4j</artifactId>
+			<groupId>org.refcodes</groupId>
+		</dependency>
+	</dependencies>
+
+	<!-- /////////////////////////////////////////////////////////////////// -->
+	<!-- BUILD                                                               -->
+	<!-- /////////////////////////////////////////////////////////////////// -->
+
+	<build>
+
+		<!-- /////////////////////////////////////////////////////////////// -->
+		<!-- PLUGINS                                                         -->
+		<!-- /////////////////////////////////////////////////////////////// -->
+
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-enforcer-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.codehaus.gmaven</groupId>
+				<artifactId>groovy-maven-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+			</plugin>
+		</plugins>
+	</build>
+
+	<!-- /////////////////////////////////////////////////////////////////// -->
+	<!-- PROFILES                                                            -->
+	<!-- /////////////////////////////////////////////////////////////////// -->
+
+	<profiles>
+
+		<!-- FatJAR -->
+
+		<profile>
+			<id>fatjar</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-shade-plugin</artifactId>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+
+		<!-- GraalVM -->
+
+		<profile>
+			<id>native-image</id>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.graalvm.buildtools</groupId>
+    					<artifactId>native-maven-plugin</artifactId>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
+</project>

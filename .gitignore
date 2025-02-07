@@ -1,0 +1,12 @@
+**/target/
+**/.settings/
+**/.gradle/
+**/.classpath
+**/.project
+**/bundle
+**/.bundle
+**/*warp-packer*
+**/*~
+**/*.bak
+**/dependency-reduced-pom.xml
+**/.idea/
