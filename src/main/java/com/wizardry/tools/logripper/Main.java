@@ -26,8 +26,8 @@ import static com.wizardry.tools.logripper.util.StringUtil.EMPTY;
 import static org.refcodes.cli.CliSugar.*;
 
 import com.wizardry.tools.logripper.config.*;
-import com.wizardry.tools.logripper.util.DataUtil;
-import com.wizardry.tools.logripper.tasks.PathSizeCalculator;
+import com.wizardry.tools.logripper.tasks.pathgrep.PathGrepRipper;
+import com.wizardry.tools.logripper.tasks.pathsize.PathSizeCalculator;
 import com.wizardry.tools.logripper.util.Timestamp;
 import org.refcodes.archetype.CliHelper;
 import org.refcodes.cli.*;
@@ -42,8 +42,6 @@ import org.refcodes.textual.FontStyle;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Optional;
-import java.util.function.Predicate;
 
 /**
  * A minimum REFCODES.ORG enabled command line interface (CLI) application. Get
@@ -187,7 +185,7 @@ public class Main {
 			final boolean isSizeRequest = theArgsProperties.getBoolean( theSizeFlag );
 			if (isSizeRequest) {
 				try {
-					long size = new PathSizeCalculator().calculatePathSize(thePath, LOGGER.isLogDebug());
+					long size = new PathSizeCalculator().rip(thePath, LOGGER.isLogDebug());
 				} catch (IOException e) {
 					LOGGER.error("Error accessing the provided path: ", e);
 				}
@@ -226,9 +224,14 @@ public class Main {
 					isIgnoreCase, matchLimit,
 					isSilent, isCountOnly, isNumbered,
 					isVerbose, isDebug);
+
+			// Option 1 - first iteration of LogRipper tool
 			LogRipper logRipper = new LogRipper(config);
 			logRipper.scanAndReport();
 
+			// Option 2 - second iteration of LogRipper tool
+			//PathGrepRipper pathGrepRipper = new PathGrepRipper(config);
+			//pathGrepRipper.rip(thePath, isDebug);
 			LOGGER.info("LogRipper execution took: " + logRipperTime.toMillis() + " milliseconds");
 
 

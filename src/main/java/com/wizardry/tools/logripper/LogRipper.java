@@ -16,7 +16,9 @@ import java.util.function.Consumer;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import static com.wizardry.tools.logripper.util.SystemUtil.calculateOptimalPartSize;
 import static com.wizardry.tools.logripper.util.StringUtil.EMPTY;
+import static com.wizardry.tools.logripper.util.SystemUtil.readFile;
 
 public class LogRipper {
 
@@ -101,6 +103,7 @@ public class LogRipper {
 
         Timestamp tasksTime = new Timestamp();
         for (int i = 0; i < fileContent.size(); i += partSize) {
+            LOGGER.info("Spawning FileScannerTask");
             int end = Math.min(i + partSize, fileContent.size());
             Callable<Map<Integer, String>> task = new FileScannerTask(fileContent.subList(i, end), pattern, config, matchesFound, matchLimit);
             futures.add(executor.submit(task));
@@ -112,11 +115,15 @@ public class LogRipper {
             matches.putAll(future.get());
         }
 
+
+
         executor.shutdown();
         if (!executor.awaitTermination(60, TimeUnit.SECONDS)) {
             executor.shutdownNow();
         }
 
+        // TODO: Match reporting exits early for some reason, not reporting all matches.
+        LOGGER.info("matches: ", matches.size());
         if (!config.isCountOnly()) {
             reportMatches(matches);
         } else {
@@ -131,11 +138,6 @@ public class LogRipper {
         }
     }
 
-    private List<String> readFile(File file) throws IOException {
-        try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
-            return new ArrayList<>(reader.lines().toList());
-        }
-    }
 
     private void reportMatches(Map<Integer, String> matches) {
         if (config.isNumbered()) {
@@ -157,11 +159,6 @@ public class LogRipper {
                 System.out.println("#" + (key + 1) + ": " + value);
             });
         };
-    }
-
-    private static int calculateOptimalPartSize(int fileSize) {
-        // Simple heuristic
-        return (fileSize / (Runtime.getRuntime().availableProcessors() * 2)) + 1;
     }
 
     private record FileScannerTask(List<String> lines, Pattern pattern, LogRipperConfig config, AtomicInteger counter, AtomicInteger limit)

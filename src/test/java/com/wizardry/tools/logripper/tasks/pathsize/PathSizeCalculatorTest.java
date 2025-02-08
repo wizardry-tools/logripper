@@ -1,4 +1,4 @@
-package com.wizardry.tools.logripper.tasks;
+package com.wizardry.tools.logripper.tasks.pathsize;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -7,7 +7,6 @@ import org.mockito.Mockito;
 
 import java.io.IOException;
 import java.nio.file.*;
-import java.nio.file.attribute.BasicFileAttributes;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
@@ -43,7 +42,7 @@ public class PathSizeCalculatorTest {
 //
 //            assertEquals(0L, size);
 //        }
-        long size = pathSizeCalculator.calculatePathSize(path, true);
+        long size = pathSizeCalculator.rip(path, true);
         assertEquals(0L, size);
     }
 
@@ -59,7 +58,7 @@ public class PathSizeCalculatorTest {
 //
 //            assertEquals(1024L, size);
 //        }
-        long size = pathSizeCalculator.calculatePathSize(path, true);
+        long size = pathSizeCalculator.rip(path, true);
         assertEquals(1510L, size);
     }
 
@@ -89,7 +88,7 @@ public class PathSizeCalculatorTest {
 //
 //            assertEquals(1280L, size);
 //        }
-        long size = pathSizeCalculator.calculatePathSize(rootPath, true);
+        long size = pathSizeCalculator.rip(rootPath, true);
         assertEquals(7380L, size);
     }
 }
