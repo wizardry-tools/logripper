@@ -27,9 +27,19 @@ public record LogRipperConfig(
         int matchLimit,
         boolean isSilent,
         boolean isCountOnly,
-        boolean isNumbered
+        boolean isNumbered,
+        boolean isVerbose,
+        boolean isDebug
 ) {
-    
+
+    public LogRipperConfig(String searchToken, String path, boolean isDir, int linesBeforeMatch, int linesAfterMatch, boolean isIgnoreCase, int matchLimit, boolean isSilent, boolean isCountOnly, boolean isNumbered, boolean isVerbose) {
+        this( searchToken, path, isDir, linesBeforeMatch, linesAfterMatch, isIgnoreCase, matchLimit, isSilent, isCountOnly, isNumbered, isVerbose, false); // Default to false
+    }
+
+    public LogRipperConfig(String searchToken, String path, boolean isDir, int linesBeforeMatch, int linesAfterMatch, boolean isIgnoreCase, int matchLimit, boolean isSilent, boolean isCountOnly, boolean isNumbered) {
+        this( searchToken, path, isDir, linesBeforeMatch, linesAfterMatch, isIgnoreCase, matchLimit, isSilent, isCountOnly, isNumbered, false); // Default to false
+    }
+
     public LogRipperConfig(String searchToken, String path, boolean isDir, int linesBeforeMatch, int linesAfterMatch, boolean isIgnoreCase, int matchLimit, boolean isSilent, boolean isCountOnly) {
         this( searchToken, path, isDir, linesBeforeMatch, linesAfterMatch, isIgnoreCase, matchLimit, isSilent, isCountOnly, false); // Default to false so that line numbers do not output.
     }

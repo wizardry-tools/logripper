@@ -1,10 +1,13 @@
 package com.wizardry.tools.logripper;
 
 import com.wizardry.tools.logripper.config.LogRipperConfig;
+import org.apache.commons.logging.Log;
 import org.refcodes.logger.RuntimeLogger;
 import org.refcodes.logger.RuntimeLoggerFactorySingleton;
 
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.*;
@@ -16,24 +19,29 @@ import java.util.regex.Pattern;
 public class LogRipper {
 
     private static final RuntimeLogger LOGGER = RuntimeLoggerFactorySingleton.createRuntimeLogger();
+    private static final String EMPTY = "";
 
     private final String searchToken;
     private final String path;
     private final ExecutorService executor;
-    private final int linesBefore;
-    private final int linesAfter;
     private final boolean isIgnoreCase;
     private final AtomicInteger matchesFound;
+    private final AtomicInteger matchLimit;
+    private final boolean isVerbose;
+    private final boolean isDebug;
+    private final LogRipperConfig config;
 
     public LogRipper(LogRipperConfig config) {
-        this.searchToken = config.searchToken() != null ? config.searchToken() : "";
+        this.config = config;
+        this.searchToken = config.searchToken() != null ? config.searchToken() : EMPTY;
         this.isIgnoreCase = config.isIgnoreCase();
         this.path = config.path();
-        this.linesBefore = Math.max(config.linesBeforeMatch(), 0);
-        this.linesAfter = Math.max(config.linesAfterMatch(), 0);
         // Use a fixed thread pool for concurrency
         this.executor = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
         this.matchesFound = new AtomicInteger(0);
+        this.matchLimit = new AtomicInteger(config.matchLimit());
+        this.isVerbose = config.isVerbose();
+        this.isDebug = config.isDebug();
     }
 
     public void scanAndReport() throws IOException, InterruptedException, ExecutionException {
@@ -52,7 +60,7 @@ public class LogRipper {
         Instant startTasks = Instant.now();
         for (int i = 0; i < fileContent.size(); i += partSize) {
             int end = Math.min(i + partSize, fileContent.size());
-            Callable<Map<Integer, String>> task = new FileScannerTask(fileContent.subList(i, end), pattern, linesBefore, linesAfter, matchesFound);
+            Callable<Map<Integer, String>> task = new FileScannerTask(fileContent.subList(i, end), pattern, config, matchesFound, matchLimit);
             futures.add(executor.submit(task));
         }
 
@@ -62,7 +70,11 @@ public class LogRipper {
             matches.putAll(future.get());
         }
 
-        reportMatches(matches);
+        if (config.isCountOnly()) {
+            reportMatches(matches);
+        } else {
+            LOGGER.info("Read [" + fileContent.size() + "] log lines in [" + readDuration.toMillis() + "] milliseconds");
+        }
 
         executor.shutdown();
         if (!executor.awaitTermination(60, TimeUnit.SECONDS)) {
@@ -72,10 +84,23 @@ public class LogRipper {
         Instant endTasks = Instant.now();
         Duration taskDuration = Duration.between(startTasks, endTasks);
 
-        LOGGER.info("LineChunks: " + partSize);
-        LOGGER.info("Read [" + fileContent.size() + "] log lines in [" + readDuration.toMillis() + "] milliseconds");
-        LOGGER.info("Spawned [" + (fileContent.size() / partSize) + "] Tasks for [" + Runtime.getRuntime().availableProcessors() + "] Threads for [" + taskDuration.toMillis() + "] milliseconds");
-        LOGGER.info("Total Matches Found: " + this.matchesFound.get());
+        if (isVerbose) {
+            LOGGER.info("LineChunks: " + partSize);
+            LOGGER.info("Read [" + fileContent.size() + "] log lines in [" + readDuration.toMillis() + "] milliseconds");
+            LOGGER.info("Spawned [" + (fileContent.size() / partSize) + "] Tasks for [" + Runtime.getRuntime().availableProcessors() + "] Threads for [" + taskDuration.toMillis() + "] milliseconds");
+            LOGGER.info("Total Matches Found: " + this.matchesFound.get());
+        }
+    }
+
+    public static List<String> collectPaths(String directoryPath) {
+        List<String> paths = new ArrayList<>();
+        try {
+            Files.walk(Paths.get(directoryPath))
+                    .forEach(path -> paths.add(path.toString()));
+        } catch (IOException e) {
+            System.err.println("Error traversing the directory: " + e.getMessage());
+        }
+        return paths;
     }
 
     private List<String> readFile(String filePath) throws IOException {
@@ -96,30 +121,42 @@ public class LogRipper {
         return (fileSize / (Runtime.getRuntime().availableProcessors() * 2)) + 1;
     }
 
-    private record FileScannerTask(List<String> lines, Pattern pattern, int linesBefore, int linesAfter,
-                                   AtomicInteger counter) implements Callable<Map<Integer, String>> {
+    private record FileScannerTask(List<String> lines, Pattern pattern, LogRipperConfig config, AtomicInteger counter, AtomicInteger limit)
+            implements Callable<Map<Integer, String>> {
 
         @Override
         public Map<Integer, String> call() {
             Map<Integer, String> matches = new HashMap<>();
             for (int i = 0; i < lines.size(); i++) {
-                Matcher matcher = pattern.matcher(lines.get(i));
-                if (matcher.find()) {
-                    StringBuilder matchDetails = new StringBuilder();
-                    int start = Math.max(0, i - linesBefore);
-                    int end = Math.min(lines.size() - 1, i + linesAfter);
-                    for (int j = start; j <= end; j++) {
-                        if (j == i) {
-                            matchDetails.append("> ").append(lines.get(j)).append("\n");
-                        } else {
-                            matchDetails.append("  ").append(lines.get(j)).append("\n");
-                        }
+                if (limit.get() == 0 || counter.get() < limit.get() + 1) {
+                    Matcher matcher = pattern.matcher(lines.get(i));
+                    if (matcher.find()) {
+                        recordMatch(i, matches);
                     }
-                    counter.incrementAndGet();
-                    matches.put(i, matchDetails.toString());
+                } else {
+                    break;
                 }
             }
             return matches;
+        }
+
+        private void recordMatch(int index, Map<Integer, String> matches) {
+            counter.incrementAndGet();
+            if (config.isSilent()) {
+                matches.put(index, EMPTY);
+                return;
+            }
+            StringBuilder matchDetails = new StringBuilder();
+            int start = Math.max(0, index - config.linesBeforeMatch());
+            int end = Math.min(lines.size() - 1, index + config.linesAfterMatch());
+            for (int j = start; j <= end; j++) {
+                if (j == index) {
+                    matchDetails.append("> ").append(lines.get(j)).append("\n");
+                } else {
+                    matchDetails.append("  ").append(lines.get(j)).append("\n");
+                }
+            }
+            matches.put(index, matchDetails.toString());
         }
     }
 }

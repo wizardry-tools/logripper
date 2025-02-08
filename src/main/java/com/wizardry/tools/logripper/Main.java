@@ -67,6 +67,7 @@ public class Main {
 	private static final String LINES_PROPERTY = "lines";
 	private static final String LINES_BEFORE_PROPERTY = "lines-before";
 	private static final String LINES_AFTER_PROPERTY = "lines-after";
+	private static final String LIMIT_PROPERTY = "limit";
 
 	// /////////////////////////////////////////////////////////////////////////
 	// METHODS:
@@ -86,6 +87,7 @@ public class Main {
 		final StringOption theLinesOption = stringOption( 'C', "lines-around", LINES_PROPERTY, "The number of lines before and after a match that should be included." );
 		final StringOption theLinesBeforeOption = stringOption( 'B', "lines-before", LINES_BEFORE_PROPERTY, "The number of lines before a match that should be included." );
 		final StringOption theLinesAfterOption = stringOption( 'A', "lines-after", LINES_AFTER_PROPERTY, "The number of lines after a match that should be included." );
+		final StringOption theLimitOption = stringOption( 'L', "limit", LIMIT_PROPERTY, "The amount of matches to record before stopping early." );
 		final ConfigOption theConfigOption = configOption();
 		final Flag theInitFlag = initFlag();
 		final Flag theVerboseFlag = verboseFlag();
@@ -99,10 +101,10 @@ public class Main {
 
 		// @formatter:off
 		final Term theArgsSyntax = cases(
-			and( theInitFlag, optional( theConfigOption, theVerboseFlag, theDebugFlag) ),
+			and( theInitFlag, optional( theConfigOption, theVerboseFlag, theDebugFlag ) ),
 			and( theSearchOption, xor( theFileOption, theDirOption ), optional(
 					xor(theLinesOption, optional( theLinesBeforeOption, theLinesAfterOption, theCountFlag ) ),
-					theIgnoreCaseFlag, theVerboseFlag, theDebugFlag, theSilentFlag, theNumberFlag )
+					theIgnoreCaseFlag, theVerboseFlag, theDebugFlag, theSilentFlag, theNumberFlag, theLimitOption )
 			),
 			xor( theHelpFlag, and( theSysInfoFlag, any ( theVerboseFlag ) ) )
 		);
@@ -169,45 +171,59 @@ public class Main {
 			}
 
 			String theFile = theArgsProperties.getOr( theFileOption, "");
-			boolean isDir = !theFile.isEmpty();
-			if (!isDir) {
-				// handle file
-				String theToken = theArgsProperties.getOr( theSearchOption, "");
-				final boolean isIgnoreCase = theArgsProperties.getBoolean(theIgnoreCaseFlag);
-				String theLines = theArgsProperties.getOr( theLinesOption, "");
-				String theLinesBefore = theArgsProperties.getOr( theLinesBeforeOption, "");
-				String theLinesAfter = theArgsProperties.getOr( theLinesAfterOption, "");
-				int linesCount = Optional.of(theLines).filter(Predicate.not(String::isBlank)).map(Integer::parseInt).orElse(0);
-				int linesBeforeCount = Optional.of(theLinesBefore).filter(Predicate.not(String::isBlank)).map(Integer::parseInt).orElse(linesCount);
-				int linesAfterCount = Optional.of(theLinesAfter).filter(Predicate.not(String::isBlank)).map(Integer::parseInt).orElse(linesCount);
-				if (isVerbose) {
-					LOGGER.info("Rip'n file: \"" + theFile + "\"");
-					if (!theToken.isBlank()) {
-						LOGGER.info("GREP with token [" + theToken + "]");
-					}
-                }
+			boolean isDir = theFile.isEmpty();
 
-
-				Instant startTime = Instant.now();
-				LogRipperConfig config = new LogRipperConfig(theToken, theFile, false, linesBeforeCount, linesAfterCount, isIgnoreCase);
-				LogRipper logRipper = new LogRipper(config);
-				logRipper.scanAndReport();
-
-				//if(isVerbose) {
-					Instant endTime = Instant.now();
-					Duration duration = Duration.between(startTime, endTime);
-					LOGGER.info("LogRipper execution took: " + duration.toMillis() + " milliseconds");
-
-				//}
-			} else {
-				// handle dir
-				String theDir = theArgsProperties.getOr( theDirOption, "");
+			// handle file
+			String theToken = theArgsProperties.getOr( theSearchOption, "");
+			final boolean isIgnoreCase = theArgsProperties.getBoolean(theIgnoreCaseFlag);
+			int linesBeforeCount = parseIntegerOption(theArgsProperties, theLinesBeforeOption, 0);
+			int linesAfterCount = parseIntegerOption(theArgsProperties, theLinesAfterOption, 0);
+			int linesCount = parseIntegerOption(theArgsProperties, theLinesOption, 0);
+			int matchLimit = parseIntegerOption(theArgsProperties, theLimitOption, 0);
+			if (linesCount != 0) {
+				linesBeforeCount = linesCount;
+				linesAfterCount = linesCount;
 			}
+
+			final boolean isSilent = theArgsProperties.getBoolean( theSilentFlag );
+			final boolean isCountOnly = theArgsProperties.getBoolean(theCountFlag);
+			final boolean isNumbered = theArgsProperties.getBoolean(theNumberFlag);
+
+			if (isVerbose) {
+				LOGGER.info("Rip'n file: \"" + theFile + "\"");
+				if (!theToken.isBlank()) {
+					LOGGER.info("GREP with token [" + theToken + "]");
+				}
+			}
+
+
+			Instant startTime = Instant.now();
+			LogRipperConfig config = new LogRipperConfig(
+					theToken, theFile, isDir,
+					linesBeforeCount, linesAfterCount,
+					isIgnoreCase, matchLimit,
+					isSilent, isCountOnly, isNumbered,
+					isVerbose, isDebug);
+			LogRipper logRipper = new LogRipper(config);
+			logRipper.scanAndReport();
+
+			Instant endTime = Instant.now();
+			Duration duration = Duration.between(startTime, endTime);
+			LOGGER.info("LogRipper execution took: " + duration.toMillis() + " milliseconds");
+
+
 		}
 		catch ( Exception e ) {
 			theCliHelper.printException( e );
 			System.exit( e.hashCode() % 0xFF );
 		}
+	}
+
+	private static int parseIntegerOption(ApplicationProperties properties, StringOption option, int defaultValue) {
+		return Optional.ofNullable(properties.getOr(option, null))
+				.filter(Predicate.not(String::isBlank))
+				.map(Integer::parseInt)
+				.orElse(defaultValue);
 	}
 
 	private static IgnoreCaseFlag ignoreCaseFlag() {
