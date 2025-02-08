@@ -1,63 +1,105 @@
 package com.wizardry.tools.logripper;
 
 import com.wizardry.tools.logripper.config.LogRipperConfig;
-import org.apache.commons.logging.Log;
+import com.wizardry.tools.logripper.util.Timestamp;
 import org.refcodes.logger.RuntimeLogger;
 import org.refcodes.logger.RuntimeLoggerFactorySingleton;
 
 import java.io.*;
 import java.nio.file.Files;
-import java.nio.file.Paths;
+import java.nio.file.LinkOption;
 import java.time.Duration;
-import java.time.Instant;
 import java.util.*;
 import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.function.Consumer;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import static com.wizardry.tools.logripper.util.StringUtil.EMPTY;
 
 public class LogRipper {
 
     private static final RuntimeLogger LOGGER = RuntimeLoggerFactorySingleton.createRuntimeLogger();
-    private static final String EMPTY = "";
 
-    private final String searchToken;
-    private final String path;
     private final ExecutorService executor;
-    private final boolean isIgnoreCase;
     private final AtomicInteger matchesFound;
     private final AtomicInteger matchLimit;
-    private final boolean isVerbose;
-    private final boolean isDebug;
     private final LogRipperConfig config;
+    private final ConcurrentLinkedQueue<String> debugMessages;
 
-    public LogRipper(LogRipperConfig config) {
+    public LogRipper(LogRipperConfig config) throws IllegalArgumentException {
+        config.validate();
         this.config = config;
-        this.searchToken = config.searchToken() != null ? config.searchToken() : EMPTY;
-        this.isIgnoreCase = config.isIgnoreCase();
-        this.path = config.path();
         // Use a fixed thread pool for concurrency
         this.executor = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
         this.matchesFound = new AtomicInteger(0);
         this.matchLimit = new AtomicInteger(config.matchLimit());
-        this.isVerbose = config.isVerbose();
-        this.isDebug = config.isDebug();
+        this.debugMessages = new ConcurrentLinkedQueue<>();
     }
 
-    public void scanAndReport() throws IOException, InterruptedException, ExecutionException {
-        Instant startRead = Instant.now();
-        List<String> fileContent = readFile(path);
-        Instant endRead = Instant.now();
-        Duration readDuration = Duration.between(startRead, endRead);
+    public void scanAndReport() {
+        try {
+            if (Files.isDirectory(config.path(), LinkOption.NOFOLLOW_LINKS)) {
+                readAndProcessDir();
+            } else {
+                readAndProcessPath();
+            }
+        }  catch (IOException | InterruptedException | ExecutionException e) {
+            LOGGER.error("Error occurred while processing path: ["+config.path().toAbsolutePath()+"]", e);
+        }
+        for (String message : debugMessages) {
+            LOGGER.info(message);
+        }
+    }
 
-        if (searchToken.isEmpty()) return;
+    private void readAndProcessDir() throws IOException, InterruptedException, ExecutionException {
+        // establish static values
+        Pattern pattern = config.getTokenPattern();
+        config.getPaths().forEach((path) -> {
 
-        Pattern pattern = isIgnoreCase ? Pattern.compile(searchToken, Pattern.CASE_INSENSITIVE) : Pattern.compile(searchToken);
+        });
+    }
+
+    private Map<Integer, String> minReadAndProcessPath() throws IOException, InterruptedException, ExecutionException {
+        // establish static values
+        Pattern pattern = config.getTokenPattern();
+        List<Future<Map<Integer, String>>> futures = new ArrayList<>();
+        Map<Integer, String> matches = new TreeMap<>();
+
+        // establish dynamic values
+        List<String> fileContent = readFile(config.path().toFile());
+        int partSize = calculateOptimalPartSize(fileContent.size());
+
+        for (int i = 0; i < fileContent.size(); i += partSize) {
+            int end = Math.min(i + partSize, fileContent.size());
+            Callable<Map<Integer, String>> task = new FileScannerTask(fileContent.subList(i, end), pattern, config, matchesFound, matchLimit);
+            futures.add(executor.submit(task));
+        }
+
+        // Collect results from all tasks
+        for (Future<Map<Integer, String>> future : futures) {
+            matches.putAll(future.get());
+        }
+
+        executor.shutdown();
+        if (!executor.awaitTermination(60, TimeUnit.SECONDS)) {
+            executor.shutdownNow();
+        }
+        return matches;
+    }
+
+    private void readAndProcessPath() throws IOException, InterruptedException, ExecutionException {
+        Timestamp readTime = new Timestamp();
+        List<String> fileContent = readFile(config.path().toFile());
+        Duration readDuration = readTime.getDuration();
+
+        Pattern pattern = config.getTokenPattern();
 
         int partSize = calculateOptimalPartSize(fileContent.size());
         List<Future<Map<Integer, String>>> futures = new ArrayList<>();
 
-        Instant startTasks = Instant.now();
+        Timestamp tasksTime = new Timestamp();
         for (int i = 0; i < fileContent.size(); i += partSize) {
             int end = Math.min(i + partSize, fileContent.size());
             Callable<Map<Integer, String>> task = new FileScannerTask(fileContent.subList(i, end), pattern, config, matchesFound, matchLimit);
@@ -70,50 +112,51 @@ public class LogRipper {
             matches.putAll(future.get());
         }
 
-        if (config.isCountOnly()) {
-            reportMatches(matches);
-        } else {
-            LOGGER.info("Read [" + fileContent.size() + "] log lines in [" + readDuration.toMillis() + "] milliseconds");
-        }
-
         executor.shutdown();
         if (!executor.awaitTermination(60, TimeUnit.SECONDS)) {
             executor.shutdownNow();
         }
 
-        Instant endTasks = Instant.now();
-        Duration taskDuration = Duration.between(startTasks, endTasks);
+        if (!config.isCountOnly()) {
+            reportMatches(matches);
+        } else {
+            System.out.println(matchesFound.get());
+        }
 
-        if (isVerbose) {
-            LOGGER.info("LineChunks: " + partSize);
-            LOGGER.info("Read [" + fileContent.size() + "] log lines in [" + readDuration.toMillis() + "] milliseconds");
-            LOGGER.info("Spawned [" + (fileContent.size() / partSize) + "] Tasks for [" + Runtime.getRuntime().availableProcessors() + "] Threads for [" + taskDuration.toMillis() + "] milliseconds");
-            LOGGER.info("Total Matches Found: " + this.matchesFound.get());
+        if (config.isDebug()) {
+            debugMessages.add("["+config.path().toAbsolutePath()+"] lineChunks: " + partSize);
+            debugMessages.add("Read [" + fileContent.size() + "] log lines in [" + readDuration.toMillis() + "] milliseconds");
+            debugMessages.add("Spawned [" + (fileContent.size() / partSize) + "] Tasks for [" + Runtime.getRuntime().availableProcessors() + "] Threads for [" + tasksTime.toMillis() + "] milliseconds");
+            debugMessages.add("Total Matches Found: " + matchesFound.get());
         }
     }
 
-    public static List<String> collectPaths(String directoryPath) {
-        List<String> paths = new ArrayList<>();
-        try {
-            Files.walk(Paths.get(directoryPath))
-                    .forEach(path -> paths.add(path.toString()));
-        } catch (IOException e) {
-            System.err.println("Error traversing the directory: " + e.getMessage());
-        }
-        return paths;
-    }
-
-    private List<String> readFile(String filePath) throws IOException {
-        try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
+    private List<String> readFile(File file) throws IOException {
+        try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
             return new ArrayList<>(reader.lines().toList());
         }
     }
 
     private void reportMatches(Map<Integer, String> matches) {
-        for (Map.Entry<Integer, String> entry : matches.entrySet()) {
-            int index = entry.getKey();
-            System.out.println("line#["+(index+1)+"]: " + entry.getValue());
+        if (config.isNumbered()) {
+            announceNumberedMatches().accept(matches);
+        } else {
+            announceMatches().accept(matches);
         }
+    }
+
+    private static Consumer<Map<Integer, String>> announceMatches() {
+        return (matches) -> {
+            matches.values().forEach(System.out::println);
+        };
+    }
+
+    private static Consumer<Map<Integer, String>> announceNumberedMatches() {
+        return (matches) -> {
+            matches.forEach((key, value) -> {
+                System.out.println("#" + (key + 1) + ": " + value);
+            });
+        };
     }
 
     private static int calculateOptimalPartSize(int fileSize) {
@@ -127,6 +170,7 @@ public class LogRipper {
         @Override
         public Map<Integer, String> call() {
             Map<Integer, String> matches = new HashMap<>();
+
             for (int i = 0; i < lines.size(); i++) {
                 if (limit.get() == 0 || counter.get() < limit.get() + 1) {
                     Matcher matcher = pattern.matcher(lines.get(i));

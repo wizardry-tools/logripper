@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<store>
+    <name>Tech Gadgets Store</name>
+    <location>123 Tech Avenue, Silicon Valley, CA</location>
+    <contactEmail>info@techgadgets.com</contactEmail>
+
+    <products>
+        <product id="P001">
+            <name>Smartphone XYZ Model</name>
+            <category>Electronics</category>
+            <price>499.99</price>
+            <stock>50</stock>
+            <description>Latest model with high-resolution camera and long battery life.</description>
+        </product>
+        <product id="P002">
+            <name>Wireless Bluetooth Headphones</name>
+            <category>Electronics</category>
+            <price>199.99</price>
+            <stock>75</stock>
+            <description>Noise-cancelling headphones with comfortable fit.</description>
+        </product>
+        <product id="P003">
+            <name>Smart Watch Model S</name>
+            <category>Electronics</category>
+            <price>249.99</price>
+            <stock>60</stock>
+            <description>Fitness tracker with heart rate monitor and GPS.</description>
+        </product>
+    </products>
+
+    <users>
+        <user id="U001">
+            <name>John Doe</name>
+            <email>johndoe@example.com</email>
+            <address>456 Elm Street, Springfield, IL</address>
+            <phone>+1-234-567-8901</phone>
+        </user>
+        <user id="U002">
+            <name>Jane Smith</name>
+            <email>janesmith@example.com</email>
+            <address>789 Oak Avenue, Metropolis, NY</address>
+            <phone>+1-345-678-9012</phone>
+        </user>
+    </users>
+
+    <orders>
+        <order id="O001">
+            <userId>U001</userId>
+            <date>2023-10-05T14:23:12Z</date>
+            <items>
+                <item productId="P001" quantity="1" price="499.99"/>
+                <item productId="P002" quantity="2" price="199.99"/>
+            </items>
+            <totalAmount>899.97</totalAmount>
+            <status>Shipped</status>
+        </order>
+        <order id="O002">
+            <userId>U002</userId>
+            <date>2023-10-06T15:45:30Z</date>
+            <items>
+                <item productId="P003" quantity="1" price="249.99"/>
+            </items>
+            <totalAmount>249.99</totalAmount>
+            <status>Processing</status>
+        </order>
+    </orders>
+</store>

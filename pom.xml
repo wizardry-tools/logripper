@@ -48,6 +48,8 @@
 	<properties>
 		<main.module>com.wizardry.tools.logripper</main.module>
 		<main.class>${main.module}.Main</main.class>
+		<maven.compiler.source>17</maven.compiler.source>
+		<maven.compiler.target>17</maven.compiler.target>
 		<!-- # %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% # -->
 		<!-- # TODO: Adjust the properties accordingly:                    # -->
 		<!-- # %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% # -->
@@ -164,6 +166,21 @@
 		<dependency>
 			<artifactId>refcodes-logger-ext-slf4j</artifactId>
 			<groupId>org.refcodes</groupId>
+		</dependency>
+
+
+		<!-- Testing -->
+		<dependency>
+			<groupId>org.mockito</groupId>
+			<artifactId>mockito-core</artifactId>
+			<version>5.14.2</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.mockito</groupId>
+			<artifactId>mockito-junit-jupiter</artifactId>
+			<version>5.14.2</version>
+			<scope>test</scope>
 		</dependency>
 	</dependencies>
 

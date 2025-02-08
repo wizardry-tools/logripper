@@ -21,9 +21,14 @@
 
 package com.wizardry.tools.logripper;
 
+import static com.wizardry.tools.logripper.util.RefCodesUtil.parseIntegerOption;
+import static com.wizardry.tools.logripper.util.StringUtil.EMPTY;
 import static org.refcodes.cli.CliSugar.*;
 
 import com.wizardry.tools.logripper.config.*;
+import com.wizardry.tools.logripper.util.DataUtil;
+import com.wizardry.tools.logripper.tasks.PathSizeCalculator;
+import com.wizardry.tools.logripper.util.Timestamp;
 import org.refcodes.archetype.CliHelper;
 import org.refcodes.cli.*;
 import org.refcodes.data.AsciiColorPalette;
@@ -34,8 +39,9 @@ import org.refcodes.textual.FontFamily;
 import org.refcodes.textual.Font;
 import org.refcodes.textual.FontStyle;
 
-import java.time.Duration;
-import java.time.Instant;
+import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Optional;
 import java.util.function.Predicate;
 
@@ -62,8 +68,7 @@ public class Main {
 	private static final char[] BANNER_PALETTE = AsciiColorPalette.MAX_LEVEL_GRAY.getPalette();
 	private static final Font BANNER_FONT = new Font( FontFamily.DIALOG, FontStyle.BOLD );
 	private static final String GREP_PROPERTY = "grep";
-	private static final String FILE_PROPERTY = "file";
-	private static final String DIR_PROPERTY = "dir";
+	private static final String PATH_PROPERTY = "path";
 	private static final String LINES_PROPERTY = "lines";
 	private static final String LINES_BEFORE_PROPERTY = "lines-before";
 	private static final String LINES_AFTER_PROPERTY = "lines-after";
@@ -81,9 +86,8 @@ public class Main {
 
 		// See "http://www.refcodes.org/refcodes/refcodes-cli" |-->
 
-		final StringOption theSearchOption = stringOption( 'g', "grep", GREP_PROPERTY, "GREP the log file for a token or pattern." );
-		final StringOption theFileOption = stringOption( 'f', "file", FILE_PROPERTY, "The log file that needs a rip'n" );
-		final StringOption theDirOption = stringOption( 'd', "dir", DIR_PROPERTY, "The log directory that needs a rip'n" );
+		final StringOption theSearchOption = stringOption( 'g', "grep", GREP_PROPERTY, "GREP the file or directory for a token or pattern." );
+		final StringOption thePathOption = stringOption( 'p', "path", PATH_PROPERTY, "The file or directory path that needs a rip'n" );
 		final StringOption theLinesOption = stringOption( 'C', "lines-around", LINES_PROPERTY, "The number of lines before and after a match that should be included." );
 		final StringOption theLinesBeforeOption = stringOption( 'B', "lines-before", LINES_BEFORE_PROPERTY, "The number of lines before a match that should be included." );
 		final StringOption theLinesAfterOption = stringOption( 'A', "lines-after", LINES_AFTER_PROPERTY, "The number of lines after a match that should be included." );
@@ -98,27 +102,29 @@ public class Main {
 		final Flag theSilentFlag = silentFlag();
 		final Flag theCountFlag = countFlag();
 		final Flag theNumberFlag = numberFlag();
+		final Flag theSizeFlag = sizeFlag();
 
 		// @formatter:off
 		final Term theArgsSyntax = cases(
 			and( theInitFlag, optional( theConfigOption, theVerboseFlag, theDebugFlag ) ),
-			and( theSearchOption, xor( theFileOption, theDirOption ), optional(
+			and( theSearchOption, thePathOption, optional(
 					xor(theLinesOption, optional( theLinesBeforeOption, theLinesAfterOption, theCountFlag ) ),
 					theIgnoreCaseFlag, theVerboseFlag, theDebugFlag, theSilentFlag, theNumberFlag, theLimitOption )
 			),
+			and( thePathOption, theSizeFlag ),
 			xor( theHelpFlag, and( theSysInfoFlag, any ( theVerboseFlag ) ) )
 		);
 		final Example[] theExamples = examples(
-			example( "Grep a file", theSearchOption, theFileOption),
-			example( "Grep a folder", theSearchOption, theDirOption),
-			example( "Grep a file and ignore case", theSearchOption, theIgnoreCaseFlag, theFileOption),
-			example( "Grep a file and include #n lines surrounding matches", theSearchOption, theLinesOption, theFileOption),
-			example( "Grep a file and include #n lines before matches", theSearchOption, theLinesBeforeOption, theFileOption),
-			example( "Grep a file and include #n lines after matches", theSearchOption, theLinesAfterOption, theFileOption),
-			example( "Grep a file and only count total matches", theSearchOption, theFileOption, theCountFlag),
-			example( "Grep a file and include line numbers with matches", theSearchOption, theFileOption, theNumberFlag),
-			example( "Grep a file and silence the matches", theSearchOption, theFileOption, theSilentFlag),
-			example( "Grep a file, print stack trace upon failure", theSearchOption, theFileOption, theDebugFlag),
+			example( "Grep a path for a token", theSearchOption, thePathOption),
+			example( "Grep a path and ignore case", theSearchOption, theIgnoreCaseFlag, thePathOption),
+			example( "Grep a path and include #n lines surrounding matches", theSearchOption, theLinesOption, thePathOption),
+			example( "Grep a path and include #n lines before matches", theSearchOption, theLinesBeforeOption, thePathOption),
+			example( "Grep a path and include #n lines after matches", theSearchOption, theLinesAfterOption, thePathOption),
+			example( "Grep a path and only count total matches", theSearchOption, thePathOption, theCountFlag),
+			example( "Grep a path and include line numbers with matches", theSearchOption, thePathOption, theNumberFlag),
+			example( "Grep a path and silence the matches", theSearchOption, thePathOption, theSilentFlag),
+			example( "Grep a path, print stack trace upon failure", theSearchOption, thePathOption, theDebugFlag),
+			example( "Calculate the size of a file or directory", thePathOption, theSizeFlag ),
 			example( "Load specific config file", theConfigOption),
 			example( "Initialize default config file", theInitFlag, theVerboseFlag),
 			example( "Initialize specific config file", theConfigOption, theInitFlag, theVerboseFlag),
@@ -170,11 +176,27 @@ public class Main {
 				LOGGER.printSeparator();
 			}
 
-			String theFile = theArgsProperties.getOr( theFileOption, "");
-			boolean isDir = theFile.isEmpty();
+			String thePathString = theArgsProperties.getOr( thePathOption, EMPTY);
+			if (thePathString.isEmpty()) {
+				LOGGER.error("Cannot rip empty paths!");
+				return;
+			}
 
-			// handle file
-			String theToken = theArgsProperties.getOr( theSearchOption, "");
+			Path thePath = Paths.get(thePathString);
+
+			final boolean isSizeRequest = theArgsProperties.getBoolean( theSizeFlag );
+			if (isSizeRequest) {
+				try {
+					long size = new PathSizeCalculator().calculatePathSize(thePath, LOGGER.isLogDebug());
+				} catch (IOException e) {
+					LOGGER.error("Error accessing the provided path: ", e);
+				}
+				// exit early
+				return;
+			}
+
+
+			String theToken = theArgsProperties.getOr( theSearchOption, EMPTY);
 			final boolean isIgnoreCase = theArgsProperties.getBoolean(theIgnoreCaseFlag);
 			int linesBeforeCount = parseIntegerOption(theArgsProperties, theLinesBeforeOption, 0);
 			int linesAfterCount = parseIntegerOption(theArgsProperties, theLinesAfterOption, 0);
@@ -190,16 +212,16 @@ public class Main {
 			final boolean isNumbered = theArgsProperties.getBoolean(theNumberFlag);
 
 			if (isVerbose) {
-				LOGGER.info("Rip'n file: \"" + theFile + "\"");
+				LOGGER.info("Rip'n path: \"" + thePath.toAbsolutePath() + "\"");
 				if (!theToken.isBlank()) {
 					LOGGER.info("GREP with token [" + theToken + "]");
 				}
 			}
 
 
-			Instant startTime = Instant.now();
+			Timestamp logRipperTime = new Timestamp();
 			LogRipperConfig config = new LogRipperConfig(
-					theToken, theFile, isDir,
+					theToken, thePath,
 					linesBeforeCount, linesAfterCount,
 					isIgnoreCase, matchLimit,
 					isSilent, isCountOnly, isNumbered,
@@ -207,9 +229,7 @@ public class Main {
 			LogRipper logRipper = new LogRipper(config);
 			logRipper.scanAndReport();
 
-			Instant endTime = Instant.now();
-			Duration duration = Duration.between(startTime, endTime);
-			LOGGER.info("LogRipper execution took: " + duration.toMillis() + " milliseconds");
+			LOGGER.info("LogRipper execution took: " + logRipperTime.toMillis() + " milliseconds");
 
 
 		}
@@ -217,13 +237,6 @@ public class Main {
 			theCliHelper.printException( e );
 			System.exit( e.hashCode() % 0xFF );
 		}
-	}
-
-	private static int parseIntegerOption(ApplicationProperties properties, StringOption option, int defaultValue) {
-		return Optional.ofNullable(properties.getOr(option, null))
-				.filter(Predicate.not(String::isBlank))
-				.map(Integer::parseInt)
-				.orElse(defaultValue);
 	}
 
 	private static IgnoreCaseFlag ignoreCaseFlag() {
@@ -240,5 +253,9 @@ public class Main {
 
 	private static NumberFlag numberFlag() {
 		return new NumberFlag(true);
+	}
+
+	private static SizeFlag sizeFlag() {
+		return new SizeFlag(true);
 	}
 }
