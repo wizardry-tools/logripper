@@ -2,7 +2,6 @@ package com.wizardry.tools.logripper.tasks.pathsize;
 
 import com.wizardry.tools.logripper.tasks.PooledRipperVisitor;
 
-import java.io.IOException;
 import java.nio.file.FileVisitResult;
 import java.nio.file.Path;
 import java.nio.file.attribute.BasicFileAttributes;
@@ -14,7 +13,7 @@ public class PathSizeVisitor extends PooledRipperVisitor<Path, PathSizeTask> {
         super(subTasks);
     }
     @Override
-    public FileVisitResult visitFile(Path input, BasicFileAttributes attrs) throws IOException {
+    public FileVisitResult visitFile(Path input, BasicFileAttributes attrs) {
         // Create a task for each file to calculate its size
         PathSizeTask task = new PathSizeTask(input);
         subTasks.add(task);

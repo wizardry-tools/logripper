@@ -5,12 +5,10 @@ import org.refcodes.logger.RuntimeLogger;
 import org.refcodes.logger.RuntimeLoggerFactorySingleton;
 
 import java.io.IOException;
-import java.nio.file.FileVisitOption;
 import java.nio.file.Files;
 import java.nio.file.LinkOption;
 import java.nio.file.Path;
 import java.util.ArrayList;
-import java.util.EnumSet;
 import java.util.List;
 
 public class PathSizeTask extends PooledRipperTask<Path,Long> {
@@ -23,24 +21,26 @@ public class PathSizeTask extends PooledRipperTask<Path,Long> {
 
     @Override
     protected Long compute() {
+        LOGGER.info("Compute Task: " + input);
         long size = 0;
         try {
             boolean isDir = false;
             boolean isFile = false;
             try {
-                isDir = Files.isDirectory(input, LinkOption.NOFOLLOW_LINKS);
+                isDir = isDir(input);
                 if (!isDir) {
                     // only called if not directory and readable
-                    isFile = Files.isRegularFile(input, LinkOption.NOFOLLOW_LINKS) || Files.isExecutable(input);
+                    isFile = isFile(input);
                 }
-            } catch (Exception e) {
+            } catch (SecurityException e) {
                 // do nothing, can't read, can't get size
                 LOGGER.info("Can't Read: " + input);
             }
 
             if (isDir) {
+                LOGGER.info("IsDir: " + input);
                 List<PathSizeTask> subTasks = new ArrayList<>();
-                Files.walkFileTree(input, EnumSet.noneOf(FileVisitOption.class), 0, new PathSizeVisitor(subTasks));
+                Files.walkFileTree(input, new PathSizeVisitor(subTasks));
 
                 if (!subTasks.isEmpty()) {
                     invokeAll(subTasks);  // Fork all the tasks
@@ -50,6 +50,7 @@ public class PathSizeTask extends PooledRipperTask<Path,Long> {
                     }
                 }
             } else if (isFile) {
+                LOGGER.info("IsFile: " + input);
                 size = Files.size(input);
             }
         } catch (IOException e) {
@@ -57,5 +58,13 @@ public class PathSizeTask extends PooledRipperTask<Path,Long> {
         }
 
         return size;
+    }
+
+    private static boolean isDir(Path input) throws SecurityException {
+        return Files.isDirectory(input, LinkOption.NOFOLLOW_LINKS);
+    }
+
+    private static boolean isFile(Path input) throws SecurityException {
+        return Files.isRegularFile(input, LinkOption.NOFOLLOW_LINKS) || Files.isExecutable(input);
     }
 }
