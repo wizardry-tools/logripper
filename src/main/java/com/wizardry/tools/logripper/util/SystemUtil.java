@@ -19,4 +19,5 @@ public class SystemUtil {
             return new ArrayList<>(reader.lines().toList());
         }
     }
+
 }

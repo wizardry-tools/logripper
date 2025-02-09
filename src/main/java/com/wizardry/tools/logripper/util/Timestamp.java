@@ -14,6 +14,10 @@ public record Timestamp (Instant start) {
         this(Instant.now());
     }
 
+    public static Timestamp now() {
+        return new Timestamp(Instant.now());
+    }
+
     public Duration getDuration() {
         return Duration.between(start, Instant.now());
     }

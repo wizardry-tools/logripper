@@ -9,11 +9,9 @@ import java.util.List;
 public abstract class PooledRipperVisitor<T,U> extends SimpleFileVisitor<T> {
 
     protected final List<U> subTasks;
-    protected final boolean isDebug;
 
-    public PooledRipperVisitor(List<U> subTasks, boolean isDebug) {
+    public PooledRipperVisitor(List<U> subTasks) {
         this.subTasks = subTasks;
-        this.isDebug = isDebug;
     }
     public abstract FileVisitResult visitFile(T input, BasicFileAttributes attrs) throws IOException;
 }

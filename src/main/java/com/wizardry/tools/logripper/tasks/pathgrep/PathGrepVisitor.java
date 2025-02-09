@@ -19,8 +19,8 @@ public class PathGrepVisitor extends PooledRipperVisitor<Path, PathGrepTask> {
     protected final LogRipperConfig config;
     protected final AtomicInteger matchCounter;
 
-    public PathGrepVisitor(List<PathGrepTask> subTasks, LogRipperConfig config, AtomicInteger matchCounter, boolean isDebug) {
-        super(subTasks, isDebug);
+    public PathGrepVisitor(List<PathGrepTask> subTasks, LogRipperConfig config, AtomicInteger matchCounter) {
+        super(subTasks);
         this.config = config;
         this.matchCounter = matchCounter;
         LOGGER.info("New PathGrepVisitor");
@@ -29,7 +29,7 @@ public class PathGrepVisitor extends PooledRipperVisitor<Path, PathGrepTask> {
     @Override
     public FileVisitResult visitFile(Path input, BasicFileAttributes attrs) throws IOException {
         // create a task for each path to grep
-        PathGrepTask task = new PathGrepTask(input, config, matchCounter, isDebug);
+        PathGrepTask task = new PathGrepTask(input, config, matchCounter);
         subTasks.add(task);
         return FileVisitResult.CONTINUE;
     }

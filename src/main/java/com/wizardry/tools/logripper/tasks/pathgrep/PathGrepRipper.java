@@ -28,12 +28,12 @@ public class PathGrepRipper implements PooledRipper<Path,Map<String, Map<Integer
     }
 
     @Override
-    public Map<String, Map<Integer, String>> rip(Path path, boolean isDebug) throws IOException {
+    public Map<String, Map<Integer, String>> rip(Path path) throws IOException {
         Map<String, Map<Integer, String>> pathMatches = new HashMap<>();
 
         Timestamp calculationTime = new Timestamp();
         try (ForkJoinPool pool = new ForkJoinPool()) {
-            PathGrepTask task = new PathGrepTask(path, config, matchCounter, isDebug);
+            PathGrepTask task = new PathGrepTask(path, config, matchCounter);
             pathMatches = pool.invoke(task);
             // call reporting
             if (!config.isCountOnly()) {
@@ -44,9 +44,7 @@ public class PathGrepRipper implements PooledRipper<Path,Map<String, Map<Integer
         } catch (Exception e) {
             throw new IOException("Error calculating file size", e);
         }
-        if (isDebug) {
-            LOGGER.info("Calculated file size in [" + calculationTime.toMillis() + "] milliseconds");
-        }
+        LOGGER.info("Calculated file size in [" + calculationTime.toMillis() + "] milliseconds");
         return pathMatches;
     }
 

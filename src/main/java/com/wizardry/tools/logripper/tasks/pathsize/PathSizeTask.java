@@ -11,8 +11,8 @@ import java.util.List;
 
 public class PathSizeTask extends PooledRipperTask<Path,Long> {
 
-    public PathSizeTask(Path path, boolean isDebug) {
-        super(path, isDebug);
+    public PathSizeTask(Path path) {
+        super(path);
     }
 
     @Override
@@ -21,7 +21,7 @@ public class PathSizeTask extends PooledRipperTask<Path,Long> {
         try {
             if (Files.isDirectory(input, LinkOption.NOFOLLOW_LINKS)) {
                 List<PathSizeTask> subTasks = new ArrayList<>();
-                Files.walkFileTree(input, new PathSizeVisitor(subTasks, isDebug));
+                Files.walkFileTree(input, new PathSizeVisitor(subTasks));
 
                 if (!subTasks.isEmpty()) {
                     invokeAll(subTasks);  // Fork all the tasks

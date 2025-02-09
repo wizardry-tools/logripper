@@ -22,8 +22,8 @@ public class PathGrepTask extends PooledRipperTask<Path, Map<String, Map<Integer
     protected final LogRipperConfig config;
     protected final AtomicInteger matchCounter;
 
-    public PathGrepTask(Path path, LogRipperConfig config, AtomicInteger matchCounter, boolean isDebug) {
-        super(path, isDebug);
+    public PathGrepTask(Path path, LogRipperConfig config, AtomicInteger matchCounter) {
+        super(path);
         this.config = config;
         this.matchCounter = matchCounter;
         LOGGER.info("New PathGrepTask");
@@ -35,7 +35,7 @@ public class PathGrepTask extends PooledRipperTask<Path, Map<String, Map<Integer
         try {
             if (Files.isDirectory(input, LinkOption.NOFOLLOW_LINKS)) {
                 List<PathGrepTask> subTasks = new ArrayList<>();
-                Files.walkFileTree(input, new PathGrepVisitor(subTasks, config, matchCounter, isDebug));
+                Files.walkFileTree(input, new PathGrepVisitor(subTasks, config, matchCounter));
 
                 if (!subTasks.isEmpty()) {
                     invokeAll(subTasks);  // Fork all the tasks
@@ -58,7 +58,7 @@ public class PathGrepTask extends PooledRipperTask<Path, Map<String, Map<Integer
     private Map<String, Map<Integer,String>> findMatches(Path input) {
         try {
             FileGrepRipper fileGrepRipper = new FileGrepRipper(config, matchCounter);
-            return Map.of(input.toAbsolutePath().toString(), fileGrepRipper.rip(input, isDebug));
+            return Map.of(input.toAbsolutePath().toString(), fileGrepRipper.rip(input));
         } catch (IOException e) {
             System.err.println("Error reading file: " + input.toAbsolutePath() + ", error: " + e.getMessage());
         } catch (Exception e) {

@@ -42,7 +42,7 @@ public class FileGrepRipper implements PooledRipper<Path, Map<Integer, String>> 
     }
 
     @Override
-    public Map<Integer, String> rip(Path path, boolean isDebug) throws IOException {
+    public Map<Integer, String> rip(Path path) throws IOException {
         LOGGER.info("Ripping File: " + path.toAbsolutePath());
         try (RandomAccessFile aFile = new RandomAccessFile(path.toFile(), "r")) {
             FileChannel inChannel = aFile.getChannel();
