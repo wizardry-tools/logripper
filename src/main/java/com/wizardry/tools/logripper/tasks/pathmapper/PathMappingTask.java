@@ -21,7 +21,7 @@ public class PathMappingTask extends PooledRipperTask<Path, FileTreeNode> {
 
     @Override
     protected FileTreeNode compute() {
-        if (node.isDir() && maxDepth != 0) { // don't go deeper if maxDepth is equal to 0
+        if (node.isDir()) {
             List<PathMappingTask> subTasks = new ArrayList<>();
             try {
                 Files.walkFileTree(input, Set.of(), 0, new PathMappingVisitor(subTasks, maxDepth));
