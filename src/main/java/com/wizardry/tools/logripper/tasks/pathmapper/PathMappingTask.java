@@ -1,26 +1,25 @@
 package com.wizardry.tools.logripper.tasks.pathmapper;
 
 import com.wizardry.tools.logripper.tasks.PooledRipperTask;
-import com.wizardry.tools.logripper.util.FileTreeNode;
 import java.io.IOException;
 import java.nio.file.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-public class PathMappingTask extends PooledRipperTask<Path, FileTreeNode> {
+public class PathMappingTask extends PooledRipperTask<Path, RippedTreeNode> {
 
-    private final FileTreeNode node;
+    private final RippedTreeNode node;
     private final long maxDepth;
 
     public PathMappingTask(Path path, long maxDepth) throws IOException {
         super(path);
-        this.node = new FileTreeNode(path);
+        this.node = new RippedTreeNode(path);
         this.maxDepth = maxDepth-1;
     }
 
     @Override
-    protected FileTreeNode compute() {
+    protected RippedTreeNode compute() {
         if (node.isDir()) {
             List<PathMappingTask> subTasks = new ArrayList<>();
             try {

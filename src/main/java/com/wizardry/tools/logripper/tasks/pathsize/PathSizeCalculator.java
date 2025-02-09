@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.nio.file.*;
 import java.util.concurrent.ForkJoinPool;
 
+// TODO: This is failing
 public class PathSizeCalculator implements PooledRipper<Path,Long> {
 
     private static final RuntimeLogger LOGGER = RuntimeLoggerFactorySingleton.createRuntimeLogger();
@@ -22,7 +23,7 @@ public class PathSizeCalculator implements PooledRipper<Path,Long> {
             PathSizeTask task = new PathSizeTask(path);
             size = pool.invoke(task);
             String humanReadableSize = DataUtil.humanReadableByteCountSI(size);
-            LOGGER.info("Total size for [" + path.toAbsolutePath() + "] is [" + humanReadableSize + "]");
+            System.out.println("Total size: [" + humanReadableSize + "]");
         } catch (Exception e) {
             throw new IOException("Error calculating file size", e);
         }

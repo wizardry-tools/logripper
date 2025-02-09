@@ -1,7 +1,6 @@
 package com.wizardry.tools.logripper.tasks.pathmapper;
 
 import com.wizardry.tools.logripper.tasks.PooledRipper;
-import com.wizardry.tools.logripper.util.FileTreeNode;
 import com.wizardry.tools.logripper.util.Timestamp;
 import org.refcodes.logger.RuntimeLogger;
 import org.refcodes.logger.RuntimeLoggerFactorySingleton;
@@ -10,7 +9,7 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.util.concurrent.ForkJoinPool;
 
-public class PathMapper implements PooledRipper<Path, FileTreeNode> {
+public class PathMapper implements PooledRipper<Path, RippedTreeNode> {
 
     private static final RuntimeLogger LOGGER = RuntimeLoggerFactorySingleton.createRuntimeLogger();
     private final long maxDepth;
@@ -23,8 +22,8 @@ public class PathMapper implements PooledRipper<Path, FileTreeNode> {
     }
 
     @Override
-    public FileTreeNode rip(Path start) throws IOException {
-        FileTreeNode root;
+    public RippedTreeNode rip(Path start) throws IOException {
+        RippedTreeNode root;
         Timestamp calculationTime = Timestamp.now();
         try (ForkJoinPool pool = new ForkJoinPool()) {
             PathMappingTask task = new PathMappingTask(start, maxDepth);

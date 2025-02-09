@@ -26,7 +26,9 @@ import static com.wizardry.tools.logripper.util.StringUtil.EMPTY;
 import static org.refcodes.cli.CliSugar.*;
 
 import com.wizardry.tools.logripper.config.*;
-import com.wizardry.tools.logripper.tasks.pathmapper.PathMapper;
+import com.wizardry.tools.logripper.tasks.pathmapper.FileTreeMapper;
+import com.wizardry.tools.logripper.tasks.pathmapper.PooledRippedTreeMapper;
+import com.wizardry.tools.logripper.tasks.pathmapper.RippedTreeNode;
 import com.wizardry.tools.logripper.tasks.pathsize.PathSizeCalculator;
 import com.wizardry.tools.logripper.util.Timestamp;
 import org.refcodes.archetype.CliHelper;
@@ -109,12 +111,15 @@ public class Main {
 		// @formatter:off
 		final Term theArgsSyntax = cases(
 			and( theInitFlag, optional( theConfigOption, theVerboseFlag, theDebugFlag ) ),
+			// Path Search
 			and( theSearchOption, thePathOption, optional(
 					xor(theLinesOption, optional( theLinesBeforeOption, theLinesAfterOption, theCountFlag ) ),
 					theIgnoreCaseFlag, theVerboseFlag, theDebugFlag, theSilentFlag, theNumberFlag, theLimitOption )
 			),
+			// Path Sizer
 			and( thePathOption, theSizeFlag ),
-			and( thePathOption, theMapFlag, optional( theSizeFlag, theDepthOption ) ),
+			// Path Mapper
+			and( thePathOption, theMapFlag, optional( theSizeFlag, theDepthOption, theVerboseFlag, theDebugFlag ) ),
 			xor( theHelpFlag, and( theSysInfoFlag, any ( theVerboseFlag ) ) )
 		);
 		final Example[] theExamples = examples(
@@ -201,11 +206,28 @@ public class Main {
 				// exit early
 				return;
 			} else if (isMapRequest) {
+				Timestamp mapTime = Timestamp.now();
 				try {
-					new PathMapper(theMaxDepth, isSizeRequest).rip(thePath);
-				} catch (IOException e) {
+					// First iteration of Mapper
+					//new PathMapper(theMaxDepth, isSizeRequest).rip(thePath);
+
+					// Second iteration of Mapper
+					//FileTreeMapper<RippedTreeNode> treeMapper = new RippedTreeMapper();
+					//RippedTreeNode root = treeMapper.crawl(thePath);
+					//treeMapper.shutdown();
+					//RippedTreeMapper.printTree(root, 1, isSizeRequest);
+
+					// Third iteration of Mapper
+					FileTreeMapper<RippedTreeNode> treeMapper = new PooledRippedTreeMapper();
+					RippedTreeNode root = treeMapper.crawl(thePath);
+					if (isVerbose) {
+						PooledRippedTreeMapper.printTree(root, 1, isSizeRequest);
+					}
+					System.out.println("Total size: ["+root.getReadableSize()+"]");
+				} catch (Exception e) {
 					LOGGER.error("Error accessing the provided path: ", e);
 				}
+				LOGGER.info("Finished mapping path in ["+mapTime.toMillis()+"] milliseconds");
 				// exit early
 				return;
 			}
@@ -252,6 +274,7 @@ public class Main {
 			// Option 2 - second iteration of LogRipper tool
 			//PathGrepRipper pathGrepRipper = new PathGrepRipper(config);
 			//pathGrepRipper.rip(thePath, isDebug);
+
 			LOGGER.info("LogRipper execution took: " + logRipperTime.toMillis() + " milliseconds");
 
 
