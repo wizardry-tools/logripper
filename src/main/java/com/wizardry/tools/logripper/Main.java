@@ -27,8 +27,8 @@ import static org.refcodes.cli.CliSugar.*;
 
 import com.wizardry.tools.logripper.config.*;
 import com.wizardry.tools.logripper.tasks.pathmapper.FileTreeMapper;
-import com.wizardry.tools.logripper.tasks.pathmapper.PooledRippedTreeMapper;
-import com.wizardry.tools.logripper.tasks.pathmapper.RippedTreeNode;
+import com.wizardry.tools.logripper.tasks.pathmapper.PooledTreeMapper;
+import com.wizardry.tools.logripper.tasks.pathmapper.MappedTreeNode;
 import com.wizardry.tools.logripper.tasks.pathsize.PathSizeCalculator;
 import com.wizardry.tools.logripper.util.Timestamp;
 import org.refcodes.archetype.CliHelper;
@@ -68,7 +68,6 @@ public class Main {
 	private static final char[] BANNER_PALETTE = AsciiColorPalette.MAX_LEVEL_GRAY.getPalette();
 	private static final Font BANNER_FONT = new Font( FontFamily.DIALOG, FontStyle.BOLD );
 	private static final String GREP_PROPERTY = "grep";
-	private static final String MAP_PROPERTY = "map";
 	private static final String DEPTH_PROPERTY = "max-depth";
 	private static final String PATH_PROPERTY = "path";
 	private static final String LINES_PROPERTY = "lines";
@@ -106,6 +105,7 @@ public class Main {
 		final Flag theCountFlag = countFlag();
 		final Flag theNumberFlag = numberFlag();
 		final Flag theSizeFlag = sizeFlag();
+		final Flag theSortFlag = sortFlag();
 		final Flag theMapFlag = mapFlag();
 
 		// @formatter:off
@@ -119,7 +119,7 @@ public class Main {
 			// Path Sizer
 			and( thePathOption, theSizeFlag ),
 			// Path Mapper
-			and( thePathOption, theMapFlag, optional( theSizeFlag, theDepthOption, theVerboseFlag, theDebugFlag ) ),
+			and( thePathOption, theMapFlag, optional( theSizeFlag, theDepthOption, theVerboseFlag, theDebugFlag, theSortFlag ) ),
 			xor( theHelpFlag, and( theSysInfoFlag, any ( theVerboseFlag ) ) )
 		);
 		final Example[] theExamples = examples(
@@ -195,6 +195,7 @@ public class Main {
 
 			final boolean isMapRequest = theArgsProperties.getBoolean( theMapFlag );
 			final boolean isSizeRequest = theArgsProperties.getBoolean( theSizeFlag );
+			final boolean isSortRequest = theArgsProperties.getBoolean( theSortFlag );
 			final int theMaxDepth = parseIntegerOption(theArgsProperties, theDepthOption, -1);
 
 			if (isSizeRequest && !isMapRequest) {
@@ -208,20 +209,15 @@ public class Main {
 			} else if (isMapRequest) {
 				Timestamp mapTime = Timestamp.now();
 				try {
-					// First iteration of Mapper
-					//new PathMapper(theMaxDepth, isSizeRequest).rip(thePath);
-
-					// Second iteration of Mapper
-					//FileTreeMapper<RippedTreeNode> treeMapper = new RippedTreeMapper();
-					//RippedTreeNode root = treeMapper.crawl(thePath);
-					//treeMapper.shutdown();
-					//RippedTreeMapper.printTree(root, 1, isSizeRequest);
 
 					// Third iteration of Mapper
-					FileTreeMapper<RippedTreeNode> treeMapper = new PooledRippedTreeMapper();
-					RippedTreeNode root = treeMapper.crawl(thePath);
+					FileTreeMapper<MappedTreeNode> treeMapper = new PooledTreeMapper();
+					MappedTreeNode root = treeMapper.crawl(thePath);
+					if (isSortRequest) {
+						root.sortChildrenBySize();
+					}
 					if (isVerbose) {
-						PooledRippedTreeMapper.printTree(root, 1, isSizeRequest);
+						FileTreeMapper.printTree(root, 1, isSizeRequest);
 					}
 					System.out.println("Total size: ["+root.getReadableSize()+"]");
 				} catch (Exception e) {
@@ -231,9 +227,6 @@ public class Main {
 				// exit early
 				return;
 			}
-
-
-
 
 
 			String theToken = theArgsProperties.getOr( theSearchOption, EMPTY);
@@ -307,5 +300,9 @@ public class Main {
 
 	private static MapFlag mapFlag() {
 		return new MapFlag(true);
+	}
+
+	private static SortFlag sortFlag() {
+		return new SortFlag(true);
 	}
 }

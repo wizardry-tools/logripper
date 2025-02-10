@@ -1,4 +1,4 @@
-package com.wizardry.tools.logripper.util;
+package com.wizardry.tools.logripper.tasks.pathmapper;
 
 import java.util.List;
 
@@ -16,4 +16,5 @@ public interface FileTreeNode<T> {
     boolean isExe();
     boolean isFile();
     boolean isReadable();
+    void sortChildrenBySize();
 }

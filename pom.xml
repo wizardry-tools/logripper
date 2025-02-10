@@ -182,7 +182,13 @@
 			<version>5.14.2</version>
 			<scope>test</scope>
 		</dependency>
-	</dependencies>
+        <dependency>
+            <artifactId>annotations</artifactId>
+            <groupId>org.jetbrains</groupId>
+            <version>24.1.0</version>
+			<scope>compile</scope>
+        </dependency>
+    </dependencies>
 
 	<!-- /////////////////////////////////////////////////////////////////// -->
 	<!-- BUILD                                                               -->

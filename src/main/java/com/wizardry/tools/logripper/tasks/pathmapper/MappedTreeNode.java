@@ -1,49 +1,47 @@
 package com.wizardry.tools.logripper.tasks.pathmapper;
 
 import com.wizardry.tools.logripper.util.DataUtil;
-import com.wizardry.tools.logripper.util.FileTreeNode;
+
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.LinkOption;
 import java.nio.file.Path;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
-public class RippedTreeNode implements FileTreeNode<Path> {
+public class MappedTreeNode implements FileTreeNode<Path> {
 
     private final static String UNREADABLE_NODE = "unreadable";
 
     private final Path path;
-    private final List<RippedTreeNode> children;
+    private final List<MappedTreeNode> children;
     private long size;
     private final String name;
 
-    public RippedTreeNode(Path path, List<RippedTreeNode> children, long size, String name) {
+    public MappedTreeNode(Path path, List<MappedTreeNode> children, long size, String name) {
         this.path = path;
         this.children = children;
         this.size = size;
         this.name = name;
     }
 
-    public RippedTreeNode(Path path, List<RippedTreeNode> children) throws IOException {
+    public MappedTreeNode(Path path, List<MappedTreeNode> children) throws IOException {
         this.path = path;
         this.children = children;
         this.size = Files.size(path);
         this.name = String.valueOf(path.getFileName());
     }
 
-    public RippedTreeNode(Path path) throws IOException {
+    public MappedTreeNode(Path path) throws IOException {
         this(path, new ArrayList<>());
     }
 
-    public static RippedTreeNode of(Path path) throws IOException {
-        return new RippedTreeNode(path);
+    public static MappedTreeNode of(Path path) throws IOException {
+        return new MappedTreeNode(path);
     }
 
-    public static RippedTreeNode ofUnreadable(Path path) {
+    public static MappedTreeNode ofUnreadable(Path path) {
         // Dummy Node that represents an unreadable path.
-        return new RippedTreeNode(path, new ArrayList<>(), 0L, UNREADABLE_NODE);
+        return new MappedTreeNode(path, new ArrayList<>(), 0L, UNREADABLE_NODE);
     }
 
     @Override
@@ -52,18 +50,18 @@ public class RippedTreeNode implements FileTreeNode<Path> {
     }
 
     @Override
-    public List<RippedTreeNode> getChildren() {
+    public List<MappedTreeNode> getChildren() {
         return children;
     }
 
     @Override
     public void addChild(FileTreeNode<? extends Path> child) {
-        children.add((RippedTreeNode) child);
+        children.add((MappedTreeNode) child);
         this.size += child.getSize(); // add child size to the parent dir's size
     }
 
     public void addUnreadable(Path path) {
-        children.add(RippedTreeNode.ofUnreadable(path));
+        children.add(MappedTreeNode.ofUnreadable(path));
     }
 
     @SafeVarargs
@@ -71,7 +69,7 @@ public class RippedTreeNode implements FileTreeNode<Path> {
     public final void addChildren(FileTreeNode<? extends Path>... children) {
         this.children.addAll(
                 Arrays.stream(children)
-                        .map(child -> (RippedTreeNode) child)
+                        .map(child -> (MappedTreeNode) child)
                         .toList());
         // update parent dir size
         this.size = this.children.stream().reduce(0L, (acc, node) -> acc + node.getSize(), Long::sum);
@@ -80,7 +78,7 @@ public class RippedTreeNode implements FileTreeNode<Path> {
 
     @Override
     public boolean removeChild(FileTreeNode<? extends Path> child) {
-        boolean success = children.remove((RippedTreeNode) child);
+        boolean success = children.remove((MappedTreeNode) child);
         this.size -= child.getSize(); // remove child size from parent dir
         return success;
     }
@@ -90,7 +88,7 @@ public class RippedTreeNode implements FileTreeNode<Path> {
         StringBuilder indent = new StringBuilder();
         indent.append("  ".repeat(Math.max(0, level)));
         System.out.println(indent.append(path));
-        for (RippedTreeNode child : children) {
+        for (MappedTreeNode child : children) {
             child.display(level + 1);
         }
     }
@@ -132,5 +130,15 @@ public class RippedTreeNode implements FileTreeNode<Path> {
     @Override
     public String getName() {
         return name;
+    }
+
+    // Method to sort children by size
+    public void sortChildrenBySize() {
+        children.sort(Comparator.comparingLong(MappedTreeNode::getSize));
+        for (MappedTreeNode child : children) {
+            if (child.isDir()) {
+                child.sortChildrenBySize();
+            }
+        }
     }
 }
