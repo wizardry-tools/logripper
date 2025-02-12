@@ -1,5 +1,6 @@
 package com.wizardry.tools.logripper.util.wrapping;
 
+import com.wizardry.tools.logripper.util.filesystem.Readable;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
@@ -8,7 +9,7 @@ import java.io.IOException;
 import java.net.URI;
 import java.nio.file.*;
 
-public class WrappedPath implements Wrappable<Path>,Path {
+public class WrappedPath implements Wrappable<Path>,Path,Readable {
     private final Path wrapped;
 
     public WrappedPath(Path wrapped) {
@@ -494,6 +495,7 @@ public class WrappedPath implements Wrappable<Path>,Path {
     /**
      * Tests whether a file is a directory.
      */
+    @Override
     public boolean isDir() {
         return Files.isDirectory(wrapped, LinkOption.NOFOLLOW_LINKS);
     }
@@ -505,6 +507,7 @@ public class WrappedPath implements Wrappable<Path>,Path {
      * access checks that the Java virtual machine has permission to search the directory in order
      * to access file or subdirectories.
      */
+    @Override
     public boolean isExe() {
         return Files.isExecutable(wrapped);
     }
@@ -512,8 +515,26 @@ public class WrappedPath implements Wrappable<Path>,Path {
     /**
      * Tests whether a file is a regular file with opaque content.
      */
+    @Override
     public boolean isFile() {
         return Files.isRegularFile(wrapped, LinkOption.NOFOLLOW_LINKS);
+    }
+
+    /**
+     * Tests whether a file is readable. This method checks that a file exists and that this
+     * Java virtual machine has appropriate privileges that would allow it open the file for
+     * reading. Depending on the implementation, this method may require to read file
+     * permissions, access control lists, or other file attributes in order to check the
+     * effective access to the file. Consequently, this method may not be atomic with respect
+     * to other file system operations.
+     */
+    @Override
+    public boolean isReadable() {
+        try {
+            return Files.isReadable(wrapped);
+        } catch (SecurityException se) {
+            return false;
+        }
     }
 
     @Override
