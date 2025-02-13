@@ -11,17 +11,6 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<!-- /////////////////////////////////////////////////////////////////// -->
-	<!-- PARENT                                                              -->
-	<!-- /////////////////////////////////////////////////////////////////// -->
-
-	<parent>
-		<groupId>org.refcodes</groupId>
-		<artifactId>refcodes-parent</artifactId>
-		<version>3.3.9</version>
-		<relativePath/>
-	</parent>
-
-	<!-- /////////////////////////////////////////////////////////////////// -->
 	<!-- ARTIFACT                                                            -->
 	<!-- /////////////////////////////////////////////////////////////////// -->
 
@@ -48,8 +37,8 @@
 	<properties>
 		<main.module>com.wizardry.tools.logripper</main.module>
 		<main.class>${main.module}.Main</main.class>
-		<maven.compiler.source>17</maven.compiler.source>
-		<maven.compiler.target>17</maven.compiler.target>
+		<maven.compiler.source>23</maven.compiler.source>
+		<maven.compiler.target>23</maven.compiler.target>
 		<!-- # %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% # -->
 		<!-- # TODO: Adjust the properties accordingly:                    # -->
 		<!-- # %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% # -->
@@ -68,6 +57,76 @@
 			of the software artifacts in question for licensing issues.
 		</license.comment>
 		<!-- # %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% # -->
+		<org.refcodes.url>http://www.refcodes.org</org.refcodes.url>
+		<org.refcodes.version>3.3.9</org.refcodes.version>
+		<java.source.version>23</java.source.version>
+		<java.target.version>23</java.target.version>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<maven.compiler.optimize>true</maven.compiler.optimize>
+		<maven.version>3.6.3</maven.version>
+		<com.amazonaws.sdk.version>1.12.779</com.amazonaws.sdk.version>
+		<com.fasterxml.jackson.version>2.18.2</com.fasterxml.jackson.version>
+		<com.fazecast.version>2.11.0</com.fazecast.version>
+		<com.gluonhq.attach.version>4.0.21</com.gluonhq.attach.version>
+		<com.gluonhq.gluonfx.maven.plugin.version>1.0.24</com.gluonhq.gluonfx.maven.plugin.version>
+		<com.google.code.gson.version>2.11.0</com.google.code.gson.version>
+		<com.mysql.jdbc.version>8.0.33</com.mysql.jdbc.version>
+		<com.pi4j.version>2.7.0</com.pi4j.version>
+		<jakarta.activation.version>2.1.3</jakarta.activation.version>
+		<jakarta.validation.version>3.1.0</jakarta.validation.version>
+		<jakarta.xml.bind.version>4.0.2</jakarta.xml.bind.version>
+		<net.lingala.zip4j.version>2.11.5</net.lingala.zip4j.version>
+		<net.objecthunter.exp4j.version>0.4.8</net.objecthunter.exp4j.version>
+		<org.apache.commons.beanutils.version>1.9.4</org.apache.commons.beanutils.version>
+		<org.apache.commons.codec.version>1.17.1</org.apache.commons.codec.version>
+		<org.apache.log4j.version>2.23.1</org.apache.log4j.version>
+		<org.apache.maven.archetype.version>3.2.1</org.apache.maven.archetype.version> <!-- Manually check for updates in "https://mvnrepository.com" -->
+		<org.apache.maven.plugins.assembly.version>3.7.1</org.apache.maven.plugins.assembly.version>
+		<org.apache.maven.plugins.clean.version>3.4.0</org.apache.maven.plugins.clean.version>
+		<org.apache.maven.plugins.compiler.version>3.13.0</org.apache.maven.plugins.compiler.version>
+		<org.apache.maven.plugins.deploy.version>3.1.3</org.apache.maven.plugins.deploy.version>
+		<org.apache.maven.plugins.enforcer.version>3.5.0</org.apache.maven.plugins.enforcer.version>
+		<org.apache.maven.plugins.gpg.version>3.2.7</org.apache.maven.plugins.gpg.version>
+		<org.apache.maven.plugins.install.version>3.1.3</org.apache.maven.plugins.install.version>
+		<org.apache.maven.plugins.jar.version>3.4.2</org.apache.maven.plugins.jar.version>
+		<org.apache.maven.plugins.javadoc.version>3.11.2</org.apache.maven.plugins.javadoc.version>
+		<org.apache.maven.plugins.release.version>3.1.1</org.apache.maven.plugins.release.version>
+		<org.apache.maven.plugins.resources.version>3.3.1</org.apache.maven.plugins.resources.version>
+		<org.apache.maven.plugins.shade.version>3.6.0</org.apache.maven.plugins.shade.version>
+		<org.apache.maven.plugins.site.version>3.12.1</org.apache.maven.plugins.site.version>
+		<org.apache.maven.plugins.source.version>3.3.1</org.apache.maven.plugins.source.version>
+		<org.apache.maven.plugins.surefire.version>3.5.2</org.apache.maven.plugins.surefire.version>
+		<org.apache.xmlgraphics.batik.transcoder.version>1.18</org.apache.xmlgraphics.batik.transcoder.version>
+		<org.apache.xmlgraphics.commons.version>2.10</org.apache.xmlgraphics.commons.version>
+		<org.bouncycastle.version>1.79</org.bouncycastle.version> <!-- goes hand in hand with "cryptacular" dependencies, see "exclusions"! -->
+		<org.cryptacular.version>1.2.7</org.cryptacular.version> <!-- goes hand in hand with "bouncycastle" v1.77 dependencies, choose "cryptacular" version which uses "bouncycastle" version (as of above), see "exclusions"! -->
+		<org.codehaus.gmaven.version>2.1.1</org.codehaus.gmaven.version>
+		<org.codehaus.maven.plugins.build.helper.version>3.6.0</org.codehaus.maven.plugins.build.helper.version>
+		<org.eclipse.m2e.lifecycle-mapping.version>1.0.0</org.eclipse.m2e.lifecycle-mapping.version>
+		<org.eclipse.paho.version>1.2.5</org.eclipse.paho.version>
+		<org.fusesource.jansi.version>2.4.1</org.fusesource.jansi.version>
+		<org.graalvm.buildtools.version>0.10.5</org.graalvm.buildtools.version>
+		<org.graphstream.version>1.3</org.graphstream.version>
+		<org.hibernate.version>6.5.0.Final</org.hibernate.version>
+		<org.hsqldb.version>2.7.4</org.hsqldb.version>
+		<org.jasypt.version>1.9.3</org.jasypt.version>
+		<org.json.version>20240303</org.json.version>
+		<org.jsoup.version>1.18.3</org.jsoup.version>
+		<org.junit.jupiter.version>5.11.3</org.junit.jupiter.version>
+		<org.junit.platform.version>1.11.3</org.junit.platform.version>
+		<org.moditect.version>1.2.2.Final</org.moditect.version>
+		<org.openjfx.javafx-maven-plugin.version>0.0.8</org.openjfx.javafx-maven-plugin.version>
+		<org.openjfx.version>22.0.1</org.openjfx.version>
+		<org.ow2.asm.version>9.7.1</org.ow2.asm.version>
+		<org.owasp.dependency-check-maven.version>11.1.1</org.owasp.dependency-check-maven.version>
+		<org.slf4j.legacy.version>1.7.36</org.slf4j.legacy.version>
+		<org.slf4j.version>2.0.13</org.slf4j.version>
+		<org.sonatype.plugins.nexus.staging.version>1.7.0</org.sonatype.plugins.nexus.staging.version>
+		<org.springframework.version>6.2.0</org.springframework.version> <!-- 6.1.0 is broken! Spring Boot v3.1.5 uses v6.0.13 -->
+		<org.springframework.boot.version>3.4.0</org.springframework.boot.version>
+		<org.springframework.cloud.version>4.2.0</org.springframework.cloud.version>
+		<org.yaml.snakeyaml.version>2.3</org.yaml.snakeyaml.version>
+		<software.amazon.awssdk.version>2.29.29</software.amazon.awssdk.version>
 	</properties>
 
 	<!-- /////////////////////////////////////////////////////////////////// -->
@@ -135,10 +194,43 @@
 	</repositories>
 
 	<!-- /////////////////////////////////////////////////////////////////// -->
+	<!-- DISTRIBUTION MANAGEMENT                                             -->
+	<!-- /////////////////////////////////////////////////////////////////// -->
+
+	<distributionManagement>
+		<snapshotRepository>
+			<id>ossrh</id>
+			<url>https://s01.oss.sonatype.org/content/repositories/snapshots</url>
+		</snapshotRepository>
+		<repository>
+			<id>ossrh</id>
+			<url>https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+		</repository>
+	</distributionManagement>
+
+	<!-- /////////////////////////////////////////////////////////////////// -->
 	<!-- DEPENDENCIES                                                        -->
 	<!-- /////////////////////////////////////////////////////////////////// -->
 
 	<dependencies>
+		<dependency>
+			<groupId>org.graalvm.polyglot</groupId>
+			<artifactId>polyglot</artifactId>
+			<version>24.1.2</version>
+		</dependency>
+		<dependency>
+			<groupId>org.graalvm.polyglot</groupId>
+			<artifactId>java-community</artifactId>
+			<version>24.1.2</version>
+			<type>pom</type>
+			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.graalvm.polyglot</groupId>
+			<artifactId>tools-community</artifactId>
+			<version>24.1.2</version>
+			<type>pom</type>
+		</dependency>
 		<dependency>
 			<groupId>org.refcodes</groupId>
 			<artifactId>refcodes-archetype</artifactId>
@@ -220,8 +312,1543 @@
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-surefire-plugin</artifactId>
 			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-release-plugin</artifactId>
+				<configuration>
+					<preparationGoals>clean install</preparationGoals>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>build-helper-maven-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>module-name</id>
+						<goals>
+							<goal>regex-property</goal>
+						</goals>
+						<configuration>
+							<name>module.name</name>
+							<value>${project.artifactId}</value>
+							<regex>-</regex>
+							<replacement>.</replacement>
+							<failIfNoMatch>false</failIfNoMatch>
+						</configuration>
+					</execution>
+					<execution>
+						<id>module-domain</id>
+						<goals>
+							<goal>regex-property</goal>
+						</goals>
+						<configuration>
+							<name>module.domain</name>
+							<value>${project.groupId}</value>
+							<regex>(.*)\.(.*)</regex>
+							<replacement>$1</replacement>
+							<failIfNoMatch>false</failIfNoMatch>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
 		</plugins>
+
+		<!-- /////////////////////////////////////////////////////////////// -->
+		<!-- PLUGIN MANAGEMENT                                               -->
+		<!-- /////////////////////////////////////////////////////////////// -->
+
+		<pluginManagement>
+			<plugins>
+				<!-- # %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% # -->
+				<!-- # How to eliminate the "maven-enforcer-plugin (goal "enforce") is     # -->
+				<!-- # ignored by m2e" warning by eclipse":                                # -->
+				<!-- # %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% # -->
+				<!-- # See "https://www.appsloveworld.com/eclipse/100/3/how-to-eliminate-the-maven-enforcer-plugin-goal-enforce-is-ignored-by-m2e-w" # -->
+				<!-- # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ # -->
+				<!-- # Edit the file ".metadata/.plugins/org.eclipse.m2e.core/lifecycle-mapping-metadata.xml" of your Eclipse workspace and add: # -->
+				<!-- # %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% # -->
+				<!--
+					<pluginExecutions>
+						...
+						<pluginExecution>
+							<pluginExecutionFilter>
+								<groupId>org.apache.maven.plugins</groupId>
+								<artifactId>maven-enforcer-plugin</artifactId>
+								<versionRange>[1.0.0,)</versionRange>
+								<goals>
+									<goal>enforce</goal>
+								</goals>
+							</pluginExecutionFilter>
+							<action>
+								<ignore />
+							</action>
+						</pluginExecution>
+						...
+					</pluginExecutions>.
+				-->
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-enforcer-plugin</artifactId>
+					<version>${org.apache.maven.plugins.enforcer.version}</version>
+					<executions>
+						<execution>
+							<id>enforce-versions</id>
+							<goals>
+								<goal>enforce</goal>
+							</goals>
+							<configuration>
+								<rules>
+									<requireMavenVersion>
+										<version>${maven.version}</version>
+									</requireMavenVersion>
+									<requireJavaVersion>
+										<version>${java.target.version}</version>
+									</requireJavaVersion>
+								</rules>
+							</configuration>
+						</execution>
+					</executions>
+				</plugin>
+				<!-- # %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% # -->
+				<!-- # Create some default POM variables:                                  # -->
+				<!-- # %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% # -->
+				<!-- ${executable.name}: ArtifactID after first "-" (if applicable)        # -->
+				<!-- ${executable.version}: Windows style version, e.g."a.b.c.d"           # -->
+				<!-- # %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% # -->
+				<plugin>
+					<groupId>org.codehaus.gmaven</groupId>
+					<artifactId>groovy-maven-plugin</artifactId>
+					<version>${org.codehaus.gmaven.version}</version>
+					<executions>
+						<execution>
+							<phase>initialize</phase>
+							<goals>
+								<goal>execute</goal>
+							</goals>
+							<configuration>
+								<source>
+									<![CDATA[
+									String exeName = "${project.artifactId}";
+									int index = exeName.indexOf("-");
+									// |--->
+									// if ( index != -1 ) {
+									// 	exeName = exeName.substring( 0, index );
+									// }
+									// <--->
+									while ( index != -1 ) {
+										exeName = exeName.substring( index + 1 );
+										index = exeName.indexOf("-");
+									}
+									if ( exeName.length() == 0 ) {
+										exeName = "${project.artifactId}";
+									}
+									// <--|
+									project.properties.setProperty( "executable.name",exeName );
+									String exeVersion = "${project.version}".replace( "", "" );
+									// int count = 0;
+									// for (int i = 0; i < exeVersion.length(); i++) {
+									// 	if (exeVersion.charAt(i) == '.') {
+									// 		count++;
+									// 	}
+									// }
+									// while( count < 3 ) {
+									// 	exeVersion += ".0";
+									// 	count++;
+									// }
+									project.properties.setProperty( "executable.version", exeVersion );
+									String osArch = System.getProperty( "os.arch" );
+									if ( osArch == null ) {
+										osArch = "UNKNOWN_ARCH"
+									}
+									else {
+										osArch = osArch.toLowerCase().replaceAll( "-", "_").replaceAll( " ", "_" );
+										if ( "amd64".equals( osArch ) || "intel64".equals( osArch ) || "intel_64".equals( osArch ) || "x64".equals( osArch ) ) {
+											osArch = "x86_64"
+										}
+									}
+									project.properties.setProperty( "native.arch", osArch );
+									String osName = System.getProperty( "os.name" );
+									if ( osName == null ) {
+										osName = "UNKNOWN_OS"
+									}
+									else {
+										osName = osName.toLowerCase();
+									}
+									project.properties.setProperty( "native.os", osName );
+									project.properties.setProperty( "executable.suffix", "" );
+									if ( osName.contains( "linux" ) || osName.contains( "unix" ) ) {
+										project.properties.setProperty( "executable.suffix", ".elf" );
+									}
+									]]>
+								</source>
+							</configuration>
+						</execution>
+					</executions>
+				</plugin>
+				<!-- # %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% # -->
+				<!-- # HOW TO GET STARTED                                                  # -->
+				<!-- # %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% # -->
+				<!-- # Dry-run to get the according native-image JSON configurations:      # -->
+				<!-- # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ # -->
+				<!-- # java -agentlib:native-image-agent=config-output-dir=target -jar ... # -->
+				<!-- # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ # -->
+				<!-- # Copy generated files into 'src/main/resources/META-INF' and tweak!  # -->
+				<!-- # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ # -->
+				<!-- # 1. Install GraalVM e.g. using SDKMAN! (https://sdkman.io/)          # -->
+				<!-- # 2. 'gu install native-image'                                        # -->
+				<!-- # 3. 'sudo apt install build-essential'                               # -->
+				<!-- # 4. 'sudo apt install libz-dev'                                      # -->
+				<!-- # 5. 'sudo apt libfreetype6-dev' (cannot find "-lfreetype" error)     # -->
+				<!-- # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ # -->
+				<!-- # Build as of "mvn package -P native-image"                           # -->
+				<!-- # %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% # -->
+				<!-- # WINDOWS SPECIAL TREATMENT                                           # -->
+				<!-- # %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% # -->
+				<!-- # 1. Install "Visual Studio Community 20XY", choose all C/C++ modules # -->
+				<!-- #    (https://visualstudio.microsoft.com/de/downloads), English only! # -->
+				<!-- # 2. Install GraalVM (https://github.com/graalvm/graalvm-ce-builds)   # -->
+				<!-- # 3. Point "GRAALVM_HOME" environment variabel to GraalVM base folder # -->
+				<!-- # 4. Add native image support "gu install native-image" to GraalVM    # -->
+				<!-- # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ # -->
+				<!-- # Build in "x64 Native Tools Command Prompt" or "Developer Command    # -->
+				<!-- # Prompt for VS 2022" when using this pliugin to see C/C++ tools.     # -->
+				<!-- # %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% # -->
+				<plugin>
+					<groupId>org.graalvm.buildtools</groupId>
+					<artifactId>native-maven-plugin</artifactId>
+					<version>${org.graalvm.buildtools.version}</version>
+					<configuration>
+						<imageName>${executable.name}-native-${native.arch}-${executable.version}${executable.suffix}</imageName>
+						<mainClass>${main.class}</mainClass>
+						<buildArgs>--no-fallback --enable-http --enable-https</buildArgs> <!-- Useful switches: no-fallback, enable-http enable-https, report-unsupported-elements-at-runtime -->
+						<metadataRepository>
+							<enabled>true</enabled>
+						</metadataRepository>
+					</configuration>
+					<extensions>true</extensions>
+					<executions>
+						<execution>
+							<id>build-native</id>
+							<goals>
+								<goal>compile-no-fork</goal>
+							</goals>
+							<phase>package</phase>
+						</execution>
+						<!--
+							<execution>
+								<id>test-native</id>
+								<goals>
+									<goal>test</goal>
+								</goals>
+								<phase>test</phase>
+							</execution>
+						-->
+					</executions>
+				</plugin>
+				<!-- # %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% # -->
+				<plugin>
+					<groupId>org.openjfx</groupId>
+					<artifactId>javafx-maven-plugin</artifactId>
+					<version>${org.openjfx.javafx-maven-plugin.version}</version>
+					<configuration>
+						<mainClass>${main.class}</mainClass>
+					</configuration>
+				</plugin>
+				<plugin>
+					<groupId>com.gluonhq</groupId>
+					<artifactId>gluonfx-maven-plugin</artifactId>
+					<version>${com.gluonhq.gluonfx.maven.plugin.version}</version>
+					<configuration>
+						<target>${gluonfx.target}</target>
+						<mainClass>${main.class}</mainClass>
+						<resourcesList>
+							<pattern>.*\\.txt</pattern>
+							<pattern>.*\\.ini</pattern>
+							<pattern>.*\\.png</pattern>
+						</resourcesList>
+					</configuration>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-assembly-plugin</artifactId>
+					<version>${org.apache.maven.plugins.assembly.version}</version>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-clean-plugin</artifactId>
+					<version>${org.apache.maven.plugins.clean.version}</version>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-install-plugin</artifactId>
+					<version>${org.apache.maven.plugins.install.version}</version>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-release-plugin</artifactId>
+					<version>${org.apache.maven.plugins.release.version}</version>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-site-plugin</artifactId>
+					<version>${org.apache.maven.plugins.site.version}</version>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-deploy-plugin</artifactId>
+					<version>${org.apache.maven.plugins.deploy.version}</version>
+					<executions>
+						<execution>
+							<id>deploy-test-jar</id>
+							<phase>deploy</phase>
+							<goals>
+								<goal>deploy</goal>
+							</goals>
+							<configuration>
+								<skip>true</skip>
+							</configuration>
+						</execution>
+					</executions>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-gpg-plugin</artifactId>
+					<version>${org.apache.maven.plugins.gpg.version}</version>
+				</plugin>
+				<plugin>
+					<groupId>org.codehaus.mojo</groupId>
+					<artifactId>build-helper-maven-plugin</artifactId>
+					<version>${org.codehaus.maven.plugins.build.helper.version}</version>
+				</plugin>
+				<plugin>
+					<groupId>org.moditect</groupId>
+					<artifactId>moditect-maven-plugin</artifactId>
+					<version>${org.moditect.version}</version>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-javadoc-plugin</artifactId>
+					<version>${org.apache.maven.plugins.javadoc.version}</version>
+					<configuration>
+						<source>${java.source.version}</source>
+						<!--
+					        <additionalparam>(MINUS)(MINUS)html5</additionalparam>
+	        				<additionalparam>(MINUS)(MINUS)verbose</additionalparam>
+        				-->
+						<!-- ////////////////////////////////// -->
+						<!-- Workaround for ugly javadoc bug(?) -->
+						<!-- ////////////////////////////////// -->
+						<sourceFileExcludes>
+							<sourceFileExclude>/module-info.java</sourceFileExclude>
+						</sourceFileExcludes>
+						<!-- ////////////////////////////////// -->
+						<detectLinks>true</detectLinks>
+						<detectJavaApiLink>true</detectJavaApiLink>
+						<!-- ////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+						<!-- "https://stackoverflow.com/questions/39616344/how-to-disable-javadoc-warnings-in-maven-javadoc-plugin" -->
+						<!-- ////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+						<!--
+							<additionalparam>-Xdoclint:all -Xdoclint:-missing</additionalparam>
+						-->
+						<additionalOptions>-Xdoclint:all -Xdoclint:-missing</additionalOptions>
+						<additionalJOptions>
+							<additionalJOption>-Xdoclint:all</additionalJOption>
+							<additionalJOption>-Xdoclint:-missing</additionalJOption>
+							<additionalJOption>-Xdoclint:none</additionalJOption>
+						</additionalJOptions>
+						<!-- ////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+					</configuration>
+				</plugin>
+				<plugin>
+					<groupId>org.sonatype.plugins</groupId>
+					<artifactId>nexus-staging-maven-plugin</artifactId>
+					<version>${org.sonatype.plugins.nexus.staging.version}</version>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-shade-plugin</artifactId>
+					<version>${org.apache.maven.plugins.shade.version}</version>
+					<executions>
+						<execution>
+							<phase>package</phase>
+							<goals>
+								<goal>shade</goal>
+							</goals>
+							<configuration>
+								<keepDependenciesWithProvidedScope>true</keepDependenciesWithProvidedScope>
+								<minimizeJar>false</minimizeJar>
+								<transformers>
+									<transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+										<mainClass>${main.class}</mainClass>
+									</transformer>
+									<!-- Merge all "spring.handlers" files -->
+									<transformer implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">
+										<resource>META-INF/spring.handlers</resource>
+									</transformer>
+									<!-- Merge all "spring.schemas" files -->
+									<transformer implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">
+										<resource>META-INF/spring.schemas</resource>
+									</transformer>
+								</transformers>
+								<filters>
+									<filter>
+										<artifact>*:*</artifact>
+										<excludes>
+											<exclude>**/bundle.properties</exclude>
+											<exclude>**/module-info.class</exclude>
+											<exclude>META-INF/*.DSA</exclude>
+											<exclude>META-INF/*.RSA</exclude>
+											<exclude>META-INF/*.SF</exclude>
+											<exclude>META-INF/DEPENDENCIES</exclude>
+											<exclude>META-INF/LICENSE.txt</exclude>
+											<exclude>META-INF/LICENSE</exclude>
+											<exclude>META-INF/MANIFEST.MF</exclude>
+											<exclude>META-INF/NOTICE.txt</exclude>
+											<exclude>META-INF/NOTICE</exclude>
+										</excludes>
+									</filter>
+									<filter>
+										<artifact>com.fasterxml.jackson.dataformat:jackson-dataformat-yaml</artifact>
+										<excludes>
+											<exclude>META-INF/services/com.fasterxml.jackson.core.JsonFactory</exclude>
+											<exclude>META-INF/services/com.fasterxml.jackson.core.ObjectCodec</exclude>
+										</excludes>
+									</filter>
+									<filter>
+										<artifact>com.fasterxml.jackson.dataformat:jackson-dataformat-xml</artifact>
+										<excludes>
+											<exclude>META-INF/services/com.fasterxml.jackson.core.JsonFactory</exclude>
+											<exclude>META-INF/services/com.fasterxml.jackson.core.ObjectCodec</exclude>
+										</excludes>
+									</filter>
+									<filter>
+										<artifact>software.amazon.awssdk:third-party-jackson-core</artifact>
+										<excludes>
+											<exclude>META-INF/maven/com.fasterxml.jackson.core/jackson-core/pom.properties</exclude>
+											<exclude>META-INF/maven/com.fasterxml.jackson.core/jackson-core/pom.xml</exclude>
+										</excludes>
+									</filter>
+									<filter>
+										<artifact>com.pi4j:*</artifact>
+										<excludes>
+											<exclude>LICENSE.txt</exclude>
+											<exclude>NOTICE.txt</exclude>
+											<exclude>README.md</exclude>
+										</excludes>
+									</filter>
+									<filter>
+										<artifact>org.refcodes:*</artifact>
+										<excludes>
+											<exclude>runtimelogger.ini</exclude>
+										</excludes>
+									</filter>
+								</filters>
+							</configuration>
+						</execution>
+					</executions>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-source-plugin</artifactId>
+					<version>${org.apache.maven.plugins.source.version}</version>
+					<!--
+						<executions>
+							<execution>
+								<id>bundle-sources</id>
+								<phase>package</phase>
+								<goals>
+									<goal>jar-no-fork</goal>
+									<goal>test-jar-no-fork</goal>
+								</goals>
+							</execution>
+						</executions>
+					-->
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-resources-plugin</artifactId>
+					<version>${org.apache.maven.plugins.resources.version}</version>
+					<configuration>
+						<addDefaultExcludes>false</addDefaultExcludes>
+					</configuration>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-surefire-plugin</artifactId>
+					<version>${org.apache.maven.plugins.surefire.version}</version>
+					<configuration>
+						<includes>
+							<include>**/*Test.java</include>
+						</includes>
+					</configuration>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-compiler-plugin</artifactId>
+					<version>${org.apache.maven.plugins.compiler.version}</version>
+					<configuration>
+						<!-- debug>false</debug -->
+						<fork>true</fork>
+						<source>${java.source.version}</source>
+						<target>${java.target.version}</target>
+						<testSource>${java.source.version}</testSource>
+						<testTarget>${java.target.version}</testTarget>
+						<encoding>${project.build.sourceEncoding}</encoding>
+					</configuration>
+					<dependencies>
+						<!-- %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% -->
+						<!-- To make MAVEN compile Java 10 code and above -->
+						<!-- %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% -->
+						<dependency>
+							<groupId>org.ow2.asm</groupId>
+							<artifactId>asm</artifactId>
+							<version>${org.ow2.asm.version}</version>
+						</dependency>
+						<!-- %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% -->
+					</dependencies>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-jar-plugin</artifactId>
+					<version>${org.apache.maven.plugins.jar.version}</version>
+					<configuration>
+						<archive>
+							<addMavenDescriptor>false</addMavenDescriptor>
+							<manifest>
+								<addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
+								<addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+							</manifest>
+							<manifestEntries>
+								<Automatic-Module-Name>${module.domain}.${module.name}</Automatic-Module-Name>
+							</manifestEntries>
+						</archive>
+					</configuration>
+					<executions>
+						<execution>
+							<goals>
+								<goal>test-jar</goal>
+							</goals>
+						</execution>
+					</executions>
+				</plugin>
+			</plugins>
+		</pluginManagement>
 	</build>
+
+	<!-- /////////////////////////////////////////////////////////////////// -->
+	<!-- REPORTING                                                           -->
+	<!-- /////////////////////////////////////////////////////////////////// -->
+
+	<reporting>
+
+		<!-- /////////////////////////////////////////////////////////////// -->
+		<!-- PLUGINS                                                         -->
+		<!-- /////////////////////////////////////////////////////////////// -->
+
+	</reporting>
+
+	<!-- /////////////////////////////////////////////////////////////////// -->
+	<!-- PLUGIN REPOSITORIES                                                 -->
+	<!-- /////////////////////////////////////////////////////////////////// -->
+
+	<pluginRepositories>
+		<pluginRepository>
+			<id>central</id>
+			<name>Central Repository</name>
+			<url>https://repo1.maven.org/maven2</url>
+		</pluginRepository>
+		<pluginRepository>
+			<id>apache</id>
+			<name>Apacheh Repository</name>
+			<url>https://repo.maven.apache.org/maven2</url>
+			<layout>default</layout>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+			<releases>
+				<updatePolicy>never</updatePolicy>
+			</releases>
+		</pluginRepository>
+	</pluginRepositories>
+
+	<!-- /////////////////////////////////////////////////////////////////// -->
+	<!-- DEPENDENCY MANAGEMENT                                               -->
+	<!-- /////////////////////////////////////////////////////////////////// -->
+
+	<dependencyManagement>
+
+		<!-- /////////////////////////////////////////////////////////////// -->
+		<!-- DEPENDENCIES                                                    -->
+		<!-- /////////////////////////////////////////////////////////////// -->
+
+		<dependencies>
+			<dependency>
+				<groupId>com.amazonaws</groupId>
+				<artifactId>aws-java-sdk</artifactId>
+				<version>${com.amazonaws.sdk.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.fasterxml.jackson.core</groupId>
+				<artifactId>jackson-annotations</artifactId>
+				<version>${com.fasterxml.jackson.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.fasterxml.jackson.core</groupId>
+				<artifactId>jackson-core</artifactId>
+				<version>${com.fasterxml.jackson.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.fasterxml.jackson.core</groupId>
+				<artifactId>jackson-databind</artifactId>
+				<version>${com.fasterxml.jackson.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.fasterxml.jackson.dataformat</groupId>
+				<artifactId>jackson-dataformat-xml</artifactId>
+				<version>${com.fasterxml.jackson.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.fasterxml.jackson.dataformat</groupId>
+				<artifactId>jackson-dataformat-yaml</artifactId>
+				<version>${com.fasterxml.jackson.version}</version>
+				<!--
+					<exclusions>
+						<exclusion>
+							<groupId>org.yaml</groupId>
+							<artifactId>snakeyaml</artifactId>
+						</exclusion>
+					</exclusions>
+				-->
+			</dependency>
+			<dependency>
+				<groupId>com.fasterxml.jackson.module</groupId>
+				<artifactId>jackson-module-jaxb-annotations</artifactId>
+				<version>${com.fasterxml.jackson.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.fazecast</groupId>
+				<artifactId>jSerialComm</artifactId>
+				<version>${com.fazecast.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.gluonhq.attach</groupId>
+				<artifactId>accelerometer</artifactId>
+				<version>${com.gluonhq.attach.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.gluonhq.attach</groupId>
+				<artifactId>display</artifactId>
+				<version>${com.gluonhq.attach.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.gluonhq</groupId>
+				<artifactId>charm-glisten</artifactId>
+				<version>${com.gluonhq.charm.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.google.code.gson</groupId>
+				<artifactId>gson</artifactId>
+				<version>${com.google.code.gson.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.pi4j</groupId>
+				<artifactId>pi4j-core</artifactId>
+				<version>${com.pi4j.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.pi4j</groupId>
+				<artifactId>pi4j-plugin-pigpio</artifactId>
+				<version>${com.pi4j.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.pi4j</groupId>
+				<artifactId>pi4j-plugin-linuxfs</artifactId>
+				<version>${com.pi4j.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.pi4j</groupId>
+				<artifactId>pi4j-plugin-raspberrypi</artifactId>
+				<version>${com.pi4j.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>commons-beanutils</groupId>
+				<artifactId>commons-beanutils</artifactId>
+				<version>${org.apache.commons.beanutils.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>commons-codec</groupId>
+				<artifactId>commons-codec</artifactId>
+				<version>${org.apache.commons.codec.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>jakarta.activation</groupId>
+				<artifactId>jakarta.activation-api</artifactId>
+				<version>${jakarta.activation.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>jakarta.validation</groupId>
+				<artifactId>jakarta.validation-api</artifactId>
+				<version>${jakarta.validation.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>jakarta.xml.bind</groupId>
+				<artifactId>jakarta.xml.bind-api</artifactId>
+				<version>${jakarta.xml.bind.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>mysql</groupId>
+				<artifactId>mysql-connector-java</artifactId>
+				<version>${com.mysql.jdbc.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>net.lingala.zip4j</groupId>
+				<artifactId>zip4j</artifactId>
+				<version>${net.lingala.zip4j.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>net.objecthunter</groupId>
+				<artifactId>exp4j</artifactId>
+				<version>${net.objecthunter.exp4j.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.logging.log4j</groupId>
+				<artifactId>log4j-api</artifactId>
+				<version>${org.apache.log4j.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.logging.log4j</groupId>
+				<artifactId>log4j-core</artifactId>
+				<version>${org.apache.log4j.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.logging.log4j</groupId>
+				<artifactId>log4j-slf4j-impl</artifactId>
+				<version>${org.apache.log4j.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.logging.log4j</groupId>
+				<artifactId>log4j-slf4j2-impl</artifactId>
+				<version>${org.apache.log4j.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.xmlgraphics</groupId>
+				<artifactId>batik-transcoder</artifactId>
+				<version>${org.apache.xmlgraphics.batik.transcoder.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.xmlgraphics</groupId>
+				<artifactId>xmlgraphics-commons</artifactId>
+				<version>${org.apache.xmlgraphics.commons.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.bouncycastle</groupId>
+				<artifactId>bcprov-jdk18on</artifactId>
+				<version>${org.bouncycastle.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.bouncycastle</groupId>
+				<artifactId>bcpkix-jdk18on</artifactId>
+				<version>${org.bouncycastle.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.cryptacular</groupId>
+				<artifactId>cryptacular</artifactId>
+				<version>${org.cryptacular.version}</version>
+				<exclusions>
+					<exclusion>
+						<groupId>org.bouncycastle</groupId>
+						<artifactId>bcprov-jdk15on</artifactId>
+					</exclusion>
+				</exclusions>
+			</dependency>
+			<dependency>
+				<groupId>org.eclipse.paho</groupId>
+				<artifactId>org.eclipse.paho.client.mqttv3</artifactId>
+				<version>${org.eclipse.paho.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.fusesource.jansi</groupId>
+				<artifactId>jansi</artifactId>
+				<version>${org.fusesource.jansi.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.graphstream</groupId>
+				<artifactId>gs-core</artifactId>
+				<version>${org.graphstream.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.graphstream</groupId>
+				<artifactId>gs-ui</artifactId>
+				<version>${org.graphstream.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.hsqldb</groupId>
+				<artifactId>hsqldb</artifactId>
+				<version>${org.hsqldb.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.hibernate.orm</groupId>
+				<artifactId>hibernate-core</artifactId>
+				<version>${org.hibernate.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.jasypt</groupId>
+				<artifactId>jasypt</artifactId>
+				<version>${org.jasypt.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.json</groupId>
+				<artifactId>json</artifactId>
+				<version>${org.json.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.jsoup</groupId>
+				<artifactId>jsoup</artifactId>
+				<version>${org.jsoup.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.junit.jupiter</groupId>
+				<artifactId>junit-jupiter</artifactId>
+				<version>${org.junit.jupiter.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.junit.platform</groupId>
+				<artifactId>junit-platform-runner</artifactId>
+				<version>${org.junit.platform.version}</version>
+				<scope>test</scope>
+			</dependency>
+			<dependency>
+				<groupId>org.junit.vintage</groupId>
+				<artifactId>junit-vintage-engine</artifactId>
+				<version>${org.junit.jupiter.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.openjfx</groupId>
+				<artifactId>javafx-fxml</artifactId>
+				<version>${org.openjfx.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.openjfx</groupId>
+				<artifactId>javafx-media</artifactId>
+				<version>${org.openjfx.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.openjfx</groupId>
+				<artifactId>javafx-graphics</artifactId>
+				<version>${org.openjfx.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.refcodes</groupId>
+				<artifactId>refcodes-archetype-alt-c2</artifactId>
+				<version>${org.refcodes.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.refcodes</groupId>
+				<artifactId>refcodes-archetype-alt-cli</artifactId>
+				<version>${org.refcodes.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.refcodes</groupId>
+				<artifactId>refcodes-archetype-alt-csv</artifactId>
+				<version>${org.refcodes.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.refcodes</groupId>
+				<artifactId>refcodes-archetype-alt-decoupling</artifactId>
+				<version>${org.refcodes.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.refcodes</groupId>
+				<artifactId>refcodes-archetype-alt-eventbus</artifactId>
+				<version>${org.refcodes.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.refcodes</groupId>
+				<artifactId>refcodes-archetype-alt-filter</artifactId>
+				<version>${org.refcodes.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.refcodes</groupId>
+				<artifactId>refcodes-archetype-alt-rest</artifactId>
+				<version>${org.refcodes.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.refcodes</groupId>
+				<artifactId>refcodes-archetype-alt</artifactId>
+				<version>${org.refcodes.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.refcodes</groupId>
+				<artifactId>refcodes-archetype</artifactId>
+				<version>${org.refcodes.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.refcodes</groupId>
+				<artifactId>refcodes-audio</artifactId>
+				<version>${org.refcodes.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.refcodes</groupId>
+				<artifactId>refcodes-batch</artifactId>
+				<version>${org.refcodes.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.refcodes</groupId>
+				<artifactId>refcodes-checkerboard-alt-javafx</artifactId>
+				<version>${org.refcodes.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.refcodes</groupId>
+				<artifactId>refcodes-checkerboard-alt</artifactId>
+				<version>${org.refcodes.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.refcodes</groupId>
+				<artifactId>refcodes-checkerboard</artifactId>
+				<version>${org.refcodes.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.refcodes</groupId>
+				<artifactId>refcodes-cli</artifactId>
+				<version>${org.refcodes.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.refcodes</groupId>
+				<artifactId>refcodes-codec</artifactId>
+				<version>${org.refcodes.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.refcodes</groupId>
+				<artifactId>refcodes-command</artifactId>
+				<version>${org.refcodes.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.refcodes</groupId>
+				<artifactId>refcodes-component-ext-observer</artifactId>
+				<version>${org.refcodes.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.refcodes</groupId>
+				<artifactId>refcodes-component-ext</artifactId>
+				<version>${org.refcodes.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.refcodes</groupId>
+				<artifactId>refcodes-component</artifactId>
+				<version>${org.refcodes.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.refcodes</groupId>
+				<artifactId>refcodes-controlflow</artifactId>
+				<version>${org.refcodes.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.refcodes</groupId>
+				<artifactId>refcodes-criteria</artifactId>
+				<version>${org.refcodes.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.refcodes</groupId>
+				<artifactId>refcodes-data-ext-checkers</artifactId>
+				<version>${org.refcodes.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.refcodes</groupId>
+				<artifactId>refcodes-data-ext-chess</artifactId>
+				<version>${org.refcodes.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.refcodes</groupId>
+				<artifactId>refcodes-data-ext-corporate</artifactId>
+				<version>${org.refcodes.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.refcodes</groupId>
+				<artifactId>refcodes-data-ext-symbols</artifactId>
+				<version>${org.refcodes.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.refcodes</groupId>
+				<artifactId>refcodes-data-ext</artifactId>
+				<version>${org.refcodes.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.refcodes</groupId>
+				<artifactId>refcodes-data</artifactId>
+				<version>${org.refcodes.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.refcodes</groupId>
+				<artifactId>refcodes-decoupling-ext-application</artifactId>
+				<version>${org.refcodes.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.refcodes</groupId>
+				<artifactId>refcodes-decoupling-ext</artifactId>
+				<version>${org.refcodes.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.refcodes</groupId>
+				<artifactId>refcodes-decoupling</artifactId>
+				<version>${org.refcodes.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.refcodes</groupId>
+				<artifactId>refcodes-entity</artifactId>
+				<version>${org.refcodes.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.refcodes</groupId>
+				<artifactId>refcodes-eventbus-ext-application</artifactId>
+				<version>${org.refcodes.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.refcodes</groupId>
+				<artifactId>refcodes-eventbus-ext</artifactId>
+				<version>${org.refcodes.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.refcodes</groupId>
+				<artifactId>refcodes-eventbus</artifactId>
+				<version>${org.refcodes.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.refcodes</groupId>
+				<artifactId>refcodes-exception</artifactId>
+				<version>${org.refcodes.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.refcodes</groupId>
+				<artifactId>refcodes-factory-alt-spring</artifactId>
+				<version>${org.refcodes.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.refcodes</groupId>
+				<artifactId>refcodes-factory-alt</artifactId>
+				<version>${org.refcodes.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.refcodes</groupId>
+				<artifactId>refcodes-factory</artifactId>
+				<version>${org.refcodes.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.refcodes</groupId>
+				<artifactId>refcodes-filesystem-alt-s3</artifactId>
+				<version>${org.refcodes.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.refcodes</groupId>
+				<artifactId>refcodes-filesystem-alt</artifactId>
+				<version>${org.refcodes.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.refcodes</groupId>
+				<artifactId>refcodes-filesystem</artifactId>
+				<version>${org.refcodes.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.refcodes</groupId>
+				<artifactId>refcodes-forwardsecrecy-alt-filesystem</artifactId>
+				<version>${org.refcodes.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.refcodes</groupId>
+				<artifactId>refcodes-forwardsecrecy-alt</artifactId>
+				<version>${org.refcodes.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.refcodes</groupId>
+				<artifactId>refcodes-forwardsecrecy</artifactId>
+				<version>${org.refcodes.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.refcodes</groupId>
+				<artifactId>refcodes-generator</artifactId>
+				<version>${org.refcodes.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.refcodes</groupId>
+				<artifactId>refcodes-graphical-ext-javafx</artifactId>
+				<version>${org.refcodes.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.refcodes</groupId>
+				<artifactId>refcodes-graphical-ext</artifactId>
+				<version>${org.refcodes.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.refcodes</groupId>
+				<artifactId>refcodes-graphical</artifactId>
+				<version>${org.refcodes.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.refcodes</groupId>
+				<artifactId>refcodes-hal</artifactId>
+				<version>${org.refcodes.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.refcodes</groupId>
+				<artifactId>refcodes-io-ext-observer</artifactId>
+				<version>${org.refcodes.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.refcodes</groupId>
+				<artifactId>refcodes-io-ext</artifactId>
+				<version>${org.refcodes.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.refcodes</groupId>
+				<artifactId>refcodes-io</artifactId>
+				<version>${org.refcodes.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.refcodes</groupId>
+				<artifactId>refcodes-jobbus</artifactId>
+				<version>${org.refcodes.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.refcodes</groupId>
+				<artifactId>refcodes-licensing</artifactId>
+				<version>${org.refcodes.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.refcodes</groupId>
+				<artifactId>refcodes-logger-alt-async</artifactId>
+				<version>${org.refcodes.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.refcodes</groupId>
+				<artifactId>refcodes-logger-alt-console</artifactId>
+				<version>${org.refcodes.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.refcodes</groupId>
+				<artifactId>refcodes-logger-alt-io</artifactId>
+				<version>${org.refcodes.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.refcodes</groupId>
+				<artifactId>refcodes-logger-alt-jul</artifactId>
+				<version>${org.refcodes.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.refcodes</groupId>
+				<artifactId>refcodes-logger-alt-slf4j-legacy</artifactId>
+				<version>${org.refcodes.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.refcodes</groupId>
+				<artifactId>refcodes-logger-alt-slf4j</artifactId>
+				<version>${org.refcodes.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.refcodes</groupId>
+				<artifactId>refcodes-logger-alt-spring</artifactId>
+				<version>${org.refcodes.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.refcodes</groupId>
+				<artifactId>refcodes-logger-alt</artifactId>
+				<version>${org.refcodes.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.refcodes</groupId>
+				<artifactId>refcodes-logger-ext-slf4j-legacy</artifactId>
+				<version>${org.refcodes.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.refcodes</groupId>
+				<artifactId>refcodes-logger-ext-slf4j</artifactId>
+				<version>${org.refcodes.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.refcodes</groupId>
+				<artifactId>refcodes-logger-ext</artifactId>
+				<version>${org.refcodes.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.refcodes</groupId>
+				<artifactId>refcodes-logger</artifactId>
+				<version>${org.refcodes.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.refcodes</groupId>
+				<artifactId>refcodes-matcher</artifactId>
+				<version>${org.refcodes.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.refcodes</groupId>
+				<artifactId>refcodes-microservice</artifactId>
+				<version>${org.refcodes.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.refcodes</groupId>
+				<artifactId>refcodes-mixin</artifactId>
+				<version>${org.refcodes.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.refcodes</groupId>
+				<artifactId>refcodes-net</artifactId>
+				<version>${org.refcodes.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.refcodes</groupId>
+				<artifactId>refcodes-numerical</artifactId>
+				<version>${org.refcodes.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.refcodes</groupId>
+				<artifactId>refcodes-observer</artifactId>
+				<version>${org.refcodes.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.refcodes</groupId>
+				<artifactId>refcodes-p2p-alt-rest</artifactId>
+				<version>${org.refcodes.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.refcodes</groupId>
+				<artifactId>refcodes-p2p-alt-serial</artifactId>
+				<version>${org.refcodes.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.refcodes</groupId>
+				<artifactId>refcodes-p2p-ext-observer</artifactId>
+				<version>${org.refcodes.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.refcodes</groupId>
+				<artifactId>refcodes-p2p</artifactId>
+				<version>${org.refcodes.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.refcodes</groupId>
+				<artifactId>refcodes-properties-ext-application</artifactId>
+				<version>${org.refcodes.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.refcodes</groupId>
+				<artifactId>refcodes-properties-ext-cli</artifactId>
+				<version>${org.refcodes.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.refcodes</groupId>
+				<artifactId>refcodes-properties-ext-obfuscation</artifactId>
+				<version>${org.refcodes.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.refcodes</groupId>
+				<artifactId>refcodes-properties-ext-observer</artifactId>
+				<version>${org.refcodes.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.refcodes</groupId>
+				<artifactId>refcodes-properties-ext</artifactId>
+				<version>${org.refcodes.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.refcodes</groupId>
+				<artifactId>refcodes-properties</artifactId>
+				<version>${org.refcodes.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.refcodes</groupId>
+				<artifactId>refcodes-remoting-ext-observer</artifactId>
+				<version>${org.refcodes.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.refcodes</groupId>
+				<artifactId>refcodes-remoting-ext</artifactId>
+				<version>${org.refcodes.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.refcodes</groupId>
+				<artifactId>refcodes-remoting</artifactId>
+				<version>${org.refcodes.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.refcodes</groupId>
+				<artifactId>refcodes-rest-ext-eureka</artifactId>
+				<version>${org.refcodes.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.refcodes</groupId>
+				<artifactId>refcodes-rest-ext</artifactId>
+				<version>${org.refcodes.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.refcodes</groupId>
+				<artifactId>refcodes-rest</artifactId>
+				<version>${org.refcodes.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.refcodes</groupId>
+				<artifactId>refcodes-runtime</artifactId>
+				<version>${org.refcodes.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.refcodes</groupId>
+				<artifactId>refcodes-schema</artifactId>
+				<version>${org.refcodes.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.refcodes</groupId>
+				<artifactId>refcodes-security-alt-chaos</artifactId>
+				<version>${org.refcodes.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.refcodes</groupId>
+				<artifactId>refcodes-security-alt</artifactId>
+				<version>${org.refcodes.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.refcodes</groupId>
+				<artifactId>refcodes-security-ext-chaos</artifactId>
+				<version>${org.refcodes.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.refcodes</groupId>
+				<artifactId>refcodes-security-ext-spring</artifactId>
+				<version>${org.refcodes.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.refcodes</groupId>
+				<artifactId>refcodes-security-ext</artifactId>
+				<version>${org.refcodes.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.refcodes</groupId>
+				<artifactId>refcodes-security</artifactId>
+				<version>${org.refcodes.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.refcodes</groupId>
+				<artifactId>refcodes-serial-alt-net</artifactId>
+				<version>${org.refcodes.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.refcodes</groupId>
+				<artifactId>refcodes-serial-alt-tty</artifactId>
+				<version>${org.refcodes.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.refcodes</groupId>
+				<artifactId>refcodes-serial-alt</artifactId>
+				<version>${org.refcodes.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.refcodes</groupId>
+				<artifactId>refcodes-serial-ext-handshake</artifactId>
+				<version>${org.refcodes.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.refcodes</groupId>
+				<artifactId>refcodes-serial-ext-observer</artifactId>
+				<version>${org.refcodes.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.refcodes</groupId>
+				<artifactId>refcodes-serial-ext-security</artifactId>
+				<version>${org.refcodes.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.refcodes</groupId>
+				<artifactId>refcodes-serial-ext</artifactId>
+				<version>${org.refcodes.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.refcodes</groupId>
+				<artifactId>refcodes-serial</artifactId>
+				<version>${org.refcodes.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.refcodes</groupId>
+				<artifactId>refcodes-struct-ext-factory</artifactId>
+				<version>${org.refcodes.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.refcodes</groupId>
+				<artifactId>refcodes-struct-ext</artifactId>
+				<version>${org.refcodes.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.refcodes</groupId>
+				<artifactId>refcodes-struct</artifactId>
+				<version>${org.refcodes.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.refcodes</groupId>
+				<artifactId>refcodes-tabular-alt-forwardsecrecy</artifactId>
+				<version>${org.refcodes.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.refcodes</groupId>
+				<artifactId>refcodes-tabular-alt</artifactId>
+				<version>${org.refcodes.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.refcodes</groupId>
+				<artifactId>refcodes-tabular</artifactId>
+				<version>${org.refcodes.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.refcodes</groupId>
+				<artifactId>refcodes-textual</artifactId>
+				<version>${org.refcodes.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.refcodes</groupId>
+				<artifactId>refcodes-time</artifactId>
+				<version>${org.refcodes.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.refcodes</groupId>
+				<artifactId>refcodes-tracker</artifactId>
+				<version>${org.refcodes.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.refcodes</groupId>
+				<artifactId>refcodes-web</artifactId>
+				<version>${org.refcodes.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.slf4j</groupId>
+				<artifactId>jcl-over-slf4j</artifactId>
+				<version>${org.slf4j.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.slf4j</groupId>
+				<artifactId>jul-to-slf4j</artifactId>
+				<version>${org.slf4j.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.slf4j</groupId>
+				<artifactId>slf4j-api</artifactId>
+				<version>${org.slf4j.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.slf4j</groupId>
+				<artifactId>slf4j-jdk14</artifactId>
+				<version>${org.slf4j.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.slf4j</groupId>
+				<artifactId>slf4j-nop</artifactId>
+				<version>${org.slf4j.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-starter-data-jpa</artifactId>
+				<version>${org.springframework.boot.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-starter-data-rest</artifactId>
+				<version>${org.springframework.boot.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-starter-validation</artifactId>
+				<version>${org.springframework.boot.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-starter-web</artifactId>
+				<version>${org.springframework.boot.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-starter</artifactId>
+				<version>${org.springframework.boot.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework.cloud</groupId>
+				<artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+				<version>${org.springframework.cloud.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework.cloud</groupId>
+				<artifactId>spring-cloud-starter-netflix-eureka-server</artifactId>
+				<version>${org.springframework.cloud.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-aop</artifactId>
+				<version>${org.springframework.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-beans</artifactId>
+				<version>${org.springframework.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-context</artifactId>
+				<version>${org.springframework.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-core</artifactId>
+				<version>${org.springframework.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-orm</artifactId>
+				<version>${org.springframework.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-test</artifactId>
+				<version>${org.springframework.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-tx</artifactId>
+				<version>${org.springframework.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-web</artifactId>
+				<version>${org.springframework.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-webmvc</artifactId>
+				<version>${org.springframework.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.yaml</groupId>
+				<artifactId>snakeyaml</artifactId>
+				<version>${org.yaml.snakeyaml.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>software.amazon.awssdk</groupId>
+				<artifactId>auth</artifactId>
+				<version>${software.amazon.awssdk.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>software.amazon.awssdk</groupId>
+				<artifactId>regions</artifactId>
+				<version>${software.amazon.awssdk.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>software.amazon.awssdk</groupId>
+				<artifactId>s3</artifactId>
+				<version>${software.amazon.awssdk.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>software.amazon.awssdk</groupId>
+				<artifactId>sdk-core</artifactId>
+				<version>${software.amazon.awssdk.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>software.amazon.awssdk</groupId>
+				<artifactId>simpledb</artifactId>
+				<version>2.0.0-preview-11</version>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
 
 	<!-- /////////////////////////////////////////////////////////////////// -->
 	<!-- PROFILES                                                            -->

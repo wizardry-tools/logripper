@@ -1,9 +1,6 @@
 package com.wizardry.tools.logripper.tasks.pathmapper;
 
 import com.wizardry.tools.logripper.util.DataUtil;
-import com.wizardry.tools.logripper.util.filesystem.Crawlable;
-import com.wizardry.tools.logripper.util.filesystem.Sizable;
-
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.LinkOption;

@@ -1,12 +1,8 @@
 package com.wizardry.tools.logripper.tasks.pathmapper;
 
 import com.wizardry.tools.logripper.util.DataUtil;
-import com.wizardry.tools.logripper.util.filesystem.Readable;
-import com.wizardry.tools.logripper.util.filesystem.Sizable;
 import com.wizardry.tools.logripper.util.printing.PrintOptions;
-import com.wizardry.tools.logripper.util.printing.Printable;
 import com.wizardry.tools.logripper.util.wrapping.WrappedPath;
-
 import java.io.IOException;
 import java.nio.file.Files;
 import java.util.ArrayList;

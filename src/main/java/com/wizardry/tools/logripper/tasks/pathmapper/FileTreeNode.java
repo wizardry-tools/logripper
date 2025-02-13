@@ -5,7 +5,6 @@ import com.wizardry.tools.logripper.util.filesystem.Readable;
 import com.wizardry.tools.logripper.util.filesystem.Sizable;
 import com.wizardry.tools.logripper.util.printing.Printable;
 
-//public interface FileTreeNode<K,T extends FileTreeNode<K,T>> extends Readable,Sizable,Printable {
 public interface FileTreeNode<K,T extends Crawlable<T>> extends Readable,Sizable,Printable, Crawlable<T> {
     K getPath();
     String getName();
