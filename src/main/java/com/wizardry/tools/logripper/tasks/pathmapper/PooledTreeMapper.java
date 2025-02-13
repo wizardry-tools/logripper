@@ -3,7 +3,7 @@ package com.wizardry.tools.logripper.tasks.pathmapper;
 import java.nio.file.Path;
 import java.util.concurrent.ForkJoinPool;
 
-public class PooledTreeMapper implements FileTreeMapper<MappedTreeNode> {
+public class PooledTreeMapper implements FileTreeMapper<Path,MappedTreeNode> {
 
     private final ForkJoinPool forkJoinPool;
 

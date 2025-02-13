@@ -26,11 +26,10 @@ import static com.wizardry.tools.logripper.util.StringUtil.EMPTY;
 import static org.refcodes.cli.CliSugar.*;
 
 import com.wizardry.tools.logripper.config.*;
-import com.wizardry.tools.logripper.tasks.pathmapper.FileTreeMapper;
-import com.wizardry.tools.logripper.tasks.pathmapper.PooledTreeMapper;
-import com.wizardry.tools.logripper.tasks.pathmapper.MappedTreeNode;
+import com.wizardry.tools.logripper.tasks.pathmapper.*;
 import com.wizardry.tools.logripper.tasks.pathsize.PathSizeCalculator;
 import com.wizardry.tools.logripper.util.Timestamp;
+import com.wizardry.tools.logripper.util.wrapping.WrappedPath;
 import org.refcodes.archetype.CliHelper;
 import org.refcodes.cli.*;
 import org.refcodes.data.AsciiColorPalette;
@@ -211,8 +210,12 @@ public class Main {
 				try {
 
 					// Third iteration of Mapper
-					FileTreeMapper<MappedTreeNode> treeMapper = new PooledTreeMapper();
-					MappedTreeNode root = treeMapper.crawl(thePath);
+					//FileTreeMapper<Path, MappedTreeNode> treeMapper = new PooledTreeMapper();
+					//MappedTreeNode root = treeMapper.crawl(thePath);
+
+					//Fourth Iteration of Mapper
+					FileTreeMapper<WrappedPath, WrappedTreeNode> treeWrapper = new PooledTreeWrapper();
+					WrappedTreeNode root = treeWrapper.crawl(WrappedPath.of(thePath));
 					if (isSortRequest) {
 						root.sortChildrenBySize();
 					}

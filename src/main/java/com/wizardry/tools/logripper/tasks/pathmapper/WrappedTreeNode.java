@@ -14,7 +14,7 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 
-public class WrappedTreeNode implements FileTreeNode<WrappedPath>,Readable, Sizable,Printable<WrappedTreeNode> {
+public class WrappedTreeNode implements FileTreeNode<WrappedPath,WrappedTreeNode> {
 
     private final static String UNREADABLE_NODE = "unreadable";
 
@@ -37,20 +37,20 @@ public class WrappedTreeNode implements FileTreeNode<WrappedPath>,Readable, Siza
     }
 
     public WrappedTreeNode(WrappedPath path, List<WrappedTreeNode> children) throws IOException {
-        this(path, children, Files.size(path), String.valueOf(path.getFileName()), 0);
+        this(path, children, Files.size(path.unwrap()), String.valueOf(path.getFileName()), 0);
     }
 
     public WrappedTreeNode(WrappedPath path) throws IOException {
         this(path, new ArrayList<>());
     }
 
-    public static WrappedTreeNode of(WrappedPath path, WrappedTreeNode parent) throws IOException {
+    public static WrappedTreeNode of(WrappedPath path) throws IOException {
         return new WrappedTreeNode(path);
     }
 
-    public static WrappedTreeNode ofUnreadable(WrappedPath path, WrappedTreeNode parent) {
+    public static WrappedTreeNode ofUnreadable(WrappedPath path, int level) {
         // Dummy Node that represents an unreadable path.
-        return new WrappedTreeNode(path, new ArrayList<>(), 0L, UNREADABLE_NODE, parent.getLevel());
+        return new WrappedTreeNode(path, new ArrayList<>(), 0L, UNREADABLE_NODE, level);
     }
 
     @Override
@@ -64,29 +64,23 @@ public class WrappedTreeNode implements FileTreeNode<WrappedPath>,Readable, Siza
     }
 
     @Override
-    public void addChild(FileTreeNode<? extends WrappedPath> child) {
-        children.add((WrappedTreeNode) child);
+    public void addChild(WrappedTreeNode child) {
+        children.add(child);
         this.size += child.getSize(); // add child size to the parent dir's size
     }
 
-    public void addUnreadable(WrappedPath path, WrappedTreeNode parent) {
-        children.add(WrappedTreeNode.ofUnreadable(path, parent));
+    public void addUnreadable(WrappedPath path) {
+        children.add(WrappedTreeNode.ofUnreadable(path, level + 1));
     }
 
-    @SafeVarargs
     @Override
-    public final void addChildren(FileTreeNode<? extends WrappedPath>... children) {
-        this.children.addAll(
-                Arrays.stream(children)
-                        .map(child -> (WrappedTreeNode) child)
-                        .toList());
-        // update parent dir size
-        this.size = this.children.stream().reduce(0L, (acc, node) -> acc + node.getSize(), Long::sum);
+    public final void addChildren(WrappedTreeNode... children) {
+        Arrays.stream(children).forEach(this::addChild);
     }
 
 
     @Override
-    public boolean removeChild(FileTreeNode<? extends WrappedPath> child) {
+    public boolean removeChild(WrappedTreeNode child) {
         boolean success = children.remove((WrappedTreeNode) child);
         this.size -= child.getSize(); // remove child size from parent dir
         return success;
@@ -132,6 +126,7 @@ public class WrappedTreeNode implements FileTreeNode<WrappedPath>,Readable, Siza
         return DataUtil.humanReadableByteCountSI(size);
     }
 
+    @Override
     public int getLevel() {
         return level;
     }
@@ -163,6 +158,9 @@ public class WrappedTreeNode implements FileTreeNode<WrappedPath>,Readable, Siza
     @Override
     public void print(PrintOptions options) {
         StringBuilder sb = new StringBuilder();
+        if (options.linePrefix() != null) {
+            sb.append(options.linePrefix());
+        }
         if (options.includeSize()) {
             sb.append("[").append(getReadableSize()).append("]");
             // add additional spacing so that tree indentation accounts for short size strings.
@@ -175,16 +173,19 @@ public class WrappedTreeNode implements FileTreeNode<WrappedPath>,Readable, Siza
             sb.append("/");
         }
         sb.append(getPath().getFileName());
+        if (options.lineSuffix() != null) {
+            sb.append(options.lineSuffix());
+        }
         System.out.println(sb);
     }
 
     @Override
     public void printChildren() {
-
+        children.forEach(WrappedTreeNode::print);
     }
 
     @Override
     public void printChildren(PrintOptions options) {
-
+        children.forEach(child -> child.print(options));
     }
 }

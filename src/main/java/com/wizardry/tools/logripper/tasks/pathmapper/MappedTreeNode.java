@@ -1,6 +1,8 @@
 package com.wizardry.tools.logripper.tasks.pathmapper;
 
 import com.wizardry.tools.logripper.util.DataUtil;
+import com.wizardry.tools.logripper.util.filesystem.Crawlable;
+import com.wizardry.tools.logripper.util.filesystem.Sizable;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -8,7 +10,7 @@ import java.nio.file.LinkOption;
 import java.nio.file.Path;
 import java.util.*;
 
-public class MappedTreeNode implements FileTreeNode<Path> {
+public class MappedTreeNode implements FileTreeNode<Path,MappedTreeNode> {
 
     private final static String UNREADABLE_NODE = "unreadable";
 
@@ -55,7 +57,7 @@ public class MappedTreeNode implements FileTreeNode<Path> {
     }
 
     @Override
-    public void addChild(FileTreeNode<? extends Path> child) {
+    public void addChild(MappedTreeNode child) {
         children.add((MappedTreeNode) child);
         this.size += child.getSize(); // add child size to the parent dir's size
     }
@@ -66,7 +68,7 @@ public class MappedTreeNode implements FileTreeNode<Path> {
 
     @SafeVarargs
     @Override
-    public final void addChildren(FileTreeNode<? extends Path>... children) {
+    public final void addChildren(MappedTreeNode... children) {
         this.children.addAll(
                 Arrays.stream(children)
                         .map(child -> (MappedTreeNode) child)
@@ -77,7 +79,7 @@ public class MappedTreeNode implements FileTreeNode<Path> {
 
 
     @Override
-    public boolean removeChild(FileTreeNode<? extends Path> child) {
+    public boolean removeChild(MappedTreeNode child) {
         boolean success = children.remove((MappedTreeNode) child);
         this.size -= child.getSize(); // remove child size from parent dir
         return success;

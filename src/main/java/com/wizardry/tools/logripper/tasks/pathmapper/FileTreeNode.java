@@ -1,15 +1,13 @@
 package com.wizardry.tools.logripper.tasks.pathmapper;
 
-import java.util.List;
+import com.wizardry.tools.logripper.util.filesystem.Crawlable;
 import com.wizardry.tools.logripper.util.filesystem.Readable;
 import com.wizardry.tools.logripper.util.filesystem.Sizable;
+import com.wizardry.tools.logripper.util.printing.Printable;
 
-public interface FileTreeNode<T> extends Readable,Sizable {
-    T getPath();
-    List<? extends FileTreeNode<T>> getChildren();
-    void addChild(FileTreeNode<? extends T> child);
-    void addChildren(FileTreeNode<? extends T>... children);
-    boolean removeChild(FileTreeNode<? extends T> child);
+//public interface FileTreeNode<K,T extends FileTreeNode<K,T>> extends Readable,Sizable,Printable {
+public interface FileTreeNode<K,T extends Crawlable<T>> extends Readable,Sizable,Printable, Crawlable<T> {
+    K getPath();
     String getName();
     void display(int level);
     void sortChildrenBySize();

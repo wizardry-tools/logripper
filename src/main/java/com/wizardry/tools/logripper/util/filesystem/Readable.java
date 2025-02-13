@@ -5,20 +5,28 @@ public interface Readable {
     /**
      * Tests whether the Readable is a directory.
      */
-    boolean isDir();
+    default boolean isDir() {
+        return false;
+    }
 
     /**
      * Tests whether a Readable is executable.
      */
-    boolean isExe();
+    default boolean isExe() {
+        return false;
+    }
 
     /**
      * Tests whether a Readable is a regular file with opaque content.
      */
-    boolean isFile();
+    default boolean isFile() {
+        return false;
+    }
 
     /**
      * Tests whether a Readable is actually readable.
      */
-    boolean isReadable();
+    default boolean isReadable() {
+        return false;
+    }
 }

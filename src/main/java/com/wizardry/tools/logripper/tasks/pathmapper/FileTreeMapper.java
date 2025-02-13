@@ -4,10 +4,10 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.util.concurrent.ExecutionException;
 
-public interface FileTreeMapper<T extends FileTreeNode<Path>> {
-    T crawl(Path rootPath) throws InterruptedException, ExecutionException, IOException;
+public interface FileTreeMapper<K extends Path,T extends FileTreeNode<K,T>> {
+    T crawl(K rootPath) throws InterruptedException, ExecutionException, IOException;
 
-    static void printTree(FileTreeNode<? extends Path> node, int level, boolean includeSize) {
+    static <K extends Path,T extends FileTreeNode<K,T>> void printTree(T node, int level, boolean includeSize) {
         StringBuilder sb = new StringBuilder();
         if (includeSize) {
             sb.append("[").append(node.getReadableSize()).append("]");
@@ -22,7 +22,7 @@ public interface FileTreeMapper<T extends FileTreeNode<Path>> {
         }
         sb.append(node.getPath().getFileName());
         System.out.println(sb);
-        for (FileTreeNode<? extends Path> child : node.getChildren()) {
+        for (T child : node.getChildren()) {
             printTree(child, level + 1, includeSize);
         }
     }

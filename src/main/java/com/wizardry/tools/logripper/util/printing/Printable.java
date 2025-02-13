@@ -1,12 +1,12 @@
 package com.wizardry.tools.logripper.util.printing;
 
-public interface Printable<T> {
+public interface Printable {
 
-    void print();
+    default void print() {}
 
-    void print(PrintOptions options);
+    default void print(PrintOptions options) {}
 
-    void printChildren();
+    default void printChildren() {}
 
-    void printChildren(PrintOptions options);
+    default void printChildren(PrintOptions options) {}
 }

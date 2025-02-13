@@ -16,6 +16,10 @@ public class WrappedPath implements Wrappable<Path>,Path,Readable {
         this.wrapped = wrapped;
     }
 
+    public static WrappedPath of(Path path) {
+        return new WrappedPath(path);
+    }
+
     @Override
     public Path unwrap() {
         return wrapped;
@@ -540,5 +544,9 @@ public class WrappedPath implements Wrappable<Path>,Path,Readable {
     @Override
     public @NotNull String toString() {
         return wrapped.toString();
+    }
+
+    public DirectoryStream<Path> dirStream() throws IOException {
+        return Files.newDirectoryStream(wrapped);
     }
 }
