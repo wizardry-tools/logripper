@@ -520,7 +520,7 @@
 					<configuration>
 						<imageName>${executable.name}-native-${native.arch}-${executable.version}${executable.suffix}</imageName>
 						<mainClass>${main.class}</mainClass>
-						<buildArgs>--no-fallback --enable-http --enable-https</buildArgs> <!-- Useful switches: no-fallback, enable-http enable-https, report-unsupported-elements-at-runtime -->
+						<buildArgs>--no-fallback --verbos</buildArgs> <!-- Useful switches: no-fallback, enable-http enable-https, report-unsupported-elements-at-runtime -->
 						<metadataRepository>
 							<enabled>true</enabled>
 						</metadataRepository>

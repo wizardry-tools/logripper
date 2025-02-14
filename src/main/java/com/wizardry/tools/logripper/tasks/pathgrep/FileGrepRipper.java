@@ -114,8 +114,6 @@ public class FileGrepRipper implements PooledRipper<Path, Map<Integer, String>> 
                         buffer.flip();
                         if (buffer.hasRemaining()) {
                             c = (char) buffer.get();
-                        } else {
-                            break;
                         }
                         buffer.clear();
                         if (c == '\n') break;

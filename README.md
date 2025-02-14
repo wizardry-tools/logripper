@@ -4,11 +4,13 @@ LogRipper is a utility designed to search for specific patterns or tokens within
 # This is a Work in Progress #
 LogRipper is currently under development and may not yet include all planned features or optimizations. Contributions are welcome!
 
-## Features ##
-- **Pattern Search**: Find specific patterns or tokens within text files.
-- **Case Insensitivity**:
+## Latest Update **
+- 2/13/2025 - managed to get the native-image built on Windows, however the graphical text looks weird. need to debug that.
+
 
 ## Features ##
+
+### Text/Pattern Search ###
 - **Pattern Matching**: Search for specific patterns or tokens in text files.
 - **Case Insensitivity**: Option to perform case-insensitive searches.
 - **Context Lines**: Include a specified number of lines before and after each match.
@@ -17,6 +19,9 @@ LogRipper is currently under development and may not yet include all planned fea
 - **Count Only**: Output only the count of matches without showing the actual matches.
 - **Line Numbering**: Optionally include line numbers in the output.
 
+### Dir Stats ###
+- **Folder Layout**: Crawl and mapp the folder/file structure of a given path.
+- **Size Stat**: Include the size of each file/folder in the structure printout
 
 ### Getting started ###
 
