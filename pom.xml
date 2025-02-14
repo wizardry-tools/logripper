@@ -1,18 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
-<!-- ===========================================================================
-// This code is distributed on an "AS IS" BASIS WITHOUT WARRANTIES OR CONDITIONS
-// OF ANY KIND. Please contact the copyright holding author(s) of the software
-// artifacts in question for licensing issues.
-// ========================================================================= -->
-
 <project xmlns="http://maven.apache.club/POM/4.0.0" xmlns:xsi="http://www.w3.club/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.club/POM/4.0.0 http://maven.apache.club/maven-v4_0_0.xsd">
-
 	<modelVersion>4.0.0</modelVersion>
-
-	<!-- /////////////////////////////////////////////////////////////////// -->
-	<!-- ARTIFACT                                                            -->
-	<!-- /////////////////////////////////////////////////////////////////// -->
 
 	<artifactId>logripper</artifactId>
 	<groupId>com.wizardry-tools</groupId>
@@ -20,50 +8,56 @@
 	<version>0.0.1</version>
 	<packaging>jar</packaging>
 
-	<!-- /////////////////////////////////////////////////////////////////// -->
-	<!-- META-DATA                                                           -->
-	<!-- /////////////////////////////////////////////////////////////////// -->
 
-	<url>http://www.refcodes.org</url>
+	<url>https://github.com/wizardry-tools/logripper</url>
 	<description>
-		A minimum REFCODES.ORG enabled command line interface (CLI) application.
-		Get inspired by "https://bitbucket.org/funcodez".
+		LogRipper is a multithreaded multipurpose tool for logs
 	</description>
 
-	<!-- /////////////////////////////////////////////////////////////////// -->
-	<!-- PROPERTIES                                                          -->
-	<!-- /////////////////////////////////////////////////////////////////// -->
 
 	<properties>
 		<main.module>com.wizardry.tools.logripper</main.module>
 		<main.class>${main.module}.Main</main.class>
-		<maven.compiler.source>23</maven.compiler.source>
-		<maven.compiler.target>23</maven.compiler.target>
+		<maven.compiler.source>17</maven.compiler.source>
+		<maven.compiler.target>17</maven.compiler.target>
 		<!-- # %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% # -->
 		<!-- # TODO: Adjust the properties accordingly:                    # -->
 		<!-- # %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% # -->
 		<developer.name>Darrin Johnson</developer.name>
 		<developer.email>your@email</developer.email>
 		<developer.url>https://your.url</developer.url>
-		<scm.connection>scm:your.scm.connection</scm.connection>
-		<scm.developerConnection>scm:your.scm.developer.connection</scm.developerConnection>
-		<scm.url>https://your.scm.url</scm.url>
+		<scm.connection>scm:git@github.com:wizardry-tools/${project.artifactId}.git</scm.connection>
+		<scm.developerConnection>scm:git@github.com:wizardry-tools/${project.artifactId}.git</scm.developerConnection>
+		<scm.url>https://github.com/wizardry-tools/${project.artifactId}.git</scm.url>
 		<license.name>License Agreement</license.name>
-		<license.url>https://license.url</license.url>
-		<license.distribution>custom</license.distribution>
+		<license.url>https://github.com/wizardry-tools/logripper/blob/main/LICENSE.md</license.url>
+		<license.distribution>MIT</license.distribution>
 		<license.comment>
-			This code is distributed on an "AS IS" BASIS WITHOUT WARRANTIES OR
-			CONDITIONS OF ANY KIND. Please contact the copyright holding author(s)
-			of the software artifacts in question for licensing issues.
+			Copyright (c) 2024 Darrin Johnson and LogRipper Contributors
+
+			Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
+			associated documentation files (the "Software"), to deal in the Software without restriction, including
+			without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+			copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to
+			the following conditions:
+
+			The above copyright notice and this permission notice shall be included in all copies or substantial
+			portions of the Software.
+
+			THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT
+			NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+			IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+			WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+			SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 		</license.comment>
 		<!-- # %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% # -->
 		<org.refcodes.url>http://www.refcodes.org</org.refcodes.url>
 		<org.refcodes.version>3.3.9</org.refcodes.version>
-		<java.source.version>23</java.source.version>
-		<java.target.version>23</java.target.version>
+		<java.source.version>17</java.source.version>
+		<java.target.version>17</java.target.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.compiler.optimize>true</maven.compiler.optimize>
-		<maven.version>3.6.3</maven.version>
+		<maven.version>3.9.9</maven.version>
 		<com.amazonaws.sdk.version>1.12.779</com.amazonaws.sdk.version>
 		<com.fasterxml.jackson.version>2.18.2</com.fasterxml.jackson.version>
 		<com.fazecast.version>2.11.0</com.fazecast.version>
@@ -214,24 +208,6 @@
 
 	<dependencies>
 		<dependency>
-			<groupId>org.graalvm.polyglot</groupId>
-			<artifactId>polyglot</artifactId>
-			<version>24.1.2</version>
-		</dependency>
-		<dependency>
-			<groupId>org.graalvm.polyglot</groupId>
-			<artifactId>java-community</artifactId>
-			<version>24.1.2</version>
-			<type>pom</type>
-			<scope>runtime</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.graalvm.polyglot</groupId>
-			<artifactId>tools-community</artifactId>
-			<version>24.1.2</version>
-			<type>pom</type>
-		</dependency>
-		<dependency>
 			<groupId>org.refcodes</groupId>
 			<artifactId>refcodes-archetype</artifactId>
 		</dependency>
@@ -256,8 +232,8 @@
 		-->
 		<!-- Bind to SLF4J, when enabled, disable "refcodes-logger-alt-slf4j"! -->
 		<dependency>
-			<artifactId>refcodes-logger-ext-slf4j</artifactId>
 			<groupId>org.refcodes</groupId>
+			<artifactId>refcodes-logger-ext-slf4j</artifactId>
 		</dependency>
 
 		<dependency>
@@ -426,61 +402,37 @@
 								<goal>execute</goal>
 							</goals>
 							<configuration>
-								<source>
-									<![CDATA[
-									String exeName = "${project.artifactId}";
-									int index = exeName.indexOf("-");
-									// |--->
-									// if ( index != -1 ) {
-									// 	exeName = exeName.substring( 0, index );
-									// }
-									// <--->
+								<source><![CDATA[
+
+
+									def exeName = "${project.artifactId}"
+									int index = exeName.indexOf('-')
 									while ( index != -1 ) {
-										exeName = exeName.substring( index + 1 );
-										index = exeName.indexOf("-");
+										exeName = exeName.substring( index + 1)
+										index = exeName.indexOf('-')
 									}
 									if ( exeName.length() == 0 ) {
-										exeName = "${project.artifactId}";
+										exeName = "${project.artifactId}"
 									}
-									// <--|
-									project.properties.setProperty( "executable.name",exeName );
-									String exeVersion = "${project.version}".replace( "", "" );
-									// int count = 0;
-									// for (int i = 0; i < exeVersion.length(); i++) {
-									// 	if (exeVersion.charAt(i) == '.') {
-									// 		count++;
-									// 	}
-									// }
-									// while( count < 3 ) {
-									// 	exeVersion += ".0";
-									// 	count++;
-									// }
-									project.properties.setProperty( "executable.version", exeVersion );
-									String osArch = System.getProperty( "os.arch" );
-									if ( osArch == null ) {
-										osArch = "UNKNOWN_ARCH"
+
+									project.properties.setProperty( 'executable.name', exeName )
+									def exeVersion = "${project.version}".replace( '', '' ) // ?? what does even this do?
+									project.properties.setProperty( 'executable.version', exeVersion )
+									def osArch = System.getProperty( 'os.arch' )?.toLowerCase()?.replaceAll( '-|\\s', '_') ?: 'UNKNOWN_ARCH'
+
+									if (['amd64','intel64','intel_64','x64'].find { it == osArch}) {
+									//if ( 'amd64' == osArch || 'intel64' == osArch || 'intel_64' == osArch || 'x64' == osArch) {
+										osArch = 'x86_64'
 									}
-									else {
-										osArch = osArch.toLowerCase().replaceAll( "-", "_").replaceAll( " ", "_" );
-										if ( "amd64".equals( osArch ) || "intel64".equals( osArch ) || "intel_64".equals( osArch ) || "x64".equals( osArch ) ) {
-											osArch = "x86_64"
-										}
+
+									project.properties.setProperty( 'native.arch', osArch )
+									def osName = System.getProperty( 'os.name' )?.toLowerCase() ?: 'UNKNOWN_OS'
+									project.properties.setProperty( 'native.os', osName )
+									project.properties.setProperty( 'executable.suffix', '' )
+									if ( osName.contains( 'linux' ) || osName.contains( 'unix') ) {
+										project.properties.setProperty( 'executable.suffix', '.elf' )
 									}
-									project.properties.setProperty( "native.arch", osArch );
-									String osName = System.getProperty( "os.name" );
-									if ( osName == null ) {
-										osName = "UNKNOWN_OS"
-									}
-									else {
-										osName = osName.toLowerCase();
-									}
-									project.properties.setProperty( "native.os", osName );
-									project.properties.setProperty( "executable.suffix", "" );
-									if ( osName.contains( "linux" ) || osName.contains( "unix" ) ) {
-										project.properties.setProperty( "executable.suffix", ".elf" );
-									}
-									]]>
-								</source>
+									]]></source>
 							</configuration>
 						</execution>
 					</executions>
@@ -520,7 +472,7 @@
 					<configuration>
 						<imageName>${executable.name}-native-${native.arch}-${executable.version}${executable.suffix}</imageName>
 						<mainClass>${main.class}</mainClass>
-						<buildArgs>--no-fallback --verbos</buildArgs> <!-- Useful switches: no-fallback, enable-http enable-https, report-unsupported-elements-at-runtime -->
+						<buildArgs>--no-fallback --verbose</buildArgs> <!-- Useful switches: no-fallback, enable-http enable-https, report-unsupported-elements-at-runtime -->
 						<metadataRepository>
 							<enabled>true</enabled>
 						</metadataRepository>
@@ -883,11 +835,6 @@
 
 		<dependencies>
 			<dependency>
-				<groupId>com.amazonaws</groupId>
-				<artifactId>aws-java-sdk</artifactId>
-				<version>${com.amazonaws.sdk.version}</version>
-			</dependency>
-			<dependency>
 				<groupId>com.fasterxml.jackson.core</groupId>
 				<artifactId>jackson-annotations</artifactId>
 				<version>${com.fasterxml.jackson.version}</version>
@@ -926,91 +873,6 @@
 				<version>${com.fasterxml.jackson.version}</version>
 			</dependency>
 			<dependency>
-				<groupId>com.fazecast</groupId>
-				<artifactId>jSerialComm</artifactId>
-				<version>${com.fazecast.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>com.gluonhq.attach</groupId>
-				<artifactId>accelerometer</artifactId>
-				<version>${com.gluonhq.attach.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>com.gluonhq.attach</groupId>
-				<artifactId>display</artifactId>
-				<version>${com.gluonhq.attach.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>com.gluonhq</groupId>
-				<artifactId>charm-glisten</artifactId>
-				<version>${com.gluonhq.charm.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>com.google.code.gson</groupId>
-				<artifactId>gson</artifactId>
-				<version>${com.google.code.gson.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>com.pi4j</groupId>
-				<artifactId>pi4j-core</artifactId>
-				<version>${com.pi4j.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>com.pi4j</groupId>
-				<artifactId>pi4j-plugin-pigpio</artifactId>
-				<version>${com.pi4j.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>com.pi4j</groupId>
-				<artifactId>pi4j-plugin-linuxfs</artifactId>
-				<version>${com.pi4j.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>com.pi4j</groupId>
-				<artifactId>pi4j-plugin-raspberrypi</artifactId>
-				<version>${com.pi4j.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>commons-beanutils</groupId>
-				<artifactId>commons-beanutils</artifactId>
-				<version>${org.apache.commons.beanutils.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>commons-codec</groupId>
-				<artifactId>commons-codec</artifactId>
-				<version>${org.apache.commons.codec.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>jakarta.activation</groupId>
-				<artifactId>jakarta.activation-api</artifactId>
-				<version>${jakarta.activation.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>jakarta.validation</groupId>
-				<artifactId>jakarta.validation-api</artifactId>
-				<version>${jakarta.validation.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>jakarta.xml.bind</groupId>
-				<artifactId>jakarta.xml.bind-api</artifactId>
-				<version>${jakarta.xml.bind.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>mysql</groupId>
-				<artifactId>mysql-connector-java</artifactId>
-				<version>${com.mysql.jdbc.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>net.lingala.zip4j</groupId>
-				<artifactId>zip4j</artifactId>
-				<version>${net.lingala.zip4j.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>net.objecthunter</groupId>
-				<artifactId>exp4j</artifactId>
-				<version>${net.objecthunter.exp4j.version}</version>
-			</dependency>
-			<dependency>
 				<groupId>org.apache.logging.log4j</groupId>
 				<artifactId>log4j-api</artifactId>
 				<version>${org.apache.log4j.version}</version>
@@ -1031,82 +893,6 @@
 				<version>${org.apache.log4j.version}</version>
 			</dependency>
 			<dependency>
-				<groupId>org.apache.xmlgraphics</groupId>
-				<artifactId>batik-transcoder</artifactId>
-				<version>${org.apache.xmlgraphics.batik.transcoder.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.apache.xmlgraphics</groupId>
-				<artifactId>xmlgraphics-commons</artifactId>
-				<version>${org.apache.xmlgraphics.commons.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.bouncycastle</groupId>
-				<artifactId>bcprov-jdk18on</artifactId>
-				<version>${org.bouncycastle.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.bouncycastle</groupId>
-				<artifactId>bcpkix-jdk18on</artifactId>
-				<version>${org.bouncycastle.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.cryptacular</groupId>
-				<artifactId>cryptacular</artifactId>
-				<version>${org.cryptacular.version}</version>
-				<exclusions>
-					<exclusion>
-						<groupId>org.bouncycastle</groupId>
-						<artifactId>bcprov-jdk15on</artifactId>
-					</exclusion>
-				</exclusions>
-			</dependency>
-			<dependency>
-				<groupId>org.eclipse.paho</groupId>
-				<artifactId>org.eclipse.paho.client.mqttv3</artifactId>
-				<version>${org.eclipse.paho.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.fusesource.jansi</groupId>
-				<artifactId>jansi</artifactId>
-				<version>${org.fusesource.jansi.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.graphstream</groupId>
-				<artifactId>gs-core</artifactId>
-				<version>${org.graphstream.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.graphstream</groupId>
-				<artifactId>gs-ui</artifactId>
-				<version>${org.graphstream.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.hsqldb</groupId>
-				<artifactId>hsqldb</artifactId>
-				<version>${org.hsqldb.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.hibernate.orm</groupId>
-				<artifactId>hibernate-core</artifactId>
-				<version>${org.hibernate.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.jasypt</groupId>
-				<artifactId>jasypt</artifactId>
-				<version>${org.jasypt.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.json</groupId>
-				<artifactId>json</artifactId>
-				<version>${org.json.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.jsoup</groupId>
-				<artifactId>jsoup</artifactId>
-				<version>${org.jsoup.version}</version>
-			</dependency>
-			<dependency>
 				<groupId>org.junit.jupiter</groupId>
 				<artifactId>junit-jupiter</artifactId>
 				<version>${org.junit.jupiter.version}</version>
@@ -1118,93 +904,8 @@
 				<scope>test</scope>
 			</dependency>
 			<dependency>
-				<groupId>org.junit.vintage</groupId>
-				<artifactId>junit-vintage-engine</artifactId>
-				<version>${org.junit.jupiter.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.openjfx</groupId>
-				<artifactId>javafx-fxml</artifactId>
-				<version>${org.openjfx.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.openjfx</groupId>
-				<artifactId>javafx-media</artifactId>
-				<version>${org.openjfx.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.openjfx</groupId>
-				<artifactId>javafx-graphics</artifactId>
-				<version>${org.openjfx.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.refcodes</groupId>
-				<artifactId>refcodes-archetype-alt-c2</artifactId>
-				<version>${org.refcodes.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.refcodes</groupId>
-				<artifactId>refcodes-archetype-alt-cli</artifactId>
-				<version>${org.refcodes.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.refcodes</groupId>
-				<artifactId>refcodes-archetype-alt-csv</artifactId>
-				<version>${org.refcodes.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.refcodes</groupId>
-				<artifactId>refcodes-archetype-alt-decoupling</artifactId>
-				<version>${org.refcodes.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.refcodes</groupId>
-				<artifactId>refcodes-archetype-alt-eventbus</artifactId>
-				<version>${org.refcodes.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.refcodes</groupId>
-				<artifactId>refcodes-archetype-alt-filter</artifactId>
-				<version>${org.refcodes.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.refcodes</groupId>
-				<artifactId>refcodes-archetype-alt-rest</artifactId>
-				<version>${org.refcodes.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.refcodes</groupId>
-				<artifactId>refcodes-archetype-alt</artifactId>
-				<version>${org.refcodes.version}</version>
-			</dependency>
-			<dependency>
 				<groupId>org.refcodes</groupId>
 				<artifactId>refcodes-archetype</artifactId>
-				<version>${org.refcodes.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.refcodes</groupId>
-				<artifactId>refcodes-audio</artifactId>
-				<version>${org.refcodes.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.refcodes</groupId>
-				<artifactId>refcodes-batch</artifactId>
-				<version>${org.refcodes.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.refcodes</groupId>
-				<artifactId>refcodes-checkerboard-alt-javafx</artifactId>
-				<version>${org.refcodes.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.refcodes</groupId>
-				<artifactId>refcodes-checkerboard-alt</artifactId>
-				<version>${org.refcodes.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.refcodes</groupId>
-				<artifactId>refcodes-checkerboard</artifactId>
 				<version>${org.refcodes.version}</version>
 			</dependency>
 			<dependency>
@@ -1215,201 +916,6 @@
 			<dependency>
 				<groupId>org.refcodes</groupId>
 				<artifactId>refcodes-codec</artifactId>
-				<version>${org.refcodes.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.refcodes</groupId>
-				<artifactId>refcodes-command</artifactId>
-				<version>${org.refcodes.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.refcodes</groupId>
-				<artifactId>refcodes-component-ext-observer</artifactId>
-				<version>${org.refcodes.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.refcodes</groupId>
-				<artifactId>refcodes-component-ext</artifactId>
-				<version>${org.refcodes.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.refcodes</groupId>
-				<artifactId>refcodes-component</artifactId>
-				<version>${org.refcodes.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.refcodes</groupId>
-				<artifactId>refcodes-controlflow</artifactId>
-				<version>${org.refcodes.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.refcodes</groupId>
-				<artifactId>refcodes-criteria</artifactId>
-				<version>${org.refcodes.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.refcodes</groupId>
-				<artifactId>refcodes-data-ext-checkers</artifactId>
-				<version>${org.refcodes.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.refcodes</groupId>
-				<artifactId>refcodes-data-ext-chess</artifactId>
-				<version>${org.refcodes.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.refcodes</groupId>
-				<artifactId>refcodes-data-ext-corporate</artifactId>
-				<version>${org.refcodes.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.refcodes</groupId>
-				<artifactId>refcodes-data-ext-symbols</artifactId>
-				<version>${org.refcodes.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.refcodes</groupId>
-				<artifactId>refcodes-data-ext</artifactId>
-				<version>${org.refcodes.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.refcodes</groupId>
-				<artifactId>refcodes-data</artifactId>
-				<version>${org.refcodes.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.refcodes</groupId>
-				<artifactId>refcodes-decoupling-ext-application</artifactId>
-				<version>${org.refcodes.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.refcodes</groupId>
-				<artifactId>refcodes-decoupling-ext</artifactId>
-				<version>${org.refcodes.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.refcodes</groupId>
-				<artifactId>refcodes-decoupling</artifactId>
-				<version>${org.refcodes.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.refcodes</groupId>
-				<artifactId>refcodes-entity</artifactId>
-				<version>${org.refcodes.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.refcodes</groupId>
-				<artifactId>refcodes-eventbus-ext-application</artifactId>
-				<version>${org.refcodes.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.refcodes</groupId>
-				<artifactId>refcodes-eventbus-ext</artifactId>
-				<version>${org.refcodes.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.refcodes</groupId>
-				<artifactId>refcodes-eventbus</artifactId>
-				<version>${org.refcodes.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.refcodes</groupId>
-				<artifactId>refcodes-exception</artifactId>
-				<version>${org.refcodes.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.refcodes</groupId>
-				<artifactId>refcodes-factory-alt-spring</artifactId>
-				<version>${org.refcodes.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.refcodes</groupId>
-				<artifactId>refcodes-factory-alt</artifactId>
-				<version>${org.refcodes.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.refcodes</groupId>
-				<artifactId>refcodes-factory</artifactId>
-				<version>${org.refcodes.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.refcodes</groupId>
-				<artifactId>refcodes-filesystem-alt-s3</artifactId>
-				<version>${org.refcodes.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.refcodes</groupId>
-				<artifactId>refcodes-filesystem-alt</artifactId>
-				<version>${org.refcodes.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.refcodes</groupId>
-				<artifactId>refcodes-filesystem</artifactId>
-				<version>${org.refcodes.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.refcodes</groupId>
-				<artifactId>refcodes-forwardsecrecy-alt-filesystem</artifactId>
-				<version>${org.refcodes.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.refcodes</groupId>
-				<artifactId>refcodes-forwardsecrecy-alt</artifactId>
-				<version>${org.refcodes.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.refcodes</groupId>
-				<artifactId>refcodes-forwardsecrecy</artifactId>
-				<version>${org.refcodes.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.refcodes</groupId>
-				<artifactId>refcodes-generator</artifactId>
-				<version>${org.refcodes.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.refcodes</groupId>
-				<artifactId>refcodes-graphical-ext-javafx</artifactId>
-				<version>${org.refcodes.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.refcodes</groupId>
-				<artifactId>refcodes-graphical-ext</artifactId>
-				<version>${org.refcodes.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.refcodes</groupId>
-				<artifactId>refcodes-graphical</artifactId>
-				<version>${org.refcodes.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.refcodes</groupId>
-				<artifactId>refcodes-hal</artifactId>
-				<version>${org.refcodes.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.refcodes</groupId>
-				<artifactId>refcodes-io-ext-observer</artifactId>
-				<version>${org.refcodes.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.refcodes</groupId>
-				<artifactId>refcodes-io-ext</artifactId>
-				<version>${org.refcodes.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.refcodes</groupId>
-				<artifactId>refcodes-io</artifactId>
-				<version>${org.refcodes.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.refcodes</groupId>
-				<artifactId>refcodes-jobbus</artifactId>
-				<version>${org.refcodes.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.refcodes</groupId>
-				<artifactId>refcodes-licensing</artifactId>
 				<version>${org.refcodes.version}</version>
 			</dependency>
 			<dependency>
@@ -1474,242 +980,12 @@
 			</dependency>
 			<dependency>
 				<groupId>org.refcodes</groupId>
-				<artifactId>refcodes-matcher</artifactId>
-				<version>${org.refcodes.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.refcodes</groupId>
-				<artifactId>refcodes-microservice</artifactId>
-				<version>${org.refcodes.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.refcodes</groupId>
-				<artifactId>refcodes-mixin</artifactId>
-				<version>${org.refcodes.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.refcodes</groupId>
-				<artifactId>refcodes-net</artifactId>
-				<version>${org.refcodes.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.refcodes</groupId>
-				<artifactId>refcodes-numerical</artifactId>
-				<version>${org.refcodes.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.refcodes</groupId>
-				<artifactId>refcodes-observer</artifactId>
-				<version>${org.refcodes.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.refcodes</groupId>
-				<artifactId>refcodes-p2p-alt-rest</artifactId>
-				<version>${org.refcodes.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.refcodes</groupId>
-				<artifactId>refcodes-p2p-alt-serial</artifactId>
-				<version>${org.refcodes.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.refcodes</groupId>
-				<artifactId>refcodes-p2p-ext-observer</artifactId>
-				<version>${org.refcodes.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.refcodes</groupId>
-				<artifactId>refcodes-p2p</artifactId>
-				<version>${org.refcodes.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.refcodes</groupId>
-				<artifactId>refcodes-properties-ext-application</artifactId>
-				<version>${org.refcodes.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.refcodes</groupId>
-				<artifactId>refcodes-properties-ext-cli</artifactId>
-				<version>${org.refcodes.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.refcodes</groupId>
-				<artifactId>refcodes-properties-ext-obfuscation</artifactId>
-				<version>${org.refcodes.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.refcodes</groupId>
-				<artifactId>refcodes-properties-ext-observer</artifactId>
-				<version>${org.refcodes.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.refcodes</groupId>
-				<artifactId>refcodes-properties-ext</artifactId>
-				<version>${org.refcodes.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.refcodes</groupId>
-				<artifactId>refcodes-properties</artifactId>
-				<version>${org.refcodes.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.refcodes</groupId>
-				<artifactId>refcodes-remoting-ext-observer</artifactId>
-				<version>${org.refcodes.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.refcodes</groupId>
-				<artifactId>refcodes-remoting-ext</artifactId>
-				<version>${org.refcodes.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.refcodes</groupId>
-				<artifactId>refcodes-remoting</artifactId>
-				<version>${org.refcodes.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.refcodes</groupId>
-				<artifactId>refcodes-rest-ext-eureka</artifactId>
-				<version>${org.refcodes.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.refcodes</groupId>
-				<artifactId>refcodes-rest-ext</artifactId>
-				<version>${org.refcodes.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.refcodes</groupId>
-				<artifactId>refcodes-rest</artifactId>
-				<version>${org.refcodes.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.refcodes</groupId>
 				<artifactId>refcodes-runtime</artifactId>
 				<version>${org.refcodes.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.refcodes</groupId>
 				<artifactId>refcodes-schema</artifactId>
-				<version>${org.refcodes.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.refcodes</groupId>
-				<artifactId>refcodes-security-alt-chaos</artifactId>
-				<version>${org.refcodes.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.refcodes</groupId>
-				<artifactId>refcodes-security-alt</artifactId>
-				<version>${org.refcodes.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.refcodes</groupId>
-				<artifactId>refcodes-security-ext-chaos</artifactId>
-				<version>${org.refcodes.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.refcodes</groupId>
-				<artifactId>refcodes-security-ext-spring</artifactId>
-				<version>${org.refcodes.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.refcodes</groupId>
-				<artifactId>refcodes-security-ext</artifactId>
-				<version>${org.refcodes.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.refcodes</groupId>
-				<artifactId>refcodes-security</artifactId>
-				<version>${org.refcodes.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.refcodes</groupId>
-				<artifactId>refcodes-serial-alt-net</artifactId>
-				<version>${org.refcodes.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.refcodes</groupId>
-				<artifactId>refcodes-serial-alt-tty</artifactId>
-				<version>${org.refcodes.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.refcodes</groupId>
-				<artifactId>refcodes-serial-alt</artifactId>
-				<version>${org.refcodes.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.refcodes</groupId>
-				<artifactId>refcodes-serial-ext-handshake</artifactId>
-				<version>${org.refcodes.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.refcodes</groupId>
-				<artifactId>refcodes-serial-ext-observer</artifactId>
-				<version>${org.refcodes.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.refcodes</groupId>
-				<artifactId>refcodes-serial-ext-security</artifactId>
-				<version>${org.refcodes.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.refcodes</groupId>
-				<artifactId>refcodes-serial-ext</artifactId>
-				<version>${org.refcodes.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.refcodes</groupId>
-				<artifactId>refcodes-serial</artifactId>
-				<version>${org.refcodes.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.refcodes</groupId>
-				<artifactId>refcodes-struct-ext-factory</artifactId>
-				<version>${org.refcodes.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.refcodes</groupId>
-				<artifactId>refcodes-struct-ext</artifactId>
-				<version>${org.refcodes.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.refcodes</groupId>
-				<artifactId>refcodes-struct</artifactId>
-				<version>${org.refcodes.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.refcodes</groupId>
-				<artifactId>refcodes-tabular-alt-forwardsecrecy</artifactId>
-				<version>${org.refcodes.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.refcodes</groupId>
-				<artifactId>refcodes-tabular-alt</artifactId>
-				<version>${org.refcodes.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.refcodes</groupId>
-				<artifactId>refcodes-tabular</artifactId>
-				<version>${org.refcodes.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.refcodes</groupId>
-				<artifactId>refcodes-textual</artifactId>
-				<version>${org.refcodes.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.refcodes</groupId>
-				<artifactId>refcodes-time</artifactId>
-				<version>${org.refcodes.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.refcodes</groupId>
-				<artifactId>refcodes-tracker</artifactId>
-				<version>${org.refcodes.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.refcodes</groupId>
-				<artifactId>refcodes-web</artifactId>
 				<version>${org.refcodes.version}</version>
 			</dependency>
 			<dependency>
@@ -1738,114 +1014,9 @@
 				<version>${org.slf4j.version}</version>
 			</dependency>
 			<dependency>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-starter-data-jpa</artifactId>
-				<version>${org.springframework.boot.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-starter-data-rest</artifactId>
-				<version>${org.springframework.boot.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-starter-validation</artifactId>
-				<version>${org.springframework.boot.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-starter-web</artifactId>
-				<version>${org.springframework.boot.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-starter</artifactId>
-				<version>${org.springframework.boot.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.springframework.cloud</groupId>
-				<artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
-				<version>${org.springframework.cloud.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.springframework.cloud</groupId>
-				<artifactId>spring-cloud-starter-netflix-eureka-server</artifactId>
-				<version>${org.springframework.cloud.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.springframework</groupId>
-				<artifactId>spring-aop</artifactId>
-				<version>${org.springframework.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.springframework</groupId>
-				<artifactId>spring-beans</artifactId>
-				<version>${org.springframework.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.springframework</groupId>
-				<artifactId>spring-context</artifactId>
-				<version>${org.springframework.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.springframework</groupId>
-				<artifactId>spring-core</artifactId>
-				<version>${org.springframework.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.springframework</groupId>
-				<artifactId>spring-orm</artifactId>
-				<version>${org.springframework.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.springframework</groupId>
-				<artifactId>spring-test</artifactId>
-				<version>${org.springframework.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.springframework</groupId>
-				<artifactId>spring-tx</artifactId>
-				<version>${org.springframework.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.springframework</groupId>
-				<artifactId>spring-web</artifactId>
-				<version>${org.springframework.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.springframework</groupId>
-				<artifactId>spring-webmvc</artifactId>
-				<version>${org.springframework.version}</version>
-			</dependency>
-			<dependency>
 				<groupId>org.yaml</groupId>
 				<artifactId>snakeyaml</artifactId>
 				<version>${org.yaml.snakeyaml.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>software.amazon.awssdk</groupId>
-				<artifactId>auth</artifactId>
-				<version>${software.amazon.awssdk.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>software.amazon.awssdk</groupId>
-				<artifactId>regions</artifactId>
-				<version>${software.amazon.awssdk.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>software.amazon.awssdk</groupId>
-				<artifactId>s3</artifactId>
-				<version>${software.amazon.awssdk.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>software.amazon.awssdk</groupId>
-				<artifactId>sdk-core</artifactId>
-				<version>${software.amazon.awssdk.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>software.amazon.awssdk</groupId>
-				<artifactId>simpledb</artifactId>
-				<version>2.0.0-preview-11</version>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
