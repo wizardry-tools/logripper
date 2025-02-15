@@ -23,6 +23,12 @@ LogRipper is currently under development and may not yet include all planned fea
 - **Folder Layout**: Crawl and mapp the folder/file structure of a given path.
 - **Size Stat**: Include the size of each file/folder in the structure printout
 
+### Configuration Files ###
+
+You can create configuration files ("--init" or "--init path/to/your/config") from a template (found in "src/main/resources"), print a help text ("--help"), show system information ("--sysinfo") for support issues, regard being more verbose ("--verbose") or more quiet ("--quiet"), load a configuration from a specific location ("--config path/to/your/config"), all given that your command line syntax given uses the according predefined args syntax Term elements such as lines-before, lines-after, limit, ignore-case, silent, count, number, etc.
+
+# Build Instructions #
+
 ### Getting started ###
 
 To get up and running, you use this archetype together with [`Maven`](https://maven.apache.org). Just change into the newly created folder and invoke `mvn` to build your new application:

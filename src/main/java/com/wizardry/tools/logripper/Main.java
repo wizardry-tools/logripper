@@ -40,9 +40,15 @@ import org.refcodes.textual.FontFamily;
 import org.refcodes.textual.Font;
 import org.refcodes.textual.FontStyle;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Locale;
 
 /**
  * A minimum REFCODES.ORG enabled command line interface (CLI) application. Get
@@ -79,6 +85,9 @@ public class Main {
 	// /////////////////////////////////////////////////////////////////////////
 
 	public static void main( String args[] ) {
+
+		System.setProperty("file.encoding", StandardCharsets.UTF_8.name());
+		Locale.setDefault(Locale.US);
 
 		// ---------------------------------------------------------------------
 		// CLI:
@@ -227,6 +236,39 @@ public class Main {
 					LOGGER.error("Error accessing the provided path: ", e);
 				}
 				LOGGER.info("Finished mapping path in ["+mapTime.toMillis()+"] milliseconds");
+				// Example of rendering text-based visuals
+				String tableBorder = "┬────┬────────────┬─";
+				// Creating an array of byte type chars and
+				// passing random  alphabet as an argument.abstract
+				// Say alphabet be 'w'
+				byte[] byte_array = { 'w' };
+
+				// Creating an object of InputStream
+				InputStream instream
+						= new ByteArrayInputStream(byte_array);
+
+				// Now, opening new file input stream reader
+				InputStreamReader streamreader
+						= new InputStreamReader(instream);
+				String defaultCharset = streamreader.getEncoding();
+
+				System.out.println(tableBorder);
+
+				String defaultencoding
+						= System.getProperty("file.encoding");
+
+				System.out.println("Default Charset: "
+						+ defaultencoding);
+
+				// Getting character encoding by InputStreamReader
+				System.out.println(
+						"Default Charset by InputStreamReader: "
+								+ defaultCharset);
+
+				// Getting character encoding by java.nio.charset
+				System.out.println("Default Charset: "
+						+ Charset.defaultCharset());
+
 				// exit early
 				return;
 			}

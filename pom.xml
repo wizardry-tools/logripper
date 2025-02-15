@@ -18,8 +18,8 @@
 	<properties>
 		<main.module>com.wizardry.tools.logripper</main.module>
 		<main.class>${main.module}.Main</main.class>
-		<maven.compiler.source>17</maven.compiler.source>
-		<maven.compiler.target>17</maven.compiler.target>
+		<maven.compiler.source>23</maven.compiler.source>
+		<maven.compiler.target>23</maven.compiler.target>
 		<!-- # %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% # -->
 		<!-- # TODO: Adjust the properties accordingly:                    # -->
 		<!-- # %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% # -->
@@ -53,8 +53,8 @@
 		<!-- # %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% # -->
 		<org.refcodes.url>http://www.refcodes.org</org.refcodes.url>
 		<org.refcodes.version>3.3.9</org.refcodes.version>
-		<java.source.version>17</java.source.version>
-		<java.target.version>17</java.target.version>
+		<java.source.version>23</java.source.version>
+		<java.target.version>23</java.target.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.compiler.optimize>true</maven.compiler.optimize>
 		<maven.version>3.9.9</maven.version>
@@ -224,17 +224,19 @@
 			<artifactId>refcodes-logger-alt-console</artifactId>
 		</dependency>
 		<!-- Log to SLF4J, when enabled, disable "refcodes-logger-ext-slf4j"! -->
-		<!-- 
+		<!--
 			<dependency>
 				<artifactId>refcodes-logger-alt-slf4j</artifactId>
 				<groupId>org.refcodes</groupId>
 			</dependency>
 		-->
 		<!-- Bind to SLF4J, when enabled, disable "refcodes-logger-alt-slf4j"! -->
+
 		<dependency>
 			<groupId>org.refcodes</groupId>
 			<artifactId>refcodes-logger-ext-slf4j</artifactId>
 		</dependency>
+
 
 		<dependency>
 			<groupId>org.projectlombok</groupId>
