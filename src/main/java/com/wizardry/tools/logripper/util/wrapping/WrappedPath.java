@@ -551,7 +551,6 @@ public final class WrappedPath implements Wrappable<Path>,Path,Readable<LineRead
 
     @Override
     public synchronized Stream<String> readLines() throws IOException {
-        LOGGER.info("Readinglines as Stream<String>");
         //validate
         if (!isReadable()) {
             throw new IOException("Path is not readable.");
@@ -562,7 +561,6 @@ public final class WrappedPath implements Wrappable<Path>,Path,Readable<LineRead
 
     @Override
     public synchronized ConcurrentLinkedQueue<Match> readLines(LineReader lineReader) throws IOException {
-        LOGGER.info("Readinglines with lineReader");
         //validate
         if (lineReader == null) {
             throw new NullPointerException("LineReader is null.");
@@ -575,7 +573,6 @@ public final class WrappedPath implements Wrappable<Path>,Path,Readable<LineRead
         final AtomicInteger totalLines = new AtomicInteger(0);
         //read file
         try  (Stream<String> lines = readLines()) {
-            LOGGER.info("lines have been read");
             // read lines
             lines.parallel().forEach(line -> {
                 // LineReader will match and collate matches based on its configuration.

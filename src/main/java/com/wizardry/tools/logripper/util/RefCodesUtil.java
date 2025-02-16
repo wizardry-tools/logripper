@@ -6,7 +6,7 @@ import org.refcodes.properties.ext.application.ApplicationProperties;
 import java.util.Optional;
 import java.util.function.Predicate;
 
-public class RefCodesUtil {
+public final class RefCodesUtil {
 
     public static int parseIntegerOption(ApplicationProperties properties, StringOption option, int defaultValue) {
         return Optional.ofNullable(properties.getOr(option, null))

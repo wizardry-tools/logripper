@@ -1,6 +1,6 @@
 package com.wizardry.tools.logripper.tasks.pathsize;
 
-import com.wizardry.tools.logripper.tasks.PooledRipper;
+import com.wizardry.tools.logripper.tasks.Ripper;
 import com.wizardry.tools.logripper.util.DataUtil;
 import com.wizardry.tools.logripper.util.Timestamp;
 import org.refcodes.logger.RuntimeLogger;
@@ -11,7 +11,7 @@ import java.nio.file.*;
 import java.util.concurrent.ForkJoinPool;
 
 // TODO: This is failing
-public class PathSizeCalculator implements PooledRipper<Path,Long> {
+public class PathSizeCalculator implements Ripper<Path,Long> {
 
     private static final RuntimeLogger LOGGER = RuntimeLoggerFactorySingleton.createRuntimeLogger();
 

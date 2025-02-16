@@ -2,7 +2,7 @@ package com.wizardry.tools.logripper.util;
 
 import static com.wizardry.tools.logripper.util.StringUtil.EMPTY;
 
-public class DataUtil {
+public final class DataUtil {
 
     public static final String DASH = "-";
 

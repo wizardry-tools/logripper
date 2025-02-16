@@ -1,9 +1,0 @@
-package com.wizardry.tools.logripper.tasks;
-
-import java.io.IOException;
-
-public interface PooledRipper<T,U> {
-
-    U rip(T toRip) throws IOException;
-
-}

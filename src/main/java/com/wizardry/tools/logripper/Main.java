@@ -27,7 +27,7 @@ import static org.refcodes.cli.CliSugar.*;
 
 import com.wizardry.tools.logripper.config.*;
 import com.wizardry.tools.logripper.tasks.pathgrep.FileGrepRipper;
-import com.wizardry.tools.logripper.tasks.pathgrep.FileGrepRipperTwo;
+import com.wizardry.tools.logripper.tasks.pathgrep.PathGrepRipper;
 import com.wizardry.tools.logripper.tasks.pathmapper.*;
 import com.wizardry.tools.logripper.tasks.pathsize.PathSizeCalculator;
 import com.wizardry.tools.logripper.util.Timestamp;
@@ -268,24 +268,23 @@ public class Main {
 					isSilent, isCountOnly, isNumbered,
 					isVerbose, isDebug);
 
-			// Option 1 - first iteration of LogRipper tool
-			//LogRipper logRipper = new LogRipper(config);
-			//logRipper.scanAndReport();
-
-			// Option 2 - second iteration of LogRipper tool
-			AtomicInteger matchCounter = new AtomicInteger(0);
-			FileGrepRipperTwo fileGrepRipper = new FileGrepRipperTwo(config, matchCounter);
-			fileGrepRipper.rip(WrappedPath.of(thePath));
-
-			// Option 3 - third iteration of LogRipper tool
-			//PathGrepRipper pathGrepRipper = new PathGrepRipper(config);
-			//pathGrepRipper.rip(thePath, isDebug);
+			WrappedPath wrappedPath = WrappedPath.of(thePath);
+			if (!wrappedPath.isReadable()) {
+				LOGGER.warn("Path is is not readable. Please select a different path");
+				return;
+			}
+			AtomicInteger totalMatches = new AtomicInteger(0);
+			if (wrappedPath.isFile()) {
+				FileGrepRipper fileGrepRipper = new FileGrepRipper(config, totalMatches);
+				fileGrepRipper.rip(wrappedPath);
+			} else if (wrappedPath.isDir()) {
+				PathGrepRipper pathGrepRipper = new PathGrepRipper(config, totalMatches);
+				pathGrepRipper.rip(wrappedPath);
+			}
 
 			LOGGER.info("LogRipper execution took: " + logRipperTime.toMillis() + " milliseconds");
 
-
-		}
-		catch ( Exception e ) {
+		} catch ( Exception e ) {
 			theCliHelper.printException( e );
 			System.exit( e.hashCode() % 0xFF );
 		}

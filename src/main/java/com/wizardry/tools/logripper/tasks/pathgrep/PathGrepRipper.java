@@ -1,80 +1,84 @@
 package com.wizardry.tools.logripper.tasks.pathgrep;
 
 import com.wizardry.tools.logripper.config.LogRipperConfig;
-import com.wizardry.tools.logripper.tasks.PooledRipper;
+import com.wizardry.tools.logripper.tasks.PathRipper;
 import com.wizardry.tools.logripper.util.Timestamp;
+import com.wizardry.tools.logripper.util.matching.Match;
+import com.wizardry.tools.logripper.util.wrapping.WrappedPath;
 import org.refcodes.logger.RuntimeLogger;
 import org.refcodes.logger.RuntimeLoggerFactorySingleton;
 
 import java.io.IOException;
-import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.ForkJoinPool;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Consumer;
 
-public class PathGrepRipper implements PooledRipper<Path,Map<String, Map<Integer,String>>> {
+public class PathGrepRipper implements PathRipper<ConcurrentLinkedQueue<Match>> {
 
     private static final RuntimeLogger LOGGER = RuntimeLoggerFactorySingleton.createRuntimeLogger();
 
     private final LogRipperConfig config;
-    private final AtomicInteger matchCounter;
+    private final AtomicInteger totalMatches;
+    private final boolean isCountOnly;
+    private final boolean isDebug;
+    private final boolean isSilent;
+    private final boolean initialized;
 
-    public PathGrepRipper(LogRipperConfig config) {
+    public PathGrepRipper(LogRipperConfig config, AtomicInteger totalMatches) {
         this.config = config;
-        this.matchCounter = new AtomicInteger(0);
-        LOGGER.info("New PathGrepRipper");
+        this.isCountOnly = config.isCountOnly();
+        this.isDebug = config.isDebug();
+        this.isSilent = config.isSilent();
+        this.totalMatches = totalMatches;
+        if (isDebug) LOGGER.debug("New PathGrepRipper");
+
+        this.initialized = true;
     }
 
     @Override
-    public Map<String, Map<Integer, String>> rip(Path path) throws IOException {
-        Map<String, Map<Integer, String>> pathMatches = new HashMap<>();
+    public Map<String, ConcurrentLinkedQueue<Match>> rip(WrappedPath path) throws IOException {
+        if (!initialized) {
+            throw new IllegalStateException("PathGrepRipper isn't initialized");
+        }
+
+        Map<String, ConcurrentLinkedQueue<Match>> pathMatches = new HashMap<>();
 
         Timestamp calculationTime = new Timestamp();
         try (ForkJoinPool pool = new ForkJoinPool()) {
-            PathGrepTask task = new PathGrepTask(path, config, matchCounter);
+            PathGrepTask task = new PathGrepTask(path, config, totalMatches);
             pathMatches = pool.invoke(task);
             // call reporting
-            if (!config.isCountOnly()) {
-                reportMatches(pathMatches);
-            } else {
-                System.out.println(matchCounter.get());
-            }
+            reportMatches(pathMatches);
         } catch (Exception e) {
-            throw new IOException("Error calculating file size", e);
+            throw new IOException("Error grepping folder", e);
         }
-        LOGGER.info("Calculated file size in [" + calculationTime.toMillis() + "] milliseconds");
+        if(isDebug) LOGGER.debug("Grepped folder in [" + calculationTime.toMillis() + "] milliseconds");
         return pathMatches;
     }
 
-    private void reportMatches(Map<String, Map<Integer, String>> matches) {
-        if (config.isNumbered()) {
-            announceNumberedMatches().accept(matches);
-        } else {
-            announceMatches().accept(matches);
+    private void reportMatches(Map<String, ConcurrentLinkedQueue<Match>> matches) {
+        if (!isCountOnly) {
+            announceMatches(isSilent, isDebug).accept(matches);
         }
+        LOGGER.info("Total matches found: "+totalMatches.get());
     }
 
-    private static Consumer<Map<String, Map<Integer, String>>> announceMatches() {
-        return (pathMatches) -> {
-            pathMatches.forEach((path, matches) -> {
-                System.out.println("["+path+"]");
-                matches.forEach((key, value) -> {
-                    matches.values().forEach(System.out::println);
-                });
+    private static Consumer<Map<String,ConcurrentLinkedQueue<Match>>> announceMatches(boolean isSilent, boolean isDebug) {
+        if (isDebug && !isSilent) {
+            return (matches) -> matches.forEach((key, entry) -> {
+                LOGGER.notice("Matches for: " + key);
+                entry.forEach(match -> match.print(LOGGER));
             });
-        };
-    }
-
-    private static Consumer<Map<String, Map<Integer, String>>> announceNumberedMatches() {
-        return (pathMatches) -> {
-            pathMatches.forEach((path, matches) -> {
-                System.out.println("["+path+"]");
-                matches.forEach((key, value) -> {
-                    System.out.println("#" + (key + 1) + ": " + value);
-                });
+        }
+        if (!isSilent) {
+            return (matches) -> matches.forEach((key, entry) -> {
+                LOGGER.notice("Matches for: " + key);
+                entry.forEach(match -> match.print(System.out));
             });
-        };
+        }
+        return (matches) -> {};
     }
 }

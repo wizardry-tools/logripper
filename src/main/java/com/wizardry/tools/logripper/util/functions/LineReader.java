@@ -38,7 +38,7 @@ public final class LineReader implements TriFunction<String,Integer,ConcurrentLi
         this.linesAfter = config.linesAfterMatch();
         this.beforeLines = new FifoList<>(linesBefore);
         this.afterLines = new LiLoList<>(linesAfter);
-        LOGGER.info("New LineReader");
+        if (config.isDebug()) LOGGER.debug("New LineReader");
         this.initialized = true;
     }
 
@@ -63,7 +63,6 @@ public final class LineReader implements TriFunction<String,Integer,ConcurrentLi
         if (limit < 1 || totalMatches.get() < limit + 1) {
             Matcher matcher = pattern.matcher(line);
             if (matcher.find()) {
-                //LOGGER.info("Found Match @ #"+lineNumber);
                 // TODO: figure out how to accurately add lines after...
                 // I'm not even sure if this is safe.`
                 if (lastMatch != null && !afterLines.isEmpty()) {

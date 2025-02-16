@@ -1,7 +1,7 @@
 package com.wizardry.tools.logripper.util;
 
 
-public class LiLoList<T> extends FifoList<T> {
+public final class LiLoList<T> extends FifoList<T> {
 
     public LiLoList(int maxSize) {
         super(maxSize);

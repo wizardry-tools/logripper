@@ -3,10 +3,10 @@ package com.wizardry.tools.logripper.util.filesystem;
 import java.util.Arrays;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
-public interface Crawlable<T extends Crawlable<T>> {
+public interface Mappable<T extends Mappable<T>> {
 
     /**
-     * Returns the Crawlable item's current level.
+     * Returns the Mappable item's current level.
      * @return
      */
     default int getLevel() {
@@ -14,7 +14,7 @@ public interface Crawlable<T extends Crawlable<T>> {
     }
 
     /**
-     * Returns a list of Crawlable child items.
+     * Returns a list of Mappable child items.
      * @return
      */
     default ConcurrentLinkedQueue<T> getChildren() {
@@ -22,13 +22,13 @@ public interface Crawlable<T extends Crawlable<T>> {
     }
 
     /**
-     * Adds a child item that is Crawlable.
+     * Adds a child item that is Mappable.
      * @param child
      */
     void addChild(T child);
 
     /**
-     * Add an array of child items that are Crwalable.
+     * Add an array of child items that are Mappable.
      * @param children
      */
     default void addChildren(T... children) {
@@ -36,7 +36,7 @@ public interface Crawlable<T extends Crawlable<T>> {
     }
 
     /**
-     * Removes a child from the current Crawlable.
+     * Removes a child from the current Mappable.
      * @param child
      * @return
      */
