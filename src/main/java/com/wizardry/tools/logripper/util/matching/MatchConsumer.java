@@ -1,6 +1,7 @@
-package com.wizardry.tools.logripper.functions;
+package com.wizardry.tools.logripper.util.matching;
 
 import com.wizardry.tools.logripper.config.LogRipperConfig;
+import com.wizardry.tools.logripper.util.functions.TriConsumer;
 
 import java.util.List;
 import java.util.Map;

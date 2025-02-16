@@ -1,5 +1,10 @@
 package com.wizardry.tools.logripper.config;
 
+import com.wizardry.tools.logripper.tasks.pathmapper.FileTreeMapper;
+import com.wizardry.tools.logripper.tasks.pathmapper.PooledTreeWrapper;
+import com.wizardry.tools.logripper.tasks.pathmapper.WrappedTreeNode;
+import com.wizardry.tools.logripper.util.wrapping.WrappedPath;
+
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.LinkOption;
@@ -7,6 +12,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
@@ -99,6 +105,11 @@ public record LogRipperConfig(
 
     public Pattern getTokenPattern() {
         return isIgnoreCase ? Pattern.compile(searchToken, Pattern.CASE_INSENSITIVE) : Pattern.compile(searchToken);
+    }
+
+    public WrappedTreeNode getWrappedTree() throws IOException, ExecutionException, InterruptedException {
+        FileTreeMapper<WrappedPath, WrappedTreeNode> treeWrapper = new PooledTreeWrapper();
+        return treeWrapper.crawl(WrappedPath.of(path));
     }
 
     public List<String> getPaths() {

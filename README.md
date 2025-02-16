@@ -4,7 +4,7 @@ LogRipper is a utility designed to search for specific patterns or tokens within
 # This is a Work in Progress #
 LogRipper is currently under development and may not yet include all planned features or optimizations. Contributions are welcome!
 
-## Latest Update **
+## Latest Update ##
 - 2/13/2025 - managed to get the native-image built on Windows, however the graphical text looks weird. need to debug that.
 
 
@@ -26,6 +26,34 @@ LogRipper is currently under development and may not yet include all planned fea
 ### Configuration Files ###
 
 You can create configuration files ("--init" or "--init path/to/your/config") from a template (found in "src/main/resources"), print a help text ("--help"), show system information ("--sysinfo") for support issues, regard being more verbose ("--verbose") or more quiet ("--quiet"), load a configuration from a specific location ("--config path/to/your/config"), all given that your command line syntax given uses the according predefined args syntax Term elements such as lines-before, lines-after, limit, ignore-case, silent, count, number, etc.
+
+
+## Commands ##
+
+| Command      | Property       | Alias | Usage                          | Description                                                     |
+|--------------|----------------|-------|--------------------------------|-----------------------------------------------------------------|
+| help         | --help         |       | `--help`                       | Shows all CLI help information.                                 |
+| path         | --path         | -p    | `-p ~/some/path`               | Pass the path to a file or directory that should be processed.  |
+| map          | --map          | -m    | `-p ~/some/path -m`            | Traverse the path and render a tree structure.                  |
+| size         | --size         | -S    | `-p ~/some/path -m -S`         | Includes information about sizing, like file size or tree size. |
+| sort         | --sort         | -o    | `-p ~/some/path -m -o`         | Sorts the mapped tree by size.                                  |
+| grep         | --grep         | -g    | `-p ~/some/file -g someToken`  | Search for the provided token. Can use REGEX.                   |
+| ignore-case  | --ignore-case  | -i    |                                |                                                                 |
+| count        | --count        | -c    |                                |                                                                 |
+| number       | --number       | -n    |                                |                                                                 |
+| lines-before | --lines-before | -B    |                                |                                                                 |
+| lines-after  | --lines-after  | -A    |                                |                                                                 |
+| lines-around | --lines-around | -C    |                                |                                                                 |
+| max-depth    | --max-depth    | -D    |                                |                                                                 |
+| limit        | --limit        | -L    |                                |                                                                 |
+| verbose      | --verbose      | -v    |                                |                                                                 |
+| silent       | --silent       | -s    |                                |                                                                 |
+| debug        | --debug        |       |                                |                                                                 |
+| sysinfo      | --sysinfo      |       |                                |                                                                 |
+| init         | --init         |       |                                |                                                                 |
+| config       | --config       |       |                                |                                                                 |
+
+
 
 # Build Instructions #
 

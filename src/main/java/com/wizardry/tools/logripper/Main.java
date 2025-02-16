@@ -26,6 +26,8 @@ import static com.wizardry.tools.logripper.util.StringUtil.EMPTY;
 import static org.refcodes.cli.CliSugar.*;
 
 import com.wizardry.tools.logripper.config.*;
+import com.wizardry.tools.logripper.tasks.pathgrep.FileGrepRipper;
+import com.wizardry.tools.logripper.tasks.pathgrep.FileGrepRipperTwo;
 import com.wizardry.tools.logripper.tasks.pathmapper.*;
 import com.wizardry.tools.logripper.tasks.pathsize.PathSizeCalculator;
 import com.wizardry.tools.logripper.util.Timestamp;
@@ -40,15 +42,12 @@ import org.refcodes.textual.FontFamily;
 import org.refcodes.textual.Font;
 import org.refcodes.textual.FontStyle;
 
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Locale;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * A minimum REFCODES.ORG enabled command line interface (CLI) application. Get
@@ -218,10 +217,6 @@ public class Main {
 				Timestamp mapTime = Timestamp.now();
 				try {
 
-					// Third iteration of Mapper
-					//FileTreeMapper<Path, MappedTreeNode> treeMapper = new PooledTreeMapper();
-					//MappedTreeNode root = treeMapper.crawl(thePath);
-
 					//Fourth Iteration of Mapper
 					FileTreeMapper<WrappedPath, WrappedTreeNode> treeWrapper = new PooledTreeWrapper();
 					WrappedTreeNode root = treeWrapper.crawl(WrappedPath.of(thePath));
@@ -236,38 +231,6 @@ public class Main {
 					LOGGER.error("Error accessing the provided path: ", e);
 				}
 				LOGGER.info("Finished mapping path in ["+mapTime.toMillis()+"] milliseconds");
-				// Example of rendering text-based visuals
-				String tableBorder = "┬────┬────────────┬─";
-				// Creating an array of byte type chars and
-				// passing random  alphabet as an argument.abstract
-				// Say alphabet be 'w'
-				byte[] byte_array = { 'w' };
-
-				// Creating an object of InputStream
-				InputStream instream
-						= new ByteArrayInputStream(byte_array);
-
-				// Now, opening new file input stream reader
-				InputStreamReader streamreader
-						= new InputStreamReader(instream);
-				String defaultCharset = streamreader.getEncoding();
-
-				System.out.println(tableBorder);
-
-				String defaultencoding
-						= System.getProperty("file.encoding");
-
-				System.out.println("Default Charset: "
-						+ defaultencoding);
-
-				// Getting character encoding by InputStreamReader
-				System.out.println(
-						"Default Charset by InputStreamReader: "
-								+ defaultCharset);
-
-				// Getting character encoding by java.nio.charset
-				System.out.println("Default Charset: "
-						+ Charset.defaultCharset());
 
 				// exit early
 				return;
@@ -306,10 +269,15 @@ public class Main {
 					isVerbose, isDebug);
 
 			// Option 1 - first iteration of LogRipper tool
-			LogRipper logRipper = new LogRipper(config);
-			logRipper.scanAndReport();
+			//LogRipper logRipper = new LogRipper(config);
+			//logRipper.scanAndReport();
 
 			// Option 2 - second iteration of LogRipper tool
+			AtomicInteger matchCounter = new AtomicInteger(0);
+			FileGrepRipperTwo fileGrepRipper = new FileGrepRipperTwo(config, matchCounter);
+			fileGrepRipper.rip(thePath);
+
+			// Option 3 - third iteration of LogRipper tool
 			//PathGrepRipper pathGrepRipper = new PathGrepRipper(config);
 			//pathGrepRipper.rip(thePath, isDebug);
 

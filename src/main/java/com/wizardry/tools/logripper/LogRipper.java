@@ -1,6 +1,7 @@
 package com.wizardry.tools.logripper;
 
 import com.wizardry.tools.logripper.config.LogRipperConfig;
+import com.wizardry.tools.logripper.tasks.pathmapper.WrappedTreeNode;
 import com.wizardry.tools.logripper.util.Timestamp;
 import org.refcodes.logger.RuntimeLogger;
 import org.refcodes.logger.RuntimeLoggerFactorySingleton;
@@ -28,7 +29,7 @@ public class LogRipper {
     private final AtomicInteger matchesFound;
     private final AtomicInteger matchLimit;
     private final LogRipperConfig config;
-    private final ConcurrentLinkedQueue<String> debugMessages;
+    private final ConcurrentLinkedQueue<String> messages;
 
     public LogRipper(LogRipperConfig config) throws IllegalArgumentException {
         config.validate();
@@ -37,7 +38,7 @@ public class LogRipper {
         this.executor = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
         this.matchesFound = new AtomicInteger(0);
         this.matchLimit = new AtomicInteger(config.matchLimit());
-        this.debugMessages = new ConcurrentLinkedQueue<>();
+        this.messages = new ConcurrentLinkedQueue<>();
     }
 
     public void scanAndReport() {
@@ -50,7 +51,7 @@ public class LogRipper {
         }  catch (IOException | InterruptedException | ExecutionException e) {
             LOGGER.error("Error occurred while processing path: ["+config.path().toAbsolutePath()+"]", e);
         }
-        for (String message : debugMessages) {
+        for (String message : messages) {
             LOGGER.info(message);
         }
     }
@@ -58,9 +59,7 @@ public class LogRipper {
     private void readAndProcessDir() throws IOException, InterruptedException, ExecutionException {
         // establish static values
         Pattern pattern = config.getTokenPattern();
-        config.getPaths().forEach((path) -> {
-
-        });
+        WrappedTreeNode treeRoot = config.getWrappedTree();
     }
 
     private Map<Integer, String> minReadAndProcessPath() throws IOException, InterruptedException, ExecutionException {
@@ -103,7 +102,6 @@ public class LogRipper {
 
         Timestamp tasksTime = new Timestamp();
         for (int i = 0; i < fileContent.size(); i += partSize) {
-            LOGGER.info("Spawning FileScannerTask");
             int end = Math.min(i + partSize, fileContent.size());
             Callable<Map<Integer, String>> task = new FileScannerTask(fileContent.subList(i, end), pattern, config, matchesFound, matchLimit);
             futures.add(executor.submit(task));
@@ -115,50 +113,48 @@ public class LogRipper {
             matches.putAll(future.get());
         }
 
-
-
         executor.shutdown();
         if (!executor.awaitTermination(60, TimeUnit.SECONDS)) {
             executor.shutdownNow();
         }
 
         // TODO: Match reporting exits early for some reason, not reporting all matches.
-        LOGGER.info("matches: ", matches.size());
-        if (!config.isCountOnly()) {
-            reportMatches(matches);
-        } else {
-            System.out.println(matchesFound.get());
-        }
+
+        reportMatches(matches);
 
         if (config.isDebug()) {
-            debugMessages.add("["+config.path().toAbsolutePath()+"] lineChunks: " + partSize);
-            debugMessages.add("Read [" + fileContent.size() + "] log lines in [" + readDuration.toMillis() + "] milliseconds");
-            debugMessages.add("Spawned [" + (fileContent.size() / partSize) + "] Tasks for [" + Runtime.getRuntime().availableProcessors() + "] Threads for [" + tasksTime.toMillis() + "] milliseconds");
-            debugMessages.add("Total Matches Found: " + matchesFound.get());
+            messages.add("["+config.path().toAbsolutePath()+"] lineChunks: " + partSize);
+            messages.add("Read [" + fileContent.size() + "] log lines in [" + readDuration.toMillis() + "] milliseconds");
+            messages.add("Spawned [" + (fileContent.size() / partSize) + "] Tasks for [" + Runtime.getRuntime().availableProcessors() + "] Threads for [" + tasksTime.toMillis() + "] milliseconds");
         }
+        messages.add("matches: " + matches.size());
+        messages.add("Total Matches Found: " + matchesFound.get());
     }
 
 
     private void reportMatches(Map<Integer, String> matches) {
+        if (config.isCountOnly() || (config.isSilent() && !config.isNumbered())) {
+            return; // don't announce matches
+        }
         if (config.isNumbered()) {
-            announceNumberedMatches().accept(matches);
+            announceNumberedMatches(config.isDebug()).accept(matches);
         } else {
-            announceMatches().accept(matches);
+            announceMatches(config.isDebug()).accept(matches);
         }
     }
 
-    private static Consumer<Map<Integer, String>> announceMatches() {
-        return (matches) -> {
-            matches.values().forEach(System.out::println);
-        };
+    private static Consumer<Map<Integer, String>> announceMatches(boolean isDebug) {
+        if (isDebug) {
+            return (matches) -> matches.values().forEach(LOGGER::debug);
+        }
+        return (matches) -> matches.values().forEach(System.out::println);
     }
 
-    private static Consumer<Map<Integer, String>> announceNumberedMatches() {
-        return (matches) -> {
-            matches.forEach((key, value) -> {
-                System.out.println("#" + (key + 1) + ": " + value);
-            });
-        };
+    private static Consumer<Map<Integer, String>> announceNumberedMatches(boolean isDebug) {
+        if (isDebug) {
+            return (matches) -> matches.forEach((key, value) -> LOGGER.debug("#" + (key + 1) + ": " + value));
+        }
+        return (matches) -> matches.forEach((key, value) -> System.out.println("#" + (key + 1) + ": " + value));
     }
 
     private record FileScannerTask(List<String> lines, Pattern pattern, LogRipperConfig config, AtomicInteger counter, AtomicInteger limit)

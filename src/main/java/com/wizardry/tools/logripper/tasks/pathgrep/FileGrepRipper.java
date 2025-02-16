@@ -14,6 +14,7 @@ import java.nio.file.Path;
 import java.util.*;
 import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.function.Consumer;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -92,6 +93,9 @@ public class FileGrepRipper implements PooledRipper<Path, Map<Integer, String>> 
             if (!executor.awaitTermination(60, TimeUnit.SECONDS)) {
                 executor.shutdownNow();
             }
+
+            reportMatches(allMatches);
+
             LOGGER.info("File Ripped and found ["+allMatches.size()+"] matches");
             return allMatches;
         } catch (FileNotFoundException | InterruptedException | ExecutionException e) {
@@ -130,8 +134,7 @@ public class FileGrepRipper implements PooledRipper<Path, Map<Integer, String>> 
                 char c = (char) buffer.get(j);
                 if (c == '\n') {
                     // Process the complete line
-                    processLine(lineNumber.get(), lineBuilder.toString(), matches);
-                    lineNumber.incrementAndGet();
+                    processLine(lineNumber.getAndIncrement(), lineBuilder.toString(), matches);
                     lineBuilder.setLength(0); // Clear the StringBuilder
                 } else {
                     lineBuilder.append(c);
@@ -144,9 +147,13 @@ public class FileGrepRipper implements PooledRipper<Path, Map<Integer, String>> 
     private void processLine(int lineNumber, String line, Map<Integer, String> matches) {
         if (limit == 0 || matchCounter.get() < limit + 1) {
             Matcher matcher = pattern.matcher(line);
-            LOGGER.info("checking : " +line);
+            if (config.isVerbose() && config.isDebug()) {
+                LOGGER.debug("checking @ ["+ lineNumber+"] : " +line);
+            }
             if (matcher.find()) {
-                LOGGER.info("Match Found @ lineNumber: " +lineNumber);
+                if (config.isDebug()) {
+                    LOGGER.debug("Match Found @ lineNumber: " + lineNumber);
+                }
                 matchCounter.incrementAndGet();
                 if (config.isSilent()) {
                     matches.put(lineNumber, EMPTY);
@@ -155,5 +162,30 @@ public class FileGrepRipper implements PooledRipper<Path, Map<Integer, String>> 
                 matches.put(lineNumber, line);
             }
         }
+    }
+
+    private void reportMatches(Map<Integer, String> matches) {
+        if (config.isCountOnly() || (config.isSilent() && !config.isNumbered())) {
+            return; // don't announce matches
+        }
+        if (config.isNumbered()) {
+            announceNumberedMatches(config.isDebug()).accept(matches);
+        } else {
+            announceMatches(config.isDebug()).accept(matches);
+        }
+    }
+
+    private static Consumer<Map<Integer, String>> announceMatches(boolean isDebug) {
+        if (isDebug) {
+            return (matches) -> matches.values().forEach(LOGGER::debug);
+        }
+        return (matches) -> matches.values().forEach(System.out::println);
+    }
+
+    private static Consumer<Map<Integer, String>> announceNumberedMatches(boolean isDebug) {
+        if (isDebug) {
+            return (matches) -> matches.forEach((key, value) -> LOGGER.debug("#" + (key + 1) + ": " + value));
+        }
+        return (matches) -> matches.forEach((key, value) -> System.out.println("#" + (key + 1) + ": " + value));
     }
 }

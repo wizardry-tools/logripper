@@ -1,4 +1,4 @@
-package com.wizardry.tools.logripper.functions;
+package com.wizardry.tools.logripper.util.functions;
 
 import java.util.Objects;
 
