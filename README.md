@@ -2,10 +2,12 @@
 LogRipper is a utility designed to search for specific patterns or tokens within text files and directories, and to optionally split these files into smaller parts based on the found matches. This tool can be particularly useful for log analysis, where you need to extract relevant information from large log files.
 
 # This is a Work in Progress #
-LogRipper is currently under development and may not yet include all planned features or optimizations. Contributions are welcome!
+LogRipper is currently under development and may not yet include all planned features or optimizations. As of right now, it is mainly a self-learning journey that I am taking. It may blossom into something useful one day. Contributions and critique are still welcome!
 
 ## Latest Update ##
 - 2/13/2025 - managed to get the native-image built on Windows, however the graphical text looks weird. need to debug that.
+- 2/14/2025 - the native executable still has incorrect characters somehow, but it at least looks presentable.
+- 2/15/2025 - Fixed various aspects of file grepping, but still experimenting with read strategies for both large and small files.
 
 
 ## Features ##

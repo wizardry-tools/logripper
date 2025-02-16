@@ -1,7 +1,7 @@
 package com.wizardry.tools.logripper.util.filesystem;
 
 import java.util.Arrays;
-import java.util.List;
+import java.util.concurrent.ConcurrentLinkedQueue;
 
 public interface Crawlable<T extends Crawlable<T>> {
 
@@ -17,8 +17,8 @@ public interface Crawlable<T extends Crawlable<T>> {
      * Returns a list of Crawlable child items.
      * @return
      */
-    default List<T> getChildren() {
-        return List.of();
+    default ConcurrentLinkedQueue<T> getChildren() {
+        return new ConcurrentLinkedQueue<>();
     }
 
     /**

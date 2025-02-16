@@ -1,15 +1,23 @@
 package com.wizardry.tools.logripper.util.wrapping;
 
 import com.wizardry.tools.logripper.util.filesystem.Readable;
+import com.wizardry.tools.logripper.util.functions.LineReader;
+import com.wizardry.tools.logripper.util.matching.Match;
 import org.jetbrains.annotations.NotNull;
+import org.refcodes.logger.RuntimeLogger;
+import org.refcodes.logger.RuntimeLoggerFactorySingleton;
 
 import java.io.File;
 import java.io.IOError;
 import java.io.IOException;
 import java.net.URI;
 import java.nio.file.*;
+import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.Stream;
 
-public class WrappedPath implements Wrappable<Path>,Path,Readable {
+public final class WrappedPath implements Wrappable<Path>,Path,Readable<LineReader,Match> {
+    private static final RuntimeLogger LOGGER = RuntimeLoggerFactorySingleton.createRuntimeLogger();
     private final Path wrapped;
 
     public WrappedPath(Path wrapped) {
@@ -539,6 +547,44 @@ public class WrappedPath implements Wrappable<Path>,Path,Readable {
         } catch (SecurityException se) {
             return false;
         }
+    }
+
+    @Override
+    public synchronized Stream<String> readLines() throws IOException {
+        LOGGER.info("Readinglines as Stream<String>");
+        //validate
+        if (!isReadable()) {
+            throw new IOException("Path is not readable.");
+        }
+        // return closable stream
+        return Files.lines(wrapped);
+    }
+
+    @Override
+    public synchronized ConcurrentLinkedQueue<Match> readLines(LineReader lineReader) throws IOException {
+        LOGGER.info("Readinglines with lineReader");
+        //validate
+        if (lineReader == null) {
+            throw new NullPointerException("LineReader is null.");
+        }
+        if (!lineReader.isInitialized()) {
+            throw new IllegalStateException("LineReader is not initialized.");
+        }
+        //prepare
+        final ConcurrentLinkedQueue<Match> matches = new ConcurrentLinkedQueue<>();
+        final AtomicInteger totalLines = new AtomicInteger(0);
+        //read file
+        try  (Stream<String> lines = readLines()) {
+            LOGGER.info("lines have been read");
+            // read lines
+            lines.parallel().forEach(line -> {
+                // LineReader will match and collate matches based on its configuration.
+                lineReader.apply(line, totalLines.getAndIncrement(), matches);
+            });
+        }
+
+        // return concurrent matches
+        return matches;
     }
 
     @Override

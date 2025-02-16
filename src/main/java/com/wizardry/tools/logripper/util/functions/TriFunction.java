@@ -13,4 +13,8 @@ public interface TriFunction<T, U, V, R> {
 
         return (t, u, v) -> after.apply(apply(t, u, v));
     }
+
+    default boolean isInitialized() {
+        return false;
+    }
 }

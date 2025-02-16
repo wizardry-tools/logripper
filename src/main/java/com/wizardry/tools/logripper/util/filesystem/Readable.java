@@ -1,6 +1,10 @@
 package com.wizardry.tools.logripper.util.filesystem;
 
-public interface Readable {
+import java.io.IOException;
+import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.stream.Stream;
+
+public interface Readable<T,R> {
 
     /**
      * Tests whether the Readable is a directory.
@@ -29,4 +33,8 @@ public interface Readable {
     default boolean isReadable() {
         return false;
     }
+
+    Stream<String> readLines() throws IOException;
+
+    ConcurrentLinkedQueue<R> readLines(T lineReader) throws IOException;
 }

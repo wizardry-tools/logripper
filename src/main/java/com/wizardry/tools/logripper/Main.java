@@ -275,7 +275,7 @@ public class Main {
 			// Option 2 - second iteration of LogRipper tool
 			AtomicInteger matchCounter = new AtomicInteger(0);
 			FileGrepRipperTwo fileGrepRipper = new FileGrepRipperTwo(config, matchCounter);
-			fileGrepRipper.rip(thePath);
+			fileGrepRipper.rip(WrappedPath.of(thePath));
 
 			// Option 3 - third iteration of LogRipper tool
 			//PathGrepRipper pathGrepRipper = new PathGrepRipper(config);

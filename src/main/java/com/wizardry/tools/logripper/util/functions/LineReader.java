@@ -21,7 +21,7 @@ public final class LineReader implements TriFunction<String,Integer,ConcurrentLi
     private final int limit;
     private final boolean numbered;
     private final AtomicInteger totalMatches;
-    private final boolean isInitialized;
+    private final boolean initialized;
     private final int linesBefore;
     private final int linesAfter;
     private final FifoList<String> beforeLines;
@@ -39,7 +39,7 @@ public final class LineReader implements TriFunction<String,Integer,ConcurrentLi
         this.beforeLines = new FifoList<>(linesBefore);
         this.afterLines = new LiLoList<>(linesAfter);
         LOGGER.info("New LineReader");
-        this.isInitialized = true;
+        this.initialized = true;
     }
 
     public static LineReader of(LogRipperConfig config, AtomicInteger totalMatches) {
@@ -49,8 +49,12 @@ public final class LineReader implements TriFunction<String,Integer,ConcurrentLi
         return new LineReader(config, totalMatches);
     }
 
+    public synchronized boolean isInitialized() {
+        return this.initialized;
+    }
+
     @Override
-    public Boolean apply(String line, Integer lineNumber, ConcurrentLinkedQueue<Match> matches) {
+    public synchronized Boolean apply(String line, Integer lineNumber, ConcurrentLinkedQueue<Match> matches) {
         if (0 < afterLineCount) {
             // if above zero, we should be capturing lines after the last match
             afterLines.add(line);
@@ -59,7 +63,7 @@ public final class LineReader implements TriFunction<String,Integer,ConcurrentLi
         if (limit < 1 || totalMatches.get() < limit + 1) {
             Matcher matcher = pattern.matcher(line);
             if (matcher.find()) {
-                LOGGER.info("Found Match @ #"+lineNumber);
+                //LOGGER.info("Found Match @ #"+lineNumber);
                 // TODO: figure out how to accurately add lines after...
                 // I'm not even sure if this is safe.`
                 if (lastMatch != null && !afterLines.isEmpty()) {

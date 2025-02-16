@@ -1,6 +1,7 @@
 package com.wizardry.tools.logripper.util.matching;
 
 import com.wizardry.tools.logripper.util.StringUtil;
+import org.refcodes.logger.RuntimeLogger;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,8 +45,23 @@ public record Match(String value, int index, boolean numbered) {
     public void print(java.io.PrintStream out) {
         validate();
         before.forEach(out::println);
-        out.println(index + ": " + value);
+        if(numbered) {
+            out.println(index + ": " + value);
+        } else {
+            out.println(value);
+        }
         after.forEach(out::println);
+    }
+
+    public void print(RuntimeLogger logger) {
+        validate();
+        before.forEach(logger::info);
+        if (numbered) {
+            logger.info(index + ": " + value);
+        } else {
+            logger.info(value);
+        }
+        after.forEach(logger::info);
     }
 
     private void validate() {
