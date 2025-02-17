@@ -10,3 +10,4 @@
 **/*.bak
 **/dependency-reduced-pom.xml
 **/.idea/
+logripper.ini

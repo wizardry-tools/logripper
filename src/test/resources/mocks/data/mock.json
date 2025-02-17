@@ -1,0 +1,84 @@
+{
+  "store": {
+    "name": "Tech Gadgets Store",
+    "location": "123 Tech Avenue, Silicon Valley, CA",
+    "contactEmail": "info@techgadgets.com"
+  },
+  "products": [
+    {
+      "id": "P001",
+      "name": "Smartphone XYZ Model",
+      "category": "Electronics",
+      "price": 499.99,
+      "stock": 50,
+      "description": "Latest model with high-resolution camera and long battery life."
+    },
+    {
+      "id": "P002",
+      "name": "Wireless Bluetooth Headphones",
+      "category": "Electronics",
+      "price": 199.99,
+      "stock": 75,
+      "description": "Noise-cancelling headphones with comfortable fit."
+    },
+    {
+      "id": "P003",
+      "name": "Smart Watch Model S",
+      "category": "Electronics",
+      "price": 249.99,
+      "stock": 60,
+      "description": "Fitness tracker with heart rate monitor and GPS."
+    }
+  ],
+  "users": [
+    {
+      "id": "U001",
+      "name": "John Doe",
+      "email": "johndoe@example.com",
+      "address": "456 Elm Street, Springfield, IL",
+      "phone": "+1-234-567-8901"
+    },
+    {
+      "id": "U002",
+      "name": "Jane Smith",
+      "email": "janesmith@example.com",
+      "address": "789 Oak Avenue, Metropolis, NY",
+      "phone": "+1-345-678-9012"
+    }
+  ],
+  "orders": [
+    {
+      "id": "O001",
+      "userId": "U001",
+      "date": "2023-10-05T14:23:12Z",
+      "items": [
+        {
+          "productId": "P001",
+          "quantity": 1,
+          "price": 499.99
+        },
+        {
+          "productId": "P002",
+          "quantity": 2,
+          "price": 199.99
+        }
+      ],
+      "totalAmount": 899.97,
+      "status": "Shipped"
+    },
+    {
+      "id": "O002",
+      "userId": "U002",
+      "date": "2023-10-06T15:45:30Z",
+      "items": [
+        {
+          "productId": "P003",
+          "quantity": 1,
+          "price": 249.99
+        }
+      ],
+      "totalAmount": 249.99,
+      "status": "Processing"
+    }
+  ]
+}
